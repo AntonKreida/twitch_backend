@@ -1,0 +1,61 @@
+---
+name: releases
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        continue-on-error: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+        continue-on-error: false
+
+      - name: Install Docker using Docker's official script
+        run: |
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+        continue-on-error: false
+
+      - name: Install Yarn
+        run: npm install --global yarn
+        continue-on-error: false
+
+      - name: Docker login
+        run: 'echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin'
+        continue-on-error: false
+
+      - name: Docker build
+        env:
+            USERNAME: ${{ secrets.USERNAME }}
+            IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+            API_PORT: ${{ secrets.API_PORT }}
+            DATABASE_URL: 'postgres://${{secrets.POSTGRES_USER}}:${{secrets.POSTGRES_PASSWORD}}@${{secrets.POSTGRES_HOST}}:${{secrets.POSTGRES_PORT}}/${{secrets.POSTGRES_DB}}?schema=public'
+        run: |
+            docker build \
+            --build-arg USERNAME=${{ secrets.USERNAME }} \
+            --build-arg IMAGE_NAME=${{ secrets.IMAGE_NAME }} \
+            -t ${{ secrets.IMAGE_NAME }} .
+            docker tag ${{ secrets.IMAGE_NAME }} ghcr.io/${{ secrets.USERNAME }}/${{ secrets.IMAGE_NAME }}:latest
+
+      - name: Docker build and push
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+        run: |
+          docker push ghcr.io/${{ secrets.USERNAME }}/${{ secrets.IMAGE_NAME }}:latest
+        continue-on-error: false
+
+      - name: Docker clear system
+        run: docker system prune -af
+        continue-on-error: false
