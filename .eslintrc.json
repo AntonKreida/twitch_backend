@@ -7,10 +7,11 @@
   },
   "plugins": [
     "@typescript-eslint/eslint-plugin",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "extends": [
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
   ],
   "root": true,
   "env": {
@@ -18,7 +19,7 @@
     "jest": true
   },
   "ignorePatterns": [
-    ".eslintrc.js"
+    ".eslintrc.json"
   ],
   "rules": {
     "@typescript-eslint/interface-name-prefix": "off",
