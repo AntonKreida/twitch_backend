@@ -15,6 +15,7 @@ import { isDevEnv } from '@shared';
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       useClass: GraphQLConfigService,
+      imports: [ConfigModule],
       inject: [ConfigService],
     }),
     PrismaModule,
