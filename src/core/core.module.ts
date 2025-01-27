@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { PrismaModule } from './prisma';
@@ -17,7 +17,6 @@ import { isDevEnv } from '@shared';
       driver: ApolloDriver,
       useClass: GraphQLConfigService,
       imports: [ConfigModule],
-      inject: [ConfigService],
     }),
     PrismaModule,
     RedisModule,
