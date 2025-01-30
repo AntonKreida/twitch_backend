@@ -1,1 +1,2 @@
-export * from './is-dev';
+export * from './is-dev.util';
+export * from './get-milliseconds-from-day.util';
