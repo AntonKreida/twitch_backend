@@ -4,8 +4,7 @@ import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import { RedisStore } from 'connect-redis';
 
-import { RedisService } from './core/redis/';
-import { CoreModule } from './core';
+import { CoreModule, RedisService } from './core';
 import {
   getMillisecondsFromDay,
   isDevEnv,
