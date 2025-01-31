@@ -17,6 +17,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
   },
+  "exclude": [
+    "./prisma/generated/**/*.{ts,js}"
+  ],
   "include": [
     "src/**/*.ts"
   ],

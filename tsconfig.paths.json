@@ -13,6 +13,12 @@
       ],
       "@shared": [
         "./src/shared/"
+      ],
+      "@core": [
+        "./src/core/"
+      ],
+      "@modules": [
+        "./src/modules/"
       ]
     }
   }
