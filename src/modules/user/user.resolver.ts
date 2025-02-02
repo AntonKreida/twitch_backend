@@ -8,7 +8,7 @@ export class UserResolver {
   constructor(private readonly userRepository: UserRepository) {}
 
   @Query(() => [UserModel], { name: 'findAllUsers' })
-  async findAll(@Args() _argsUsers: ArgsUsersDto): Promise<UserModel[]> {
-    return await this.userRepository.findAll();
+  async findAll(@Args() argsUsers: ArgsUsersDto): Promise<UserModel[]> {
+    return await this.userRepository.findAll(argsUsers);
   }
 }
