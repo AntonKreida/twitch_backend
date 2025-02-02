@@ -18,9 +18,6 @@ export class UserModel implements User {
   @Field(() => String)
   email: string;
 
-  @Field(() => String)
-  displayName: string;
-
   @Field(() => String, { nullable: true })
   avatar: string | null;
 

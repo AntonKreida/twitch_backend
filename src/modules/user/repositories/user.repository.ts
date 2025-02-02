@@ -3,6 +3,7 @@ import { User } from '/prisma/generated';
 
 import { PrismaService } from '@core';
 import { ArgsUsersDto } from '../dto';
+import { UserEntity } from '../entityes';
 
 @Injectable()
 export class UserRepository {
@@ -22,5 +23,13 @@ export class UserRepository {
       },
       ...paramsPagination,
     });
+  }
+
+  async findById(id: string): Promise<User> {
+    return await this.prismaService.user.findUnique({ where: { id } });
+  }
+
+  async createUser(user: UserEntity): Promise<User> {
+    return await this.prismaService.user.create({ data: user });
   }
 }
