@@ -27,7 +27,7 @@ input PaginationInputType {
 }
 
 type Query {
-  user(email: String, id: String, username: String): UserModel!
+  user(email: String, id: ID, username: String): UserModel!
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
 }
 
