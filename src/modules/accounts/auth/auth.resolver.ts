@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
 import { ArgsUserDto, InputUserRegisterDto } from './dto';
-import { SortOrPaginationArgsType } from '/src/shared';
+import { SortOrPaginationArgsType } from '@shared';
 
 @Resolver('Auth')
 export class AuthResolver {
