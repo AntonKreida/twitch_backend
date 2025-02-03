@@ -18,7 +18,7 @@ input InputUserRegisterDto {
 }
 
 type Mutation {
-  registerUser(inputUser: InputUserRegisterDto!): UserModel!
+  registerUser(inputUserRegister: InputUserRegisterDto!): UserModel!
 }
 
 input PaginationInputType {

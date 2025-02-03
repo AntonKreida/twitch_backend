@@ -10,7 +10,7 @@ export class AuthResolver {
 
   @Mutation(() => UserModel, { name: 'registerUser' })
   async register(
-    @Args('inputUser') inputUser: InputUserRegisterDto,
+    @Args('inputUserRegister') inputUser: InputUserRegisterDto,
   ): Promise<UserModel> {
     return this.authService.registerUser(inputUser);
   }
