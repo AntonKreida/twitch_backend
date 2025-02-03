@@ -884,6 +884,7 @@ export namespace Prisma {
     email: string | null
     avatar: string | null
     bio: string | null
+    passwordHash: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -896,6 +897,7 @@ export namespace Prisma {
     email: string | null
     avatar: string | null
     bio: string | null
+    passwordHash: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -908,6 +910,7 @@ export namespace Prisma {
     email: number
     avatar: number
     bio: number
+    passwordHash: number
     createAt: number
     updateAt: number
     _all: number
@@ -922,6 +925,7 @@ export namespace Prisma {
     email?: true
     avatar?: true
     bio?: true
+    passwordHash?: true
     createAt?: true
     updateAt?: true
   }
@@ -934,6 +938,7 @@ export namespace Prisma {
     email?: true
     avatar?: true
     bio?: true
+    passwordHash?: true
     createAt?: true
     updateAt?: true
   }
@@ -946,6 +951,7 @@ export namespace Prisma {
     email?: true
     avatar?: true
     bio?: true
+    passwordHash?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -1031,6 +1037,7 @@ export namespace Prisma {
     email: string
     avatar: string | null
     bio: string | null
+    passwordHash: string
     createAt: Date
     updateAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1060,6 +1067,7 @@ export namespace Prisma {
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1072,6 +1080,7 @@ export namespace Prisma {
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1084,6 +1093,7 @@ export namespace Prisma {
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1096,11 +1106,12 @@ export namespace Prisma {
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "passwordHash" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1113,6 +1124,7 @@ export namespace Prisma {
       email: string
       avatar: string | null
       bio: string | null
+      passwordHash: string
       createAt: Date
       updateAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1545,6 +1557,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly avatar: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
+    readonly passwordHash: FieldRef<"User", 'String'>
     readonly createAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
   }
@@ -1923,6 +1936,7 @@ export namespace Prisma {
     email: 'email',
     avatar: 'avatar',
     bio: 'bio',
+    passwordHash: 'passwordHash',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -2015,6 +2029,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    passwordHash?: StringFilter<"User"> | string
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -2027,6 +2042,7 @@ export namespace Prisma {
     email?: SortOrder
     avatar?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -2042,6 +2058,7 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    passwordHash?: StringFilter<"User"> | string
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "username" | "email">
@@ -2054,6 +2071,7 @@ export namespace Prisma {
     email?: SortOrder
     avatar?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -2072,6 +2090,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    passwordHash?: StringWithAggregatesFilter<"User"> | string
     createAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -2084,6 +2103,7 @@ export namespace Prisma {
     email: string
     avatar?: string | null
     bio?: string | null
+    passwordHash: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -2096,6 +2116,7 @@ export namespace Prisma {
     email: string
     avatar?: string | null
     bio?: string | null
+    passwordHash: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -2108,6 +2129,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2120,6 +2142,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2132,6 +2155,7 @@ export namespace Prisma {
     email: string
     avatar?: string | null
     bio?: string | null
+    passwordHash: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -2144,6 +2168,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2156,6 +2181,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2214,6 +2240,7 @@ export namespace Prisma {
     email?: SortOrder
     avatar?: SortOrder
     bio?: SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -2226,6 +2253,7 @@ export namespace Prisma {
     email?: SortOrder
     avatar?: SortOrder
     bio?: SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -2238,6 +2266,7 @@ export namespace Prisma {
     email?: SortOrder
     avatar?: SortOrder
     bio?: SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }

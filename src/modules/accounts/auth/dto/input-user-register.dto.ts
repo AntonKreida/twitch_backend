@@ -10,8 +10,8 @@ import {
 } from 'class-validator';
 
 @InputType()
-export class InputUserDto
-  implements Omit<User, 'id' | 'createAt' | 'updateAt'>
+export class InputUserRegisterDto
+  implements Omit<User, 'id' | 'createAt' | 'updateAt' | 'passwordHash'>
 {
   @Field(() => String)
   @IsString({
@@ -54,6 +54,14 @@ export class InputUserDto
       'login должен состоять только из латинских букв, цифр, пробелы, символов @!#$%^&*()-+=',
   })
   username: string;
+
+  @Field(() => String)
+  @IsString({
+    message: 'password должен быть строкой',
+  })
+  @MinLength(8, { message: 'password должен быть больше 8-х символов' })
+  @IsNotEmpty({ message: 'password не может быть пустым' })
+  password: string;
 
   @Field(() => String, { nullable: true })
   @IsOptional()

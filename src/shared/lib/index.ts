@@ -1,2 +1,2 @@
 export * from './enums';
-export * from './input-types';
+export * from './args-type';

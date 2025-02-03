@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '/prisma/generated';
 
+import { UserEntity } from '../entities';
+import { IArgsFindUser } from '../lib/interfaces';
+
 import { PrismaService } from '@core';
-import { ArgsUsersDto } from '../dto';
-import { UserEntity } from '../entityes';
+import { SortOrPaginationArgsType } from '@shared';
 
 @Injectable()
 export class UserRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll(argsUsersDto?: ArgsUsersDto): Promise<User[]> {
-    const { sort, pagination } = argsUsersDto;
-
+  async findAll({
+    sort,
+    pagination,
+  }: SortOrPaginationArgsType): Promise<User[]> {
     const paramsPagination = {
       take: pagination?.limit,
       skip: pagination?.page * pagination?.limit || 0,
@@ -25,8 +28,14 @@ export class UserRepository {
     });
   }
 
-  async findById(id: string): Promise<User> {
-    return await this.prismaService.user.findUnique({ where: { id } });
+  async findUser({
+    id,
+    email,
+    username,
+  }: Partial<IArgsFindUser>): Promise<User> {
+    return await this.prismaService.user.findUnique({
+      where: { id, email, username },
+    });
   }
 
   async createUser(user: UserEntity): Promise<User> {

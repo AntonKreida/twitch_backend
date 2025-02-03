@@ -24,6 +24,9 @@ export class UserModel implements User {
   @Field(() => String, { nullable: true })
   bio: string | null;
 
+  @Field(() => String)
+  passwordHash: string;
+
   @Field(() => Date)
   createAt: Date;
 
