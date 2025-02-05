@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UserRepository, UserEntity, IArgsFindUser } from '../user';
 import { User } from '/prisma/generated';
-import { type InputUserRegisterDto } from './dto';
+import { type InputUserSignUpDto } from './dto';
 import { type SortOrPaginationArgsType } from '@shared';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class AuthService {
     lastName,
     password,
     username,
-  }: InputUserRegisterDto): Promise<User> {
+  }: InputUserSignUpDto): Promise<User> {
     const isUsernameExist = await this.userRepository.findUser({
       username,
     });
@@ -57,7 +57,7 @@ export class AuthService {
     });
   }
 
-  async findUser(args: Partial<IArgsFindUser>): Promise<User> {
+  async findUser(args: Partial<IArgsFindUser>): Promise<User | null> {
     return await this.userRepository.findUser(args);
   }
 }

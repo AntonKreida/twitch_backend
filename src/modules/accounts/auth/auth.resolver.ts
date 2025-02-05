@@ -1,16 +1,16 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
-import { ArgsUserDto, InputUserRegisterDto } from './dto';
+import { ArgsUserDto, InputUserSignUpDto } from './dto';
 import { SortOrPaginationArgsType } from '@shared';
 
 @Resolver('Auth')
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => UserModel, { name: 'registerUser' })
-  async register(
-    @Args('inputUserRegister') inputUser: InputUserRegisterDto,
+  @Mutation(() => UserModel, { name: 'signUp' })
+  async signUp(
+    @Args('inputUserSignUp') inputUser: InputUserSignUpDto,
   ): Promise<UserModel> {
     return this.authService.registerUser(inputUser);
   }
@@ -22,14 +22,8 @@ export class AuthResolver {
     return await this.authService.findUsers(sortOrPaginationType);
   }
 
-  @Query(() => UserModel, { name: 'user' })
-  async findById(
-    @Args() { id, username, email }: ArgsUserDto,
-  ): Promise<UserModel> {
-    return await this.authService.findUser({
-      id,
-      username,
-      email,
-    });
+  @Query(() => UserModel, { name: 'user', nullable: true })
+  async findById(@Args() args: ArgsUserDto): Promise<UserModel | null> {
+    return await this.authService.findUser(args);
   }
 }

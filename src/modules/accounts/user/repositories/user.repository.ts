@@ -32,9 +32,23 @@ export class UserRepository {
     id,
     email,
     username,
-  }: Partial<IArgsFindUser>): Promise<User> {
-    return await this.prismaService.user.findUnique({
-      where: { id, email, username },
+  }: Partial<IArgsFindUser>): Promise<User | null> {
+    return await this.prismaService.user.findFirst({
+      where: {
+        OR: [
+          {
+            id: {
+              equals: id,
+            },
+            email: {
+              equals: email,
+            },
+            username: {
+              equals: username,
+            },
+          },
+        ],
+      },
     });
   }
 
