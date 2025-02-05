@@ -12,7 +12,9 @@ import {
 } from '@shared';
 
 async function bootstrap() {
-  const app = await NestFactory.create(CoreModule);
+  const app = await NestFactory.create(CoreModule, {
+    logger: ['log', 'warn', 'error'], // Оставляем только важные логи
+  });
 
   const config = app.get(ConfigService);
   const redis = app.get(RedisService);

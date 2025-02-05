@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { GqlOptionsFactory } from '@nestjs/graphql';
 import { isDev } from '@shared';
-import { GraphQLFormattedErrorExtensions } from 'graphql';
 
 import { join } from 'path';
 
@@ -18,23 +17,18 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       sortSchema: true,
       context: ({ req, res }) => ({ req, res }),
       formatError: (error) => {
-        const originalError = (
-          error.extensions as GraphQLFormattedErrorExtensions
-        )?.originalError;
+        if (error.extensions['code'] !== 'BAD_REQUEST') {
+          return error;
+        }
 
-        const isObjectAndHasMessage =
-          !!originalError &&
-          typeof originalError === 'object' &&
-          'message' in originalError;
+        const errorsParseJson = JSON.parse(error.message);
 
-        const responseError = {
-          message: isObjectAndHasMessage
-            ? (originalError.message as string)
-            : (error.message as string),
-          code: error.extensions?.code as string,
+        return {
+          message:
+            error.extensions['originalError']?.['error'] ?? error.message,
+          extensions: errorsParseJson,
+          status: error.extensions['originalError']?.['status'] ?? 400,
         };
-
-        return responseError;
       },
     };
   }
