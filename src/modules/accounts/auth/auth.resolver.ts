@@ -1,5 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
@@ -8,7 +9,10 @@ import { SortOrPaginationArgsType, IContext } from '@shared';
 
 @Resolver('Auth')
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Query(() => [UserModel], { name: 'users' })
   async findAll(
@@ -32,17 +36,17 @@ export class AuthResolver {
   @Mutation(() => UserModel, { name: 'signIn' })
   async signIn(
     @Args('inputUserSignIn') inputUser: InputUserSignInDto,
-    @Context() ctx: IContext,
+    @Context() { req }: IContext,
   ): Promise<UserModel> {
     const { username, password } = inputUser;
 
     const user = await this.authService.validateUser(username, password);
 
     return new Promise((resolve, reject) => {
-      ctx.req.session.userId = user.id;
-      ctx.req.session.createAt = new Date();
+      req.session.userId = user.id;
+      req.session.createAt = new Date();
 
-      ctx.req.session.save((error) => {
+      req.session.save((error) => {
         if (error) {
           reject(
             new InternalServerErrorException(
@@ -57,9 +61,9 @@ export class AuthResolver {
   }
 
   @Query(() => String, { name: 'SignOut' })
-  async signOut(@Context() ctx: IContext): Promise<string> {
+  async signOut(@Context() { req, res }: IContext): Promise<string> {
     return new Promise((resolve, reject) => {
-      ctx.req.session.destroy((error) => {
+      req.session.destroy((error) => {
         if (error) {
           reject(
             new InternalServerErrorException(
@@ -67,6 +71,8 @@ export class AuthResolver {
             ),
           );
         }
+
+        res.clearCookie(`${this.configService.getOrThrow('SESSION_NAME')}`);
 
         resolve('Вы успешно вышли из системы!');
       });
