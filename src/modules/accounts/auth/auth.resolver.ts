@@ -10,6 +10,25 @@ import { SortOrPaginationArgsType, IContext } from '@shared';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
+  @Query(() => [UserModel], { name: 'users' })
+  async findAll(
+    @Args() sortOrPaginationType: SortOrPaginationArgsType,
+  ): Promise<UserModel[]> {
+    return await this.authService.findUsers(sortOrPaginationType);
+  }
+
+  @Query(() => UserModel, { name: 'user', nullable: true })
+  async find(@Args() args: ArgsUserDto): Promise<UserModel | null> {
+    return await this.authService.findUser(args);
+  }
+
+  @Mutation(() => UserModel, { name: 'signUp' })
+  async signUp(
+    @Args('inputUserSignUp') inputUser: InputUserSignUpDto,
+  ): Promise<UserModel> {
+    return this.authService.registerUser(inputUser);
+  }
+
   @Mutation(() => UserModel, { name: 'signIn' })
   async signIn(
     @Args('inputUserSignIn') inputUser: InputUserSignInDto,
@@ -35,24 +54,5 @@ export class AuthResolver {
         resolve(user);
       });
     });
-  }
-
-  @Mutation(() => UserModel, { name: 'signUp' })
-  async signUp(
-    @Args('inputUserSignUp') inputUser: InputUserSignUpDto,
-  ): Promise<UserModel> {
-    return this.authService.registerUser(inputUser);
-  }
-
-  @Query(() => [UserModel], { name: 'users' })
-  async findAll(
-    @Args() sortOrPaginationType: SortOrPaginationArgsType,
-  ): Promise<UserModel[]> {
-    return await this.authService.findUsers(sortOrPaginationType);
-  }
-
-  @Query(() => UserModel, { name: 'user', nullable: true })
-  async find(@Args() args: ArgsUserDto): Promise<UserModel | null> {
-    return await this.authService.findUser(args);
   }
 }
