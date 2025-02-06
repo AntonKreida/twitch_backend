@@ -30,7 +30,7 @@ services:
       - app_network
   redis_db:
     container_name: redis_db
-    image: redis:5.0
+    image: redis:7.0-alpine
     restart: always
     depends_on:
       - postgres

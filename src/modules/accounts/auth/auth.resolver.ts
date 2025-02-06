@@ -60,7 +60,7 @@ export class AuthResolver {
     });
   }
 
-  @Mutation(() => String, { name: 'SignOut' })
+  @Mutation(() => String, { name: 'signOut' })
   async signOut(@Context() { req, res }: IContext): Promise<string> {
     return new Promise((resolve, reject) => {
       req.session.destroy((error) => {
