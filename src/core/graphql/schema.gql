@@ -23,7 +23,7 @@ input InputUserSignUpDto {
 }
 
 type Mutation {
-  signIn(inputUserSignIn: InputUserSignInDto!): String!
+  signIn(inputUserSignIn: InputUserSignInDto!): UserModel!
   signUp(inputUserSignUp: InputUserSignUpDto!): UserModel!
 }
 

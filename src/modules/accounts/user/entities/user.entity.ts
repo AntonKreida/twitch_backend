@@ -14,7 +14,7 @@ export class UserEntity
   passwordHash: string;
 
   constructor(
-    user: Omit<UserModel, 'createAt' | 'updateAt' | 'passwordHash' | 'id'> & {
+    user: Omit<UserModel, 'createAt' | 'updateAt' | 'id'> & {
       id?: string;
     },
   ) {
@@ -25,6 +25,7 @@ export class UserEntity
     this.email = user.email;
     this.avatar = user.avatar || null;
     this.bio = user.bio || null;
+    this.passwordHash = user.passwordHash;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

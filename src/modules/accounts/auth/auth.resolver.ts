@@ -1,4 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { InternalServerErrorException } from '@nestjs/common';
+
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
 import { ArgsUserDto, InputUserSignInDto, InputUserSignUpDto } from './dto';
@@ -8,14 +10,31 @@ import { SortOrPaginationArgsType, IContext } from '@shared';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => String, { name: 'signIn' })
+  @Mutation(() => UserModel, { name: 'signIn' })
   async signIn(
     @Args('inputUserSignIn') inputUser: InputUserSignInDto,
     @Context() ctx: IContext,
-  ): Promise<string> {
-    console.log(ctx.req.session.userId);
+  ): Promise<UserModel> {
+    const { username, password } = inputUser;
 
-    return `${inputUser.username} ${inputUser.password}`;
+    const user = await this.authService.validateUser(username, password);
+
+    return new Promise((resolve, reject) => {
+      ctx.req.session.userId = user.id;
+      ctx.req.session.createAt = new Date();
+
+      ctx.req.session.save((error) => {
+        if (error) {
+          reject(
+            new InternalServerErrorException(
+              'При сохранении сессии произошла ошибка!',
+            ),
+          );
+        }
+
+        resolve(user);
+      });
+    });
   }
 
   @Mutation(() => UserModel, { name: 'signUp' })
@@ -33,7 +52,7 @@ export class AuthResolver {
   }
 
   @Query(() => UserModel, { name: 'user', nullable: true })
-  async findById(@Args() args: ArgsUserDto): Promise<UserModel | null> {
+  async find(@Args() args: ArgsUserDto): Promise<UserModel | null> {
     return await this.authService.findUser(args);
   }
 }

@@ -1,6 +1,11 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { UserRepository, UserEntity, IArgsFindUser } from '../user';
-import { User } from '/prisma/generated';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+
+import { UserRepository, UserEntity, IArgsFindUser, UserModel } from '../user';
 import { type InputUserSignUpDto } from './dto';
 import { type SortOrPaginationArgsType } from '@shared';
 
@@ -16,14 +21,14 @@ export class AuthService {
     lastName,
     password,
     username,
-  }: InputUserSignUpDto): Promise<User> {
+  }: InputUserSignUpDto): Promise<UserModel> {
     const isUsernameExist = await this.userRepository.findUser({
       username,
     });
 
     if (isUsernameExist) {
       throw new ConflictException(
-        'Пользователь с таким username уже существует',
+        'Пользователь с таким username уже существует!',
       );
     }
 
@@ -32,7 +37,7 @@ export class AuthService {
     });
 
     if (IsEmailExist) {
-      throw new ConflictException('Пользователь с таким email уже существует');
+      throw new ConflictException('Пользователь с таким email уже существует!');
     }
 
     const newEntityUser = await new UserEntity({
@@ -42,6 +47,7 @@ export class AuthService {
       firstName,
       lastName,
       username,
+      passwordHash: '',
     }).setPassword(password);
 
     return await this.userRepository.createUser(newEntityUser);
@@ -50,14 +56,31 @@ export class AuthService {
   async findUsers({
     sort,
     pagination,
-  }: SortOrPaginationArgsType): Promise<User[]> {
+  }: SortOrPaginationArgsType): Promise<UserModel[]> {
     return await this.userRepository.findAll({
       sort,
       pagination,
     });
   }
 
-  async findUser(args: Partial<IArgsFindUser>): Promise<User | null> {
+  async findUser(args: Partial<IArgsFindUser>): Promise<UserModel | null> {
     return await this.userRepository.findUser(args);
+  }
+
+  async validateUser(username: string, password: string): Promise<UserModel> {
+    const user = await this.userRepository.findUser({ username });
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const newUserEntity = new UserEntity(user);
+    const isCorrectPassword = await newUserEntity.validatePassword(password);
+
+    if (!isCorrectPassword) {
+      throw new UnauthorizedException('Неверный пароль!');
+    }
+
+    return user;
   }
 }
