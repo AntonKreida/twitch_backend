@@ -23,6 +23,7 @@ input InputUserSignUpDto {
 }
 
 type Mutation {
+  SignOut: String!
   signIn(inputUserSignIn: InputUserSignInDto!): UserModel!
   signUp(inputUserSignUp: InputUserSignUpDto!): UserModel!
 }
@@ -33,7 +34,6 @@ input PaginationInputType {
 }
 
 type Query {
-  SignOut: String!
   user(email: String, id: ID, username: String): UserModel
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
 }
