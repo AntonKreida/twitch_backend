@@ -55,4 +55,21 @@ export class AuthResolver {
       });
     });
   }
+
+  @Query(() => String, { name: 'SignOut' })
+  async signOut(@Context() ctx: IContext): Promise<string> {
+    return new Promise((resolve, reject) => {
+      ctx.req.session.destroy((error) => {
+        if (error) {
+          reject(
+            new InternalServerErrorException(
+              'При удалении сессии произошла ошибка!',
+            ),
+          );
+        }
+
+        resolve('Вы успешно вышли из системы!');
+      });
+    });
+  }
 }

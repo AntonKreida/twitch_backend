@@ -33,6 +33,7 @@ input PaginationInputType {
 }
 
 type Query {
+  SignOut: String!
   user(email: String, id: ID, username: String): UserModel
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
 }
