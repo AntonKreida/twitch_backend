@@ -47,11 +47,11 @@ export class InputUserSignUpDto
   @IsString({
     message: 'login должен быть строкой',
   })
-  @IsNotEmpty({ message: 'login не может быть пустым' })
-  @MinLength(3, { message: 'login должен быть больше 3-х символов' })
+  @IsNotEmpty({ message: 'username не может быть пустым' })
+  @MinLength(3, { message: 'username должен быть больше 3-х символов' })
   @Matches(/^[a-zA-Z0-9_\s@!#$%^&*()\-+=]{3,}$/, {
     message:
-      'login должен состоять только из латинских букв, цифр, пробелы, символов @!#$%^&*()-+=',
+      'username должен состоять только из латинских букв, цифр, пробелы, символов @!#$%^&*()-+=',
   })
   username: string;
 

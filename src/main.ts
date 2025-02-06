@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
-import * as session from 'express-session';
 import { RedisStore } from 'connect-redis';
+import * as session from 'express-session';
 
 import { CoreModule, RedisService } from './core';
 import {

@@ -1,12 +1,22 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
-import { ArgsUserDto, InputUserSignUpDto } from './dto';
-import { SortOrPaginationArgsType } from '@shared';
+import { ArgsUserDto, InputUserSignInDto, InputUserSignUpDto } from './dto';
+import { SortOrPaginationArgsType, IContext } from '@shared';
 
 @Resolver('Auth')
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
+
+  @Mutation(() => String, { name: 'signIn' })
+  async signIn(
+    @Args('inputUserSignIn') inputUser: InputUserSignInDto,
+    @Context() ctx: IContext,
+  ): Promise<string> {
+    console.log(ctx.req.session.userId);
+
+    return `${inputUser.username} ${inputUser.password}`;
+  }
 
   @Mutation(() => UserModel, { name: 'signUp' })
   async signUp(

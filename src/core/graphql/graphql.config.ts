@@ -2,6 +2,7 @@ import { ApolloDriverConfig } from '@nestjs/apollo';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { GqlOptionsFactory } from '@nestjs/graphql';
+import { Request, Response } from 'express';
 import { isDev } from '@shared';
 
 import { join } from 'path';
@@ -15,7 +16,10 @@ export class GraphQLConfigService implements GqlOptionsFactory {
       path: this.configService.getOrThrow<string>('GRAPHQL_PATH'),
       autoSchemaFile: join(process.cwd(), 'src/core/graphql/schema.gql'),
       sortSchema: true,
-      context: ({ req, res }) => ({ req, res }),
+      context: ({ req, res }: { req: Request; res: Response }) => ({
+        req,
+        res,
+      }),
       formatError: (error) => {
         if (error.extensions['code'] !== 'BAD_REQUEST') {
           return error;

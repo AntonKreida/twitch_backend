@@ -7,6 +7,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input InputUserSignInDto {
+  password: String!
+  username: String!
+}
+
 input InputUserSignUpDto {
   avatar: String
   bio: String
@@ -18,6 +23,7 @@ input InputUserSignUpDto {
 }
 
 type Mutation {
+  signIn(inputUserSignIn: InputUserSignInDto!): String!
   signUp(inputUserSignUp: InputUserSignUpDto!): UserModel!
 }
 

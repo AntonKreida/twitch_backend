@@ -22,7 +22,9 @@
   ],
   "include": [
     "src/**/*.ts",
-    "/**/*.d.ts",
+  ],
+  "files": [
+    "./session.d.ts"
   ],
   "extends": [
     "./tsconfig.paths.json"
