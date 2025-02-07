@@ -34,6 +34,7 @@ input PaginationInputType {
 }
 
 type Query {
+  me: UserModel!
   user(email: String, id: ID, username: String): UserModel
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
 }

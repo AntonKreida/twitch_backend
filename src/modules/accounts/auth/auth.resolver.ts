@@ -5,7 +5,13 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
 import { ArgsUserDto, InputUserSignInDto, InputUserSignUpDto } from './dto';
-import { SortOrPaginationArgsType, IContext, AuthGuard } from '@shared';
+import {
+  SortOrPaginationArgsType,
+  IContext,
+  AuthGuard,
+  Authorized,
+  Auth,
+} from '@shared';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -78,5 +84,11 @@ export class AuthResolver {
         resolve('Вы успешно вышли из системы!');
       });
     });
+  }
+
+  @Auth()
+  @Query(() => UserModel, { name: 'me' })
+  async me(@Authorized('id') id: string): Promise<UserModel> {
+    return this.authService.findUser({ id: id });
   }
 }
