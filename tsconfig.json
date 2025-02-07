@@ -24,7 +24,8 @@
     "src/**/*.ts",
   ],
   "files": [
-    "./session.d.ts"
+    "types/session.d.ts",
+    "types/request.d.ts",
   ],
   "extends": [
     "./tsconfig.paths.json"

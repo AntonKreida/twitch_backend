@@ -1,11 +1,11 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { InternalServerErrorException } from '@nestjs/common';
+import { InternalServerErrorException, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
 import { ArgsUserDto, InputUserSignInDto, InputUserSignUpDto } from './dto';
-import { SortOrPaginationArgsType, IContext } from '@shared';
+import { SortOrPaginationArgsType, IContext, AuthGuard } from '@shared';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -34,6 +34,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => UserModel, { name: 'signIn' })
+  @UseGuards(AuthGuard)
   async signIn(
     @Args('inputUserSignIn') inputUser: InputUserSignInDto,
     @Context() { req }: IContext,
