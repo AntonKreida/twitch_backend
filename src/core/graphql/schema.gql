@@ -7,19 +7,53 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input InputUserSignInDto {
+  password: String!
+  username: String!
+}
+
+input InputUserSignUpDto {
+  avatar: String
+  bio: String
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  signIn(inputUserSignIn: InputUserSignInDto!): UserModel!
+  signOut: String!
+  signUp(inputUserSignUp: InputUserSignUpDto!): UserModel!
+}
+
+input PaginationInputType {
+  limit: Int
+  page: Int
+}
+
 type Query {
-  findAllUsers: [UserModel!]!
+  me: UserModel!
+  user(email: String, id: ID, username: String): UserModel
+  users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
+}
+
+"""Сортировка по возрастанию/убыванию"""
+enum SORT_ENUM {
+  ASC
+  DESC
 }
 
 type UserModel {
   avatar: String
   bio: String
   createAt: DateTime!
-  displayName: String!
   email: String!
   firstName: String!
   id: ID!
   lastName: String!
+  passwordHash: String!
   updateAt: DateTime!
   username: String!
 }

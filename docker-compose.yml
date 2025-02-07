@@ -28,9 +28,9 @@ services:
       - postgres
     networks:
       - app_network
-  redis:
-    container_name: redis
-    image: redis:5.0
+  redis_db:
+    container_name: redis_db
+    image: redis:7.0-alpine
     restart: always
     depends_on:
       - postgres
@@ -38,8 +38,7 @@ services:
       - ${REDIS_PORT}:${REDIS_PORT}
     volumes:
       - redis_data:/data
-    command:
-      - redis-server --requirepass ${REDIS_PASSWORD}
+    command: redis-server --requirepass "${REDIS_PASSWORD}"
     networks:
       - app_network
 

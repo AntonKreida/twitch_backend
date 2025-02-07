@@ -21,9 +21,13 @@
     "./prisma/generated/**/*.{ts,js}"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+  ],
+  "files": [
+    "types/session.d.ts",
+    "types/request.d.ts",
   ],
   "extends": [
     "./tsconfig.paths.json"
-  ]
+  ],
 }

@@ -2,11 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+
 import { PrismaModule } from './prisma';
 import { GraphQLConfigService } from './graphql';
 import { RedisModule } from './redis';
+
+import { UserModule, AuthModule } from '@modules';
+
 import { isDevEnv } from '@shared';
-import { UserModule } from '@modules';
 
 @Module({
   imports: [
@@ -22,6 +25,7 @@ import { UserModule } from '@modules';
     PrismaModule,
     RedisModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class CoreModule {}

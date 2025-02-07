@@ -193,7 +193,7 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics 
+   * Metrics
    */
   export type Metrics = runtime.Metrics
   export type Metric<T> = runtime.Metric<T>
@@ -211,14 +211,14 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.2.1
-   * Query Engine version: 4123509d24aa4dede1e864b46351bf2790323b69
+   * Prisma Client JS version: 6.3.1
+   * Query Engine version: acc0b9dd43eb689cbd20c9470515d719db10d0b0
    */
   export type PrismaVersion = {
     client: string
   }
 
-  export const prismaVersion: PrismaVersion 
+  export const prismaVersion: PrismaVersion
 
   /**
    * Utility Types
@@ -234,15 +234,15 @@ export namespace Prisma {
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   namespace NullTypes {
     /**
     * Type of `Prisma.DbNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class DbNull {
@@ -252,9 +252,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.JsonNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class JsonNull {
@@ -264,9 +264,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.AnyNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class AnyNull {
@@ -277,21 +277,21 @@ export namespace Prisma {
 
   /**
    * Helper for filtering JSON entries that have `null` on the database (empty on the db)
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const DbNull: NullTypes.DbNull
 
   /**
    * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const JsonNull: NullTypes.JsonNull
 
   /**
    * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const AnyNull: NullTypes.AnyNull
@@ -881,10 +881,10 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     username: string | null
-    displayName: string | null
     email: string | null
     avatar: string | null
     bio: string | null
+    passwordHash: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -894,10 +894,10 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     username: string | null
-    displayName: string | null
     email: string | null
     avatar: string | null
     bio: string | null
+    passwordHash: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -907,10 +907,10 @@ export namespace Prisma {
     firstName: number
     lastName: number
     username: number
-    displayName: number
     email: number
     avatar: number
     bio: number
+    passwordHash: number
     createAt: number
     updateAt: number
     _all: number
@@ -922,10 +922,10 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     username?: true
-    displayName?: true
     email?: true
     avatar?: true
     bio?: true
+    passwordHash?: true
     createAt?: true
     updateAt?: true
   }
@@ -935,10 +935,10 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     username?: true
-    displayName?: true
     email?: true
     avatar?: true
     bio?: true
+    passwordHash?: true
     createAt?: true
     updateAt?: true
   }
@@ -948,10 +948,10 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     username?: true
-    displayName?: true
     email?: true
     avatar?: true
     bio?: true
+    passwordHash?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -1034,10 +1034,10 @@ export namespace Prisma {
     firstName: string
     lastName: string
     username: string
-    displayName: string
     email: string
     avatar: string | null
     bio: string | null
+    passwordHash: string
     createAt: Date
     updateAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1064,10 +1064,10 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     username?: boolean
-    displayName?: boolean
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1077,10 +1077,10 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     username?: boolean
-    displayName?: boolean
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1090,10 +1090,10 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     username?: boolean
-    displayName?: boolean
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1103,15 +1103,15 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     username?: boolean
-    displayName?: boolean
     email?: boolean
     avatar?: boolean
     bio?: boolean
+    passwordHash?: boolean
     createAt?: boolean
     updateAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "displayName" | "email" | "avatar" | "bio" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "passwordHash" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1121,10 +1121,10 @@ export namespace Prisma {
       firstName: string
       lastName: string
       username: string
-      displayName: string
       email: string
       avatar: string | null
       bio: string | null
+      passwordHash: string
       createAt: Date
       updateAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1554,10 +1554,10 @@ export namespace Prisma {
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
-    readonly displayName: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly avatar: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
+    readonly passwordHash: FieldRef<"User", 'String'>
     readonly createAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
   }
@@ -1821,6 +1821,10 @@ export namespace Prisma {
      * Filter which Users to update
      */
     where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
   }
 
   /**
@@ -1843,6 +1847,10 @@ export namespace Prisma {
      * Filter which Users to update
      */
     where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
   }
 
   /**
@@ -1897,6 +1905,10 @@ export namespace Prisma {
      * Filter which Users to delete
      */
     where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
   }
 
   /**
@@ -1933,10 +1945,10 @@ export namespace Prisma {
     firstName: 'firstName',
     lastName: 'lastName',
     username: 'username',
-    displayName: 'displayName',
     email: 'email',
     avatar: 'avatar',
     bio: 'bio',
+    passwordHash: 'passwordHash',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -2026,10 +2038,10 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
-    displayName?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    passwordHash?: StringFilter<"User"> | string
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -2039,10 +2051,10 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
     email?: SortOrder
     avatar?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -2056,9 +2068,9 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
-    displayName?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
+    passwordHash?: StringFilter<"User"> | string
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "username" | "email">
@@ -2068,10 +2080,10 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
     email?: SortOrder
     avatar?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -2087,10 +2099,10 @@ export namespace Prisma {
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
-    displayName?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    passwordHash?: StringWithAggregatesFilter<"User"> | string
     createAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -2100,10 +2112,10 @@ export namespace Prisma {
     firstName: string
     lastName: string
     username: string
-    displayName: string
     email: string
     avatar?: string | null
     bio?: string | null
+    passwordHash: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -2113,10 +2125,10 @@ export namespace Prisma {
     firstName: string
     lastName: string
     username: string
-    displayName: string
     email: string
     avatar?: string | null
     bio?: string | null
+    passwordHash: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -2126,10 +2138,10 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2139,10 +2151,10 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2152,10 +2164,10 @@ export namespace Prisma {
     firstName: string
     lastName: string
     username: string
-    displayName: string
     email: string
     avatar?: string | null
     bio?: string | null
+    passwordHash: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -2165,10 +2177,10 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2178,10 +2190,10 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2237,10 +2249,10 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
     email?: SortOrder
     avatar?: SortOrder
     bio?: SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -2250,10 +2262,10 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
     email?: SortOrder
     avatar?: SortOrder
     bio?: SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -2263,10 +2275,10 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     username?: SortOrder
-    displayName?: SortOrder
     email?: SortOrder
     avatar?: SortOrder
     bio?: SortOrder
+    passwordHash?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
