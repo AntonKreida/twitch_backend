@@ -1,19 +1,26 @@
 import {
   ConflictException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
+import { type Response, type Request } from 'express';
 
 import { UserRepository, UserEntity, IArgsFindUser, UserModel } from '../user';
 import { type InputUserSignUpDto } from './dto';
-import { type SortOrPaginationArgsType } from '@shared';
+import { ISessionMetadata, type SortOrPaginationArgsType } from '@shared';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly configService: ConfigService,
+  ) {}
 
-  async registerUser({
+  async signUp({
     avatar,
     bio,
     email,
@@ -67,7 +74,12 @@ export class AuthService {
     return await this.userRepository.findUser(args);
   }
 
-  async validateUser(username: string, password: string): Promise<UserModel> {
+  async signIn(
+    req: Request,
+    username: string,
+    password: string,
+    metadata: ISessionMetadata,
+  ): Promise<UserModel> {
     const user = await this.userRepository.findUser({ username });
 
     if (!user) {
@@ -81,6 +93,40 @@ export class AuthService {
       throw new UnauthorizedException('Неверный пароль!');
     }
 
-    return user;
+    return new Promise((resolve, reject) => {
+      req.session.userId = user.id;
+      req.session.createAt = new Date();
+      req.session.metadata = metadata;
+
+      req.session.save((error) => {
+        if (error) {
+          reject(
+            new InternalServerErrorException(
+              'При сохранении сессии произошла ошибка!',
+            ),
+          );
+        }
+
+        resolve(user);
+      });
+    });
+  }
+
+  async signOut(req: Request, res: Response): Promise<string> {
+    return new Promise((resolve, reject) => {
+      req.session.destroy((error) => {
+        if (error) {
+          reject(
+            new InternalServerErrorException(
+              'При удалении сессии произошла ошибка!',
+            ),
+          );
+        }
+
+        res.clearCookie(`${this.configService.getOrThrow('SESSION_NAME')}`);
+
+        resolve('Вы успешно вышли из системы!');
+      });
+    });
   }
 }
