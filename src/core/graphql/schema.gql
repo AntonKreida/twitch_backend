@@ -7,6 +7,25 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type DeviceModel {
+  browser: String!
+  os: String!
+  type: String!
+}
+
+type LocationModel {
+  city: String
+  country: String
+  latitude: Float!
+  longitude: Float!
+}
+
+type MetadataModel {
+  device: DeviceModel!
+  ip: String!
+  location: LocationModel!
+}
+
 type Mutation {
   signIn(inputUserSignIn: UserInputSignInDto!): UserModel!
   signOut: String!
@@ -20,6 +39,7 @@ input PaginationInputType {
 
 type Query {
   me: UserModel!
+  session: [SessionModel!]!
   user(email: String, id: ID, username: String): UserModel
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
 }
@@ -28,6 +48,13 @@ type Query {
 enum SORT_ENUM {
   ASC
   DESC
+}
+
+type SessionModel {
+  createAt: String!
+  id: String!
+  metadata: MetadataModel!
+  userId: String!
 }
 
 input UserInputSignInDto {
