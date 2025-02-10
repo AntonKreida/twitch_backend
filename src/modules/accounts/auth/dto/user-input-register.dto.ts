@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 
 @InputType()
-export class InputUserSignUpDto
+export class UserInputSignUpDto
   implements Omit<User, 'id' | 'createAt' | 'updateAt' | 'passwordHash'>
 {
   @Field(() => String)

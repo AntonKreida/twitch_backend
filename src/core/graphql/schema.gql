@@ -7,25 +7,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-input InputUserSignInDto {
-  password: String!
-  username: String!
-}
-
-input InputUserSignUpDto {
-  avatar: String
-  bio: String
-  email: String!
-  firstName: String!
-  lastName: String!
-  password: String!
-  username: String!
-}
-
 type Mutation {
-  signIn(inputUserSignIn: InputUserSignInDto!): UserModel!
+  signIn(inputUserSignIn: UserInputSignInDto!): UserModel!
   signOut: String!
-  signUp(inputUserSignUp: InputUserSignUpDto!): UserModel!
+  signUp(inputUserSignUp: UserInputSignUpDto!): UserModel!
 }
 
 input PaginationInputType {
@@ -43,6 +28,21 @@ type Query {
 enum SORT_ENUM {
   ASC
   DESC
+}
+
+input UserInputSignInDto {
+  password: String!
+  username: String!
+}
+
+input UserInputSignUpDto {
+  avatar: String
+  bio: String
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
 }
 
 type UserModel {

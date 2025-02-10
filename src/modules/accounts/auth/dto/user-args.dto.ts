@@ -2,7 +2,7 @@ import { ArgsType, Field, ID } from '@nestjs/graphql';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 @ArgsType()
-export class ArgsUserDto {
+export class UserArgsDto {
   @Field(() => ID, { nullable: true })
   @IsOptional()
   @IsString({ message: 'id должно быть строкой' })

@@ -1,3 +1,3 @@
-export * from './input-user-register.dto';
-export * from './input-user-sign-in.dto';
-export * from './args-user.dto';
+export * from './user-input-register.dto';
+export * from './user-input-sign-in.dto';
+export * from './user-args.dto';

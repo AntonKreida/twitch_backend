@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { type Response, type Request } from 'express';
 
 import { UserRepository, UserEntity, IArgsFindUser, UserModel } from '../user';
-import { type InputUserSignUpDto } from './dto';
+import { UserInputSignUpDto } from './dto';
 import { ISessionMetadata, type SortOrPaginationArgsType } from '@shared';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class AuthService {
     lastName,
     password,
     username,
-  }: InputUserSignUpDto): Promise<UserModel> {
+  }: UserInputSignUpDto): Promise<UserModel> {
     const isUsernameExist = await this.userRepository.findUser({
       username,
     });
