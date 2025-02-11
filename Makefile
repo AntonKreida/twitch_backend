@@ -14,3 +14,9 @@ stop-db:
 
 start:
 	docker-compose up -d --build
+
+up-dev:
+	docker-compose -f docker-compose.dev.yml -f docker-compose.yml up postgres redis_db mailer -d
+
+stop-dev:
+	docker-compose -f docker-compose.dev.yml -f docker-compose.yml stop postgres redis_db mailer

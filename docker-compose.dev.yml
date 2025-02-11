@@ -1,0 +1,16 @@
+---
+services:
+  mailer:
+    image: maildev/maildev:latest
+    container_name: mailer
+    restart: always
+    ports:
+      - '1025:1025' # сервер
+      - '1080:1080' # клиент (морда)
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    external: true
+    name: twitch_backend_app_network
