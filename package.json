@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.3",
+    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/apollo": "^13.0.1",
     "@nestjs/common": "^10",
     "@nestjs/config": "^4.0.0",
@@ -46,6 +47,7 @@
     "graphql": "^16.10.0",
     "i18n-iso-countries": "^7.13.0",
     "ioredis": "^5.4.2",
+    "nodemailer": "^6.10.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
@@ -60,6 +62,7 @@
     "@types/geoip-lite": "^1.4.4",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
+    "@types/nodemailer": "^6.4.17",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
