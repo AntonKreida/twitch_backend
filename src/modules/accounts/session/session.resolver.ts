@@ -12,4 +12,10 @@ export class SessionResolver {
   async session(@Context() { req }: IContext): Promise<SessionModel[]> {
     return await this.sessionService.findSessionByUser(req);
   }
+
+  @Auth()
+  @Query(() => SessionModel, { name: 'currentSession' })
+  async currentSession(@Context() { req }: IContext): Promise<SessionModel> {
+    return await this.sessionService.findCurrentSession(req);
+  }
 }

@@ -38,6 +38,7 @@ input PaginationInputType {
 }
 
 type Query {
+  currentSession: SessionModel!
   me: UserModel!
   session: [SessionModel!]!
   user(email: String, id: ID, username: String): UserModel

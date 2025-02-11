@@ -1,28 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { RedisService } from '/src/core';
-import { SessionModel } from '../models/session.model';
+import { RedisService } from '@core';
+import { SessionModel } from '../models';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SessionRepository {
-  constructor(private readonly redisService: RedisService) {}
+  constructor(
+    private readonly redisService: RedisService,
+    private readonly configService: ConfigService,
+  ) {}
 
-  async findSessions(userId: string): Promise<SessionModel[]> {
+  async findSessionsByUser(userId: string): Promise<SessionModel[]> {
     const keys = await this.redisService.keys('*');
 
-    const sessionUser: SessionModel[] = [];
+    const sessionUser = await keys.reduce<Promise<SessionModel[]>>(
+      async (accP: Promise<SessionModel[]>, key) => {
+        const sessionJSON = (await this.redisService.get(key)) as string | null;
+        const session: SessionModel | null = sessionJSON
+          ? JSON.parse(sessionJSON)
+          : null;
 
-    for (const key of keys) {
-      const sessionJSON = await this.redisService.get(key);
-      const session = sessionJSON ? JSON.parse(sessionJSON) : null;
+        const awAcc = await accP;
 
-      if (session?.userId === userId) {
-        sessionUser.push({
-          ...session,
-          id: key?.split(':')[1],
-        });
-      }
-    }
+        if (session?.userId === userId) {
+          awAcc.push({
+            ...session,
+            id: key?.split(':')[1],
+          });
+        }
+
+        return awAcc;
+      },
+      Promise.resolve([]),
+    );
+
+    sessionUser.sort(
+      (prev, next) =>
+        new Date(prev.createAt).getTime() - new Date(next.createAt).getTime(),
+    );
 
     return sessionUser;
+  }
+
+  async findCurrentSession(sessionId: string): Promise<SessionModel | null> {
+    const currentSessionJSON = await this.redisService.get(
+      this.configService.getOrThrow<string>('SESSION_PREFIX') + sessionId,
+    );
+
+    const currentSession = currentSessionJSON
+      ? JSON.parse(currentSessionJSON)
+      : null;
+
+    return {
+      ...currentSession,
+      id: sessionId,
+    };
   }
 }
