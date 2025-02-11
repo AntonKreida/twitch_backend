@@ -7,7 +7,7 @@ import { PrismaModule } from './prisma';
 import { GraphQLConfigService } from './graphql';
 import { RedisModule } from './redis';
 
-import { UserModule, AuthModule } from '@modules';
+import { UserModule, AuthModule, SessionModule } from '@modules';
 
 import { isDevEnv } from '@shared';
 
@@ -26,6 +26,7 @@ import { isDevEnv } from '@shared';
     RedisModule,
     UserModule,
     AuthModule,
+    SessionModule,
   ],
 })
 export class CoreModule {}
