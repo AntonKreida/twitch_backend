@@ -56,4 +56,10 @@ export class SessionRepository {
       id: sessionId,
     };
   }
+
+  async removeSession(sessionId: string): Promise<void> {
+    await this.redisService.del(
+      this.configService.getOrThrow<string>('SESSION_PREFIX') + sessionId,
+    );
+  }
 }

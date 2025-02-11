@@ -38,8 +38,10 @@ input PaginationInputType {
 }
 
 type Query {
+  clearSession: Boolean!
   currentSession: SessionModel!
   me: UserModel!
+  removeSession(id: String!): Boolean!
   session: [SessionModel!]!
   user(email: String, id: ID, username: String): UserModel
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
