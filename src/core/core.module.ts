@@ -7,11 +7,11 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { PrismaModule } from './prisma';
 import { GraphQLConfigService } from './graphql';
 import { RedisModule } from './redis';
+import { MailerConfigService } from './mailer';
 
-import { UserModule, AuthModule, SessionModule } from '@modules';
+import { UserModule, AuthModule, SessionModule, EmailModule } from '@modules';
 
 import { isDevEnv } from '@shared';
-import { MailerConfigService } from './mailer/mailer.config';
 
 @Module({
   imports: [
@@ -33,6 +33,7 @@ import { MailerConfigService } from './mailer/mailer.config';
     UserModule,
     AuthModule,
     SessionModule,
+    EmailModule,
   ],
 })
 export class CoreModule {}
