@@ -71,6 +71,7 @@ input UserInputSignUpDto {
   bio: String
   email: String!
   firstName: String!
+  isEmailVerification: Boolean!
   lastName: String!
   password: String!
   username: String!
@@ -83,6 +84,7 @@ type UserModel {
   email: String!
   firstName: String!
   id: ID!
+  isEmailVerification: Boolean!
   lastName: String!
   passwordHash: String!
   updateAt: DateTime!

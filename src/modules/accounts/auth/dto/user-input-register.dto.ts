@@ -9,10 +9,13 @@ import {
   Matches,
 } from 'class-validator';
 
+type TUserRegister = Omit<
+  User,
+  'id' | 'createAt' | 'updateAt' | 'passwordHash' | 'isEmailVerification'
+>;
+
 @InputType()
-export class UserInputSignUpDto
-  implements Omit<User, 'id' | 'createAt' | 'updateAt' | 'passwordHash'>
-{
+export class UserInputSignUpDto implements TUserRegister {
   @Field(() => String)
   @IsString({
     message: 'firstName должно быть строкой',
@@ -78,4 +81,7 @@ export class UserInputSignUpDto
   })
   @IsNotEmpty({ message: 'bio не может быть пустым' })
   bio: string | null;
+
+  @Field(() => Boolean)
+  isEmailVerification: boolean;
 }

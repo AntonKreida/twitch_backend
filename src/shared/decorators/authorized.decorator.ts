@@ -7,7 +7,7 @@ import { Request } from 'express';
 export const Authorized = createParamDecorator<
   keyof User | undefined,
   ExecutionContext,
-  User | string | Date
+  User | string | Date | boolean
 >((data, ctx) => {
   if (ctx.getType() === 'http') {
     const req = ctx.switchToHttp().getRequest<Request>();

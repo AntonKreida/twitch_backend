@@ -2,7 +2,8 @@ import { genSalt, hash, compare } from 'bcrypt';
 import { UserModel } from '../models';
 
 export class UserEntity
-  implements Omit<UserModel, 'id' | 'createAt' | 'updateAt'>
+  implements
+    Omit<UserModel, 'id' | 'createAt' | 'updateAt' | 'isEmailVerification'>
 {
   id?: string | null;
   firstName: string;
@@ -14,7 +15,10 @@ export class UserEntity
   passwordHash: string;
 
   constructor(
-    user: Omit<UserModel, 'createAt' | 'updateAt' | 'id'> & {
+    user: Omit<
+      UserModel,
+      'createAt' | 'updateAt' | 'id' | 'isEmailVerification'
+    > & {
       id?: string;
     },
   ) {

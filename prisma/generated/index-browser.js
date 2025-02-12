@@ -126,8 +126,19 @@ exports.Prisma.UserScalarFieldEnum = {
   avatar: 'avatar',
   bio: 'bio',
   passwordHash: 'passwordHash',
+  isEmailVerification: 'isEmailVerification',
   createAt: 'createAt',
   updateAt: 'updateAt'
+};
+
+exports.Prisma.TokenScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  token: 'token',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  expiresIn: 'expiresIn',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -144,10 +155,13 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.ENUM_TYPE_TOKEN = exports.$Enums.ENUM_TYPE_TOKEN = {
+  EMAIL: 'EMAIL'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Token: 'Token'
 };
 
 /**
