@@ -18,7 +18,7 @@ export class EntityToken implements TEntityToken {
     this.userId = token?.userId;
   }
 
-  sendToken({ isUUID }: { isUUID: boolean }) {
+  sendToken({ isUUID }: { isUUID: boolean }): void {
     const fiveHoursInMs = 18000000;
 
     this.expiresIn = new Date(new Date().getTime() + fiveHoursInMs);
@@ -26,7 +26,7 @@ export class EntityToken implements TEntityToken {
     if (isUUID) {
       this.token = uuid();
 
-      return this.token;
+      return;
     }
 
     const tokenGenerated = Math.floor(
