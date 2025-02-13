@@ -9,11 +9,13 @@ import { IContext, UserMetadata, ISessionMetadata } from '@shared';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => UserModel, { name: 'signUp' })
+  @Mutation(() => Boolean, { name: 'signUp' })
   async signUp(
     @Args('inputUserSignUp') inputUser: UserInputSignUpDto,
-  ): Promise<UserModel> {
-    return this.authService.signUp(inputUser);
+  ): Promise<boolean> {
+    await this.authService.signUp(inputUser);
+
+    return true;
   }
 
   @Mutation(() => UserModel, { name: 'signIn' })

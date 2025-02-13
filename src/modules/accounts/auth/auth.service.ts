@@ -12,12 +12,15 @@ import { type Response, type Request } from 'express';
 import { UserRepository, UserEntity, UserModel } from '../user';
 import { UserInputSignUpDto } from './dto';
 import { ISessionMetadata } from '@shared';
+import { VerificationService } from '../verification/verification.service';
+import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly configService: ConfigService,
+    private readonly verificationService: VerificationService,
   ) {}
 
   async signUp({
@@ -28,22 +31,22 @@ export class AuthService {
     lastName,
     password,
     username,
-  }: UserInputSignUpDto): Promise<UserModel> {
-    const isUsernameExist = await this.userRepository.findUser({
+  }: UserInputSignUpDto): Promise<boolean> {
+    const userByUsername = await this.userRepository.findUser({
       username,
     });
 
-    if (isUsernameExist) {
+    if (userByUsername) {
       throw new ConflictException(
         'Пользователь с таким username уже существует!',
       );
     }
 
-    const IsEmailExist = await this.userRepository.findUser({
+    const userByEmail = await this.userRepository.findUser({
       email,
     });
 
-    if (IsEmailExist) {
+    if (userByEmail) {
       throw new ConflictException('Пользователь с таким email уже существует!');
     }
 
@@ -57,7 +60,14 @@ export class AuthService {
       passwordHash: '',
     }).setPassword(password);
 
-    return await this.userRepository.createUser(newEntityUser);
+    const newUser = await this.userRepository.createUser(newEntityUser);
+
+    await this.verificationService.sendVerificationToken(
+      newUser.id,
+      ENUM_TYPE_TOKEN.EMAIL,
+    );
+
+    return true;
   }
 
   async signIn(

@@ -30,7 +30,7 @@ type Mutation {
   sendEmail(text: String!): Boolean!
   signIn(inputUserSignIn: UserInputSignInDto!): UserModel!
   signOut: String!
-  signUp(inputUserSignUp: UserInputSignUpDto!): UserModel!
+  signUp(inputUserSignUp: UserInputSignUpDto!): Boolean!
 }
 
 input PaginationInputType {
@@ -71,7 +71,6 @@ input UserInputSignUpDto {
   bio: String
   email: String!
   firstName: String!
-  isEmailVerification: Boolean!
   lastName: String!
   password: String!
   username: String!

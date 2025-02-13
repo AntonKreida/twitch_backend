@@ -81,7 +81,4 @@ export class UserInputSignUpDto implements TUserRegister {
   })
   @IsNotEmpty({ message: 'bio не может быть пустым' })
   bio: string | null;
-
-  @Field(() => Boolean)
-  isEmailVerification: boolean;
 }
