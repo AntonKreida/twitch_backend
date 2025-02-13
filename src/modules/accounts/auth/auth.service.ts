@@ -9,9 +9,9 @@ import { ConfigService } from '@nestjs/config';
 
 import { type Response, type Request } from 'express';
 
-import { UserRepository, UserEntity, IArgsFindUser, UserModel } from '../user';
+import { UserRepository, UserEntity, UserModel } from '../user';
 import { UserInputSignUpDto } from './dto';
-import { ISessionMetadata, type SortOrPaginationArgsType } from '@shared';
+import { ISessionMetadata } from '@shared';
 
 @Injectable()
 export class AuthService {
@@ -58,20 +58,6 @@ export class AuthService {
     }).setPassword(password);
 
     return await this.userRepository.createUser(newEntityUser);
-  }
-
-  async findUsers({
-    sort,
-    pagination,
-  }: SortOrPaginationArgsType): Promise<UserModel[]> {
-    return await this.userRepository.findAll({
-      sort,
-      pagination,
-    });
-  }
-
-  async findUser(args: Partial<IArgsFindUser>): Promise<UserModel | null> {
-    return await this.userRepository.findUser(args);
   }
 
   async signIn(
