@@ -1,8 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { SessionRepository } from './repositories';
 import { type Response, type Request } from 'express';
 import { SessionModel } from './models';
 import { ConfigService } from '@nestjs/config';
+import { ISessionMetadata } from '/src/shared';
+import { UserModel } from '../user';
 
 @Injectable()
 export class SessionService {
@@ -37,5 +43,29 @@ export class SessionService {
     await this.sessionRepository.removeSession(id);
 
     return true;
+  }
+
+  async saveSession(
+    req: Request,
+    user: UserModel,
+    metadata: ISessionMetadata,
+  ): Promise<UserModel> {
+    return new Promise((resolve, reject) => {
+      req.session.userId = user.id;
+      req.session.createAt = new Date();
+      req.session.metadata = metadata;
+
+      req.session.save((error) => {
+        if (error) {
+          reject(
+            new InternalServerErrorException(
+              'При сохранении сессии произошла ошибка!',
+            ),
+          );
+        }
+
+        resolve(user);
+      });
+    });
   }
 }

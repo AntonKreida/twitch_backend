@@ -28,10 +28,20 @@ export class TokenRepository {
     });
   }
 
-  async findTokenById(tokenId: string): Promise<Token | null> {
+  async findToken({
+    tokenId,
+    tokenCode,
+    tokenType,
+  }: {
+    tokenId?: string;
+    tokenCode?: string;
+    tokenType?: ENUM_TYPE_TOKEN;
+  }): Promise<Token | null> {
     return await this.prismaService.token.findUnique({
       where: {
         id: tokenId,
+        token: tokenCode,
+        type: tokenType,
       },
     });
   }

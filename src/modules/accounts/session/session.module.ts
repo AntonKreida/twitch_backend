@@ -5,5 +5,6 @@ import { SessionRepository } from './repositories';
 
 @Module({
   providers: [SessionResolver, SessionRepository, SessionService],
+  exports: [SessionService],
 })
 export class SessionModule {}
