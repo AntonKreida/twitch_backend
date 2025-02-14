@@ -30,7 +30,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => String, { name: 'signOut' })
-  async signOut(@Context() { req, res }: IContext): Promise<string> {
+  async signOut(@Context() { req, res }: IContext): Promise<boolean> {
     return await this.authService.signOut(req, res);
   }
 }

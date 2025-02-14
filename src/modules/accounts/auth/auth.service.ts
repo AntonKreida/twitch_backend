@@ -5,22 +5,20 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-
+import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { type Response, type Request } from 'express';
 
 import { UserRepository, UserEntity, UserModel } from '../user';
+import { SessionService } from '../session';
+import { VerificationService } from '../verification';
+
 import { UserInputSignUpDto } from './dto';
 import { ISessionMetadata } from '@shared';
-import { VerificationService } from '../verification/verification.service';
-import { ENUM_TYPE_TOKEN } from '/prisma/generated';
-import { SessionService } from '../session';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly configService: ConfigService,
     private readonly verificationService: VerificationService,
     private readonly sessionService: SessionService,
   ) {}
@@ -101,6 +99,7 @@ export class AuthService {
         'Пользователь не подтвержден! Пожалуйста проверьте почту для подтверждения!',
       );
     }
+
     return await this.sessionService.saveSession(req, user, metadata);
   }
 
