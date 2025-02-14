@@ -68,4 +68,22 @@ export class SessionService {
       });
     });
   }
+
+  async destroySession(req: Request, res: Response): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      req.session.destroy((error) => {
+        if (error) {
+          reject(
+            new InternalServerErrorException(
+              'При удалении сессии произошла ошибка!',
+            ),
+          );
+        }
+
+        res.clearCookie(`${this.configService.getOrThrow('SESSION_NAME')}`);
+
+        resolve(true);
+      });
+    });
+  }
 }

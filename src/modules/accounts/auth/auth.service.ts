@@ -1,7 +1,7 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -14,6 +14,7 @@ import { UserInputSignUpDto } from './dto';
 import { ISessionMetadata } from '@shared';
 import { VerificationService } from '../verification/verification.service';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
+import { SessionService } from '../session';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,7 @@ export class AuthService {
     private readonly userRepository: UserRepository,
     private readonly configService: ConfigService,
     private readonly verificationService: VerificationService,
+    private readonly sessionService: SessionService,
   ) {}
 
   async signUp({
@@ -82,47 +84,27 @@ export class AuthService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
-    const newUserEntity = new UserEntity(user);
-    const isCorrectPassword = await newUserEntity.validatePassword(password);
+    const userEntity = new UserEntity(user);
+    const isCorrectPassword = await userEntity.validatePassword(password);
 
     if (!isCorrectPassword) {
       throw new UnauthorizedException('Неверный пароль!');
     }
 
-    return new Promise((resolve, reject) => {
-      req.session.userId = user.id;
-      req.session.createAt = new Date();
-      req.session.metadata = metadata;
+    if (!userEntity.isEmailVerification) {
+      await this.verificationService.sendVerificationToken(
+        user.id,
+        ENUM_TYPE_TOKEN.EMAIL,
+      );
 
-      req.session.save((error) => {
-        if (error) {
-          reject(
-            new InternalServerErrorException(
-              'При сохранении сессии произошла ошибка!',
-            ),
-          );
-        }
-
-        resolve(user);
-      });
-    });
+      throw new BadRequestException(
+        'Пользователь не подтвержден! Пожалуйста проверьте почту для подтверждения!',
+      );
+    }
+    return await this.sessionService.saveSession(req, user, metadata);
   }
 
-  async signOut(req: Request, res: Response): Promise<string> {
-    return new Promise((resolve, reject) => {
-      req.session.destroy((error) => {
-        if (error) {
-          reject(
-            new InternalServerErrorException(
-              'При удалении сессии произошла ошибка!',
-            ),
-          );
-        }
-
-        res.clearCookie(`${this.configService.getOrThrow('SESSION_NAME')}`);
-
-        resolve('Вы успешно вышли из системы!');
-      });
-    });
+  async signOut(req: Request, res: Response): Promise<boolean> {
+    return await this.sessionService.destroySession(req, res);
   }
 }
