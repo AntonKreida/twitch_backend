@@ -3,8 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
-import { ENUM_TYPE_TOKEN, Token, User } from '/prisma/generated';
+import { ENUM_TYPE_TOKEN } from '/prisma/generated';
+
+import { EmailService } from '@/modules/notification';
 
 import { UserModel, UserRepository } from '../user';
 import { SessionService } from '../session';
@@ -20,12 +23,14 @@ export class VerificationService {
     private readonly tokenRepository: TokenRepository,
     private readonly userRepository: UserRepository,
     private readonly sessionService: SessionService,
+    private readonly emailService: EmailService,
+    private readonly configService: ConfigService,
   ) {}
 
   async sendVerificationToken(
     userId: string,
     typeToken: ENUM_TYPE_TOKEN,
-  ): Promise<Token & { user: User }> {
+  ): Promise<boolean> {
     const oldToken = await this.tokenRepository.findTokenByUserIdAndType(
       userId,
       typeToken,
@@ -45,7 +50,23 @@ export class VerificationService {
       newToken,
     );
 
-    return tokenCreated;
+    const hostnameClient = await this.configService.getOrThrow<string>(
+      'ALLOWED_ORIGIN',
+    );
+
+    const urlForLink = new URL(hostnameClient);
+    urlForLink.searchParams.append('token', tokenCreated.token);
+
+    await this.emailService.sendEmail({
+      firstName: tokenCreated.user.firstName,
+      lastName: tokenCreated.user.lastName,
+      emailFrom: 'kreida.anton@yandex.ru',
+      emailTo: tokenCreated.user.email,
+      subject: 'Подтверждение аккаунта',
+      link: urlForLink.href,
+    });
+
+    return true;
   }
 
   async verify(

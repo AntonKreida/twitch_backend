@@ -3,11 +3,12 @@ import { VerificationService } from './verification.service';
 import { VerificationResolver } from './verification.resolver';
 import { TokenRepository } from './repositories';
 
-import { UserModule } from '../user';
-import { SessionModule } from '../session';
+import { UserModule } from '@/modules/accounts/user';
+import { SessionModule } from '@/modules/accounts/session';
+import { EmailModule } from '@/modules/notification';
 
 @Module({
-  imports: [UserModule, SessionModule],
+  imports: [UserModule, SessionModule, EmailModule],
   providers: [TokenRepository, VerificationService, VerificationResolver],
   exports: [VerificationService],
 })

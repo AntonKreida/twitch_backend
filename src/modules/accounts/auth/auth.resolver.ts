@@ -13,9 +13,7 @@ export class AuthResolver {
   async signUp(
     @Args('inputUserSignUp') inputUser: UserInputSignUpDto,
   ): Promise<boolean> {
-    await this.authService.signUp(inputUser);
-
-    return true;
+    return await this.authService.signUp(inputUser);
   }
 
   @Mutation(() => UserModel, { name: 'signIn' })

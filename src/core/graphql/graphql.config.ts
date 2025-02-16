@@ -25,6 +25,8 @@ export class GraphQLConfigService implements GqlOptionsFactory {
           return error;
         }
 
+        console.log(error);
+
         const errorsParseJson = JSON.parse(error.message);
 
         return {
