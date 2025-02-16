@@ -11,7 +11,13 @@ import { GraphQLConfigService } from './graphql';
 import { RedisModule } from './redis';
 import { MailerConfigService } from './mailer';
 
-import { UserModule, AuthModule, SessionModule, EmailModule } from '@modules';
+import {
+  UserModule,
+  AuthModule,
+  SessionModule,
+  EmailModule,
+  PasswordModule,
+} from '@modules';
 
 import { isDevEnv } from '@shared';
 
@@ -39,6 +45,7 @@ import { isDevEnv } from '@shared';
     UserModule,
     AuthModule,
     SessionModule,
+    PasswordModule,
     EmailModule,
   ],
 })
