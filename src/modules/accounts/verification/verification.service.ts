@@ -8,9 +8,8 @@ import { Request } from 'express';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 
 import { EmailService } from '@/modules/notification';
-
-import { UserModel, UserRepository } from '../user';
-import { SessionService } from '../session';
+import { UserModel, UserRepository } from '@/modules/accounts/user';
+import { SessionService } from '@/modules/accounts/session';
 
 import { TokenRepository } from './repositories';
 import { EntityToken } from './entities';
@@ -57,16 +56,14 @@ export class VerificationService {
     const urlForLink = new URL(hostnameClient);
     urlForLink.searchParams.append('token', tokenCreated.token);
 
-    await this.emailService.sendEmail({
+    return await this.emailService.sendEmail({
       firstName: tokenCreated.user.firstName,
       lastName: tokenCreated.user.lastName,
-      emailFrom: 'kreida.anton@yandex.ru',
+      emailFrom: 'Kx5wO@example.com',
       emailTo: tokenCreated.user.email,
-      subject: 'Подтверждение аккаунта',
+      subject: 'Подтверждение аккаунта на TvStream',
       link: urlForLink.href,
     });
-
-    return true;
   }
 
   async verify(

@@ -14,7 +14,7 @@ export class EmailService {
     emailTo,
     subject,
     link,
-  }: ISendEmail): Promise<void> {
+  }: ISendEmail): Promise<boolean> {
     await this.mailerService.sendMail({
       from: emailFrom,
       to: emailTo,
@@ -25,5 +25,7 @@ export class EmailService {
         link,
       }),
     });
+
+    return true;
   }
 }
