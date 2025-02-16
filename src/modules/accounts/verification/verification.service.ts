@@ -57,12 +57,16 @@ export class VerificationService {
     urlForLink.searchParams.append('token', tokenCreated.token);
 
     return await this.emailService.sendEmail({
-      firstName: tokenCreated.user.firstName,
-      lastName: tokenCreated.user.lastName,
       emailFrom: 'Kx5wO@example.com',
       emailTo: tokenCreated.user.email,
       subject: 'Подтверждение аккаунта на TvStream',
       link: urlForLink.href,
+      textLink: 'Подтвердить аккаунт',
+      title: 'Подтверждение аккаунта на TvStream',
+      subtitle: `Привет ${tokenCreated.user.firstName} ${tokenCreated.user.lastName}, `,
+      message: `Спасибо что присоединились к нам! Мы рады видеть вас на нашей
+                платформе! Сейчас для того чтобы начать пользоваться нашими
+                возможностями, пожалуйста, нажмите на кнопку ниже.`,
     });
   }
 

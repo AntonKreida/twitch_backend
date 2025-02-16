@@ -8,21 +8,25 @@ export class EmailService {
   constructor(private readonly mailerService: MailerService) {}
 
   async sendEmail({
-    firstName,
-    lastName,
+    title,
+    subtitle,
     emailFrom,
     emailTo,
     subject,
     link,
+    message,
+    textLink,
   }: ISendEmail): Promise<boolean> {
     await this.mailerService.sendMail({
       from: emailFrom,
       to: emailTo,
       subject: subject,
       html: await emailTemplate({
-        firstName,
-        lastName,
+        title,
+        subtitle,
         link,
+        message,
+        textLink,
       }),
     });
 

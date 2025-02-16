@@ -1,8 +1,10 @@
 export interface ISendEmail {
-  firstName: string;
-  lastName: string;
-  link: string;
+  title: string;
   emailTo: string;
   emailFrom: string;
   subject: string;
+  message: string;
+  subtitle: string;
+  link?: string;
+  textLink?: string;
 }

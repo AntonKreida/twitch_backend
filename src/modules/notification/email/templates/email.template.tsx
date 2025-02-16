@@ -10,12 +10,20 @@ import {
 } from '@react-email/components';
 
 interface IEmailProps {
-  firstName: string;
-  lastName: string;
-  link: string;
+  title: string;
+  subtitle: string;
+  message: string;
+  link?: string;
+  textLink: string;
 }
 
-const Email: React.FC<IEmailProps> = ({ firstName, lastName, link }) => (
+const Email: React.FC<IEmailProps> = ({
+  title,
+  link,
+  message,
+  subtitle,
+  textLink,
+}) => (
   <Html lang="ru">
     <Head>
       <Font
@@ -43,29 +51,29 @@ const Email: React.FC<IEmailProps> = ({ firstName, lastName, link }) => (
           </div>
           <div className="bg-white px-10 py-11 flex-[1_0_auto]">
             <h1 className="text-black text-2xl text-left m-0 font-sans font-semibold mb-10">
-              Добро пожаловать на нашу платформу TvStream!
+              {title}
             </h1>
             <div className="font-sans text-sm font-normal text-black">
               <p>
-                {`Привет ${firstName} ${lastName},`}
+                {subtitle}
                 <br />
                 <br />
-                Спасибо что присоединились к нам! Мы рады видеть вас на нашей
-                платформе! Сейчас для того чтобы начать пользоваться нашими
-                возможностями, пожалуйста, нажмите на кнопку ниже.
+                {message}
               </p>
-              <Button
-                href={link}
-                className="my-[65px] bg-[#329DFF] py-4 text-center text-white text-md font-semibold font-sans rounded-md px-10"
-              >
-                Подтвердите пожалуйста свой аккаунт
-              </Button>
+              {!!(link && textLink) && (
+                <Button
+                  href={link}
+                  className="my-[65px] bg-[#329DFF] py-4 text-center text-white text-md font-semibold font-sans rounded-md px-10"
+                >
+                  {textLink}
+                </Button>
+              )}
             </div>
           </div>
           <div className="bg-[#F2FBFF] w-full py-3.5 px-10 font-sans text-sm">
             <p>
-              Если вы не создали аккаунт, пожалуйста, свяжитесь с нами по
-              электронной почте,{' '}
+              Для обращения к технической поддержке, пожалуйста, свяжитесь с
+              нами по электронной почте,{' '}
               <a
                 className="text-[#329DFF] font-semibold"
                 href="mailto:Kx5wO@example.com"
@@ -80,5 +88,19 @@ const Email: React.FC<IEmailProps> = ({ firstName, lastName, link }) => (
   </Html>
 );
 
-export const emailTemplate = ({ firstName, lastName, link }: IEmailProps) =>
-  render(<Email firstName={firstName} lastName={lastName} link={link} />);
+export const emailTemplate = ({
+  title,
+  subtitle,
+  link,
+  message,
+  textLink,
+}: IEmailProps) =>
+  render(
+    <Email
+      title={title}
+      link={link}
+      message={message}
+      subtitle={subtitle}
+      textLink={textLink}
+    />,
+  );
