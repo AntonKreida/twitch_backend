@@ -5,16 +5,20 @@ import {
   Tailwind,
   Font,
   Head,
+  Text,
   Button,
   render,
+  Heading,
 } from '@react-email/components';
+import { ISessionMetadata } from '@shared';
 
 interface IEmailProps {
   title: string;
   subtitle: string;
   message: string;
   link?: string;
-  textLink: string;
+  textLink?: string;
+  metadata?: ISessionMetadata;
 }
 
 const Email: React.FC<IEmailProps> = ({
@@ -23,6 +27,7 @@ const Email: React.FC<IEmailProps> = ({
   message,
   subtitle,
   textLink,
+  metadata,
 }) => (
   <Html lang="ru">
     <Head>
@@ -50,37 +55,57 @@ const Email: React.FC<IEmailProps> = ({
             <img src={`${process.env.API_URL}/static/logo.png`} alt="logo" />
           </div>
           <div className="bg-white px-10 py-11 flex-[1_0_auto]">
-            <h1 className="text-black text-2xl text-left m-0 font-sans font-semibold mb-10">
+            <Heading className="text-black text-2xl text-left m-0 font-sans font-semibold mb-10">
               {title}
-            </h1>
+            </Heading>
             <div className="font-sans text-sm font-normal text-black">
-              <p>
+              {!!metadata && (
+                <div className="my-10">
+                  <h1 className="text-black text-xl text-left m-0 font-sans font-semibold my-2">
+                    Информация о запросе:{' '}
+                  </h1>
+                  <ul className="m-0 list-inside list-disc">
+                    <li>🌍 Расположение: {metadata.location.country}</li>
+                    <li>🤖 Операционная система: {metadata.device.os}</li>
+                    <li>🧑‍💻 Браузер: {metadata.device.browser}</li>
+                    <li>🪪 IP-адрес: {metadata.ip}</li>
+                  </ul>
+                </div>
+              )}
+              <Text>
                 {subtitle}
                 <br />
                 <br />
                 {message}
-              </p>
+              </Text>
               {!!(link && textLink) && (
-                <Button
-                  href={link}
-                  className="my-[65px] bg-[#329DFF] py-4 text-center text-white text-md font-semibold font-sans rounded-md px-10"
-                >
-                  {textLink}
-                </Button>
+                <div className="flex items-center justify-center w-full">
+                  <Button
+                    href={link}
+                    className="my-[65px] bg-[#329DFF] py-4 text-center text-white text-md font-semibold font-sans rounded-md px-10"
+                  >
+                    {textLink}
+                  </Button>
+                </div>
               )}
+              <Text className="font-bold">
+                Если вы не делали запрос, пожалуйста, проигнорируйте это
+                письмо!!!
+              </Text>
             </div>
           </div>
           <div className="bg-[#F2FBFF] w-full py-3.5 px-10 font-sans text-sm">
-            <p>
-              Для обращения к технической поддержке, пожалуйста, свяжитесь с
-              нами по электронной почте,{' '}
+            <Text>
+              Если у вас возникли трудности, вопросы вы можете обратиться в нашу
+              техническую поддержку, пожалуйста, свяжитесь с нами по электронной
+              почте,{' '}
               <a
                 className="text-[#329DFF] font-semibold"
                 href="mailto:Kx5wO@example.com"
               >
                 Kx5wO@example.com
               </a>
-            </p>
+            </Text>
           </div>
         </main>
       </Body>
@@ -94,6 +119,7 @@ export const emailTemplate = ({
   link,
   message,
   textLink,
+  metadata,
 }: IEmailProps) =>
   render(
     <Email
@@ -102,5 +128,6 @@ export const emailTemplate = ({
       message={message}
       subtitle={subtitle}
       textLink={textLink}
+      metadata={metadata}
     />,
   );

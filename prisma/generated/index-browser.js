@@ -156,7 +156,8 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 exports.ENUM_TYPE_TOKEN = exports.$Enums.ENUM_TYPE_TOKEN = {
-  EMAIL: 'EMAIL'
+  EMAIL: 'EMAIL',
+  PASSWORD: 'PASSWORD'
 };
 
 exports.Prisma.ModelName = {

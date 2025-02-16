@@ -91,6 +91,7 @@ export class AuthService {
       await this.verificationService.sendVerificationToken(
         user.id,
         ENUM_TYPE_TOKEN.EMAIL,
+        metadata,
       );
 
       throw new BadRequestException(

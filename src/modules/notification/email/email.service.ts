@@ -16,6 +16,7 @@ export class EmailService {
     link,
     message,
     textLink,
+    metadata,
   }: ISendEmail): Promise<boolean> {
     await this.mailerService.sendMail({
       from: emailFrom,
@@ -27,6 +28,7 @@ export class EmailService {
         link,
         message,
         textLink,
+        metadata,
       }),
     });
 

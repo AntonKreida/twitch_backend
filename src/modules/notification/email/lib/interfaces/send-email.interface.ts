@@ -1,3 +1,5 @@
+import { ISessionMetadata } from '@shared';
+
 export interface ISendEmail {
   title: string;
   emailTo: string;
@@ -7,4 +9,5 @@ export interface ISendEmail {
   subtitle: string;
   link?: string;
   textLink?: string;
+  metadata?: ISessionMetadata;
 }

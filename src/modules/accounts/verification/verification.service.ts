@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
-import { ENUM_TYPE_TOKEN } from '/prisma/generated';
+import { ENUM_TYPE_TOKEN, User, Token } from '/prisma/generated';
 
 import { EmailService } from '@/modules/notification';
 import { UserModel, UserRepository } from '@/modules/accounts/user';
@@ -15,6 +15,7 @@ import { TokenRepository } from './repositories';
 import { EntityToken } from './entities';
 
 import { ISessionMetadata } from '@shared';
+import { IGenerateToken } from './lib';
 
 @Injectable()
 export class VerificationService {
@@ -29,25 +30,12 @@ export class VerificationService {
   async sendVerificationToken(
     userId: string,
     typeToken: ENUM_TYPE_TOKEN,
+    metadata?: ISessionMetadata,
   ): Promise<boolean> {
-    const oldToken = await this.tokenRepository.findTokenByUserIdAndType(
+    const tokenCreated = await this.generateToken({
       userId,
       typeToken,
-    );
-
-    if (oldToken) {
-      await this.tokenRepository.deleteTokenById(oldToken.id);
-    }
-
-    const newToken = new EntityToken({
-      type: typeToken,
-      userId,
-    }).sendToken({ isUUID: true });
-
-    const tokenCreated = await this.tokenRepository.createTokenUserById(
-      userId,
-      newToken,
-    );
+    });
 
     const hostnameClient = await this.configService.getOrThrow<string>(
       'ALLOWED_ORIGIN',
@@ -67,6 +55,7 @@ export class VerificationService {
       message: `Спасибо что присоединились к нам! Мы рады видеть вас на нашей
                 платформе! Сейчас для того чтобы начать пользоваться нашими
                 возможностями, пожалуйста, нажмите на кнопку ниже.`,
+      metadata,
     });
   }
 
@@ -98,5 +87,58 @@ export class VerificationService {
     await this.tokenRepository.deleteTokenById(tokenFound.id);
 
     return await this.sessionService.saveSession(req, user, metadata);
+  }
+
+  async sendVerificationPasswordRecovery(
+    userId: string,
+    typeToken: ENUM_TYPE_TOKEN,
+    metadata: ISessionMetadata,
+  ): Promise<boolean> {
+    const tokenCreated = await this.generateToken({
+      userId,
+      typeToken,
+    });
+
+    const hostnameClient = await this.configService.getOrThrow<string>(
+      'ALLOWED_ORIGIN',
+    );
+
+    const urlForLink = new URL(hostnameClient);
+    urlForLink.pathname = '/recovery-password';
+    urlForLink.searchParams.append('token', tokenCreated.token);
+
+    return await this.emailService.sendEmail({
+      emailFrom: 'Kx5wO@example.com',
+      emailTo: tokenCreated.user.email,
+      subject: 'Подтверждение восстановление пароля на TvStream',
+      link: urlForLink.href,
+      textLink: 'Подтвердите восстановление пароля',
+      title: 'Подтверждение восстановление пароля на TvStream',
+      subtitle: `Привет ${tokenCreated.user.firstName} ${tokenCreated.user.lastName}, `,
+      message: `Для того чтобы восстановить пароль, пожалуйста, нажмите на кнопку ниже.`,
+      metadata,
+    });
+  }
+
+  private async generateToken({
+    userId,
+    typeToken,
+    isUUID = true,
+  }: IGenerateToken): Promise<Token & { user: User }> {
+    const oldToken = await this.tokenRepository.findTokenByUserIdAndType(
+      userId,
+      typeToken,
+    );
+
+    if (oldToken) {
+      await this.tokenRepository.deleteTokenById(oldToken.id);
+    }
+
+    const newToken = new EntityToken({
+      type: typeToken,
+      userId,
+    }).sendToken({ isUUID: isUUID });
+
+    return await this.tokenRepository.createTokenUserById(userId, newToken);
   }
 }
