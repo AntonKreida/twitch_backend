@@ -24,6 +24,9 @@ export class UserModel implements User {
   @Field(() => String, { nullable: true })
   bio: string | null;
 
+  @Field(() => Boolean)
+  isEmailVerification: boolean;
+
   @Field(() => String)
   passwordHash: string;
 

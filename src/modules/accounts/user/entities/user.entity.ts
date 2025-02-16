@@ -1,9 +1,9 @@
 import { genSalt, hash, compare } from 'bcrypt';
 import { UserModel } from '../models';
 
-export class UserEntity
-  implements Omit<UserModel, 'id' | 'createAt' | 'updateAt'>
-{
+type TEntityUser = Partial<Omit<UserModel, 'createAt' | 'updateAt'>>;
+
+export class UserEntity implements TEntityUser {
   id?: string | null;
   firstName: string;
   lastName: string;
@@ -12,12 +12,9 @@ export class UserEntity
   avatar: string | null;
   bio: string | null;
   passwordHash: string;
+  isEmailVerification?: boolean;
 
-  constructor(
-    user: Omit<UserModel, 'createAt' | 'updateAt' | 'id'> & {
-      id?: string;
-    },
-  ) {
+  constructor(user: TEntityUser) {
     this.id = user?.id;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
@@ -26,6 +23,7 @@ export class UserEntity
     this.avatar = user.avatar || null;
     this.bio = user.bio || null;
     this.passwordHash = user.passwordHash;
+    this.isEmailVerification = user?.isEmailVerification;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

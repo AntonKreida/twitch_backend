@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
-import { UserRepository } from '@/modules/accounts/user';
+import { UserRepository } from '@/modules/accounts/user/repositories';
 import { IContext } from '../lib';
 
 @Injectable()

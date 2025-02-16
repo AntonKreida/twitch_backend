@@ -16,12 +16,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "jsx": "react",
   },
   "exclude": [
     "./prisma/generated/**/*.{ts,js}"
   ],
   "include": [
-    "src/**/*.ts",
+    "src/**/*",
   ],
   "files": [
     "types/session.d.ts",

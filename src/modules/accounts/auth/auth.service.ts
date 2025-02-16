@@ -1,23 +1,26 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-
+import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { type Response, type Request } from 'express';
 
-import { UserRepository, UserEntity, IArgsFindUser, UserModel } from '../user';
+import { UserRepository, UserEntity, UserModel } from '../user';
+import { SessionService } from '../session';
+import { VerificationService } from '../verification';
+
 import { UserInputSignUpDto } from './dto';
-import { ISessionMetadata, type SortOrPaginationArgsType } from '@shared';
+import { ISessionMetadata } from '@shared';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly configService: ConfigService,
+    private readonly verificationService: VerificationService,
+    private readonly sessionService: SessionService,
   ) {}
 
   async signUp({
@@ -28,22 +31,22 @@ export class AuthService {
     lastName,
     password,
     username,
-  }: UserInputSignUpDto): Promise<UserModel> {
-    const isUsernameExist = await this.userRepository.findUser({
+  }: UserInputSignUpDto): Promise<boolean> {
+    const userByUsername = await this.userRepository.findUser({
       username,
     });
 
-    if (isUsernameExist) {
+    if (userByUsername) {
       throw new ConflictException(
         'Пользователь с таким username уже существует!',
       );
     }
 
-    const IsEmailExist = await this.userRepository.findUser({
+    const userByEmail = await this.userRepository.findUser({
       email,
     });
 
-    if (IsEmailExist) {
+    if (userByEmail) {
       throw new ConflictException('Пользователь с таким email уже существует!');
     }
 
@@ -57,21 +60,12 @@ export class AuthService {
       passwordHash: '',
     }).setPassword(password);
 
-    return await this.userRepository.createUser(newEntityUser);
-  }
+    const newUser = await this.userRepository.createUser(newEntityUser);
 
-  async findUsers({
-    sort,
-    pagination,
-  }: SortOrPaginationArgsType): Promise<UserModel[]> {
-    return await this.userRepository.findAll({
-      sort,
-      pagination,
-    });
-  }
-
-  async findUser(args: Partial<IArgsFindUser>): Promise<UserModel | null> {
-    return await this.userRepository.findUser(args);
+    return await this.verificationService.sendVerificationToken(
+      newUser.id,
+      ENUM_TYPE_TOKEN.EMAIL,
+    );
   }
 
   async signIn(
@@ -86,47 +80,28 @@ export class AuthService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
-    const newUserEntity = new UserEntity(user);
-    const isCorrectPassword = await newUserEntity.validatePassword(password);
+    const userEntity = new UserEntity(user);
+    const isCorrectPassword = await userEntity.validatePassword(password);
 
     if (!isCorrectPassword) {
       throw new UnauthorizedException('Неверный пароль!');
     }
 
-    return new Promise((resolve, reject) => {
-      req.session.userId = user.id;
-      req.session.createAt = new Date();
-      req.session.metadata = metadata;
+    if (!userEntity.isEmailVerification) {
+      await this.verificationService.sendVerificationToken(
+        user.id,
+        ENUM_TYPE_TOKEN.EMAIL,
+      );
 
-      req.session.save((error) => {
-        if (error) {
-          reject(
-            new InternalServerErrorException(
-              'При сохранении сессии произошла ошибка!',
-            ),
-          );
-        }
+      throw new BadRequestException(
+        'Пользователь не подтвержден! Пожалуйста проверьте почту для подтверждения!',
+      );
+    }
 
-        resolve(user);
-      });
-    });
+    return await this.sessionService.saveSession(req, user, metadata);
   }
 
-  async signOut(req: Request, res: Response): Promise<string> {
-    return new Promise((resolve, reject) => {
-      req.session.destroy((error) => {
-        if (error) {
-          reject(
-            new InternalServerErrorException(
-              'При удалении сессии произошла ошибка!',
-            ),
-          );
-        }
-
-        res.clearCookie(`${this.configService.getOrThrow('SESSION_NAME')}`);
-
-        resolve('Вы успешно вышли из системы!');
-      });
-    });
+  async signOut(req: Request, res: Response): Promise<boolean> {
+    return await this.sessionService.destroySession(req, res);
   }
 }
