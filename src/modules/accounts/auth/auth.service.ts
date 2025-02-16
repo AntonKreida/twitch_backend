@@ -5,12 +5,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { type Response, type Request } from 'express';
 
 import { UserRepository, UserEntity, UserModel } from '../user';
 import { SessionService } from '../session';
 import { VerificationService } from '../verification';
+import { EmailService } from '@/modules/notification';
 
 import { UserInputSignUpDto } from './dto';
 import { ISessionMetadata } from '@shared';
@@ -21,6 +23,8 @@ export class AuthService {
     private readonly userRepository: UserRepository,
     private readonly verificationService: VerificationService,
     private readonly sessionService: SessionService,
+    private readonly emailService: EmailService,
+    private readonly configService: ConfigService,
   ) {}
 
   async signUp({
@@ -62,10 +66,26 @@ export class AuthService {
 
     const newUser = await this.userRepository.createUser(newEntityUser);
 
-    await this.verificationService.sendVerificationToken(
+    const token = await this.verificationService.sendVerificationToken(
       newUser.id,
       ENUM_TYPE_TOKEN.EMAIL,
     );
+
+    const hostnameClient = await this.configService.getOrThrow<string>(
+      'ALLOWED_ORIGIN',
+    );
+
+    const urlForLink = new URL(hostnameClient);
+    urlForLink.searchParams.append('token', token.token);
+
+    await this.emailService.sendEmail({
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      emailFrom: 'kreida.anton@yandex.ru',
+      emailTo: newUser.email,
+      subject: 'Подтверждение аккаунта',
+      link: urlForLink.href,
+    });
 
     return true;
   }

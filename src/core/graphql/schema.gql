@@ -27,7 +27,6 @@ type MetadataModel {
 }
 
 type Mutation {
-  sendEmail(text: String!): Boolean!
   signIn(inputUserSignIn: UserInputSignInDto!): UserModel!
   signOut: String!
   signUp(inputUserSignUp: UserInputSignUpDto!): Boolean!
