@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { PasswordService } from './password.service';
-import { PasswordRecoveryInput } from './inputs';
-import { ISessionMetadata, UserMetadata } from '@shared';
+import { PasswordConfirmInput, PasswordRecoveryInput } from './inputs';
+import { Auth, Authorized, ISessionMetadata, UserMetadata } from '@shared';
 
 @Resolver()
 export class PasswordResolver {
@@ -13,5 +13,14 @@ export class PasswordResolver {
     @UserMetadata() metadata: ISessionMetadata,
   ): Promise<boolean> {
     return await this.passwordService.recoveryPassword(email, metadata);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean, { name: 'confirmPassword' })
+  async confirmPassword(
+    @Args('confirmPasswordInput') { password }: PasswordConfirmInput,
+    @Authorized('id') id: string,
+  ) {
+    return await this.passwordService.confirmPassword(id, password);
   }
 }

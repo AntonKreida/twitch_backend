@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 
 import { VerificationService } from '@/modules/accounts/verification';
-import { UserRepository } from '@/modules/accounts/user';
+import { UserEntity, UserRepository } from '@/modules/accounts/user';
 
 import { ISessionMetadata } from '@shared';
 
@@ -28,5 +28,23 @@ export class PasswordService {
       ENUM_TYPE_TOKEN.PASSWORD,
       metadata,
     );
+  }
+
+  async confirmPassword(userId: string, password: string): Promise<boolean> {
+    const user = new UserEntity(
+      await this.userRepository.findUser({ id: userId }),
+    );
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const isCorrectPassword = await user.validatePassword(password);
+
+    if (!isCorrectPassword) {
+      throw new NotFoundException('Неверный пароль!');
+    }
+
+    return true;
   }
 }
