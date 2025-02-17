@@ -47,4 +47,33 @@ export class PasswordService {
 
     return true;
   }
+
+  async changePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string,
+  ): Promise<boolean> {
+    const user = new UserEntity(
+      await this.userRepository.findUser({ id: userId }),
+    );
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const isCorrectOldPassword = await user.validatePassword(oldPassword);
+
+    if (!isCorrectOldPassword) {
+      throw new NotFoundException('Неверный пароль!');
+    }
+
+    const updatedUser = await user.setPassword(newPassword);
+
+    await this.userRepository.updateUser({
+      id: updatedUser.id,
+      passwordHash: updatedUser.passwordHash,
+    });
+
+    return true;
+  }
 }

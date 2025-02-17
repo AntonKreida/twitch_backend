@@ -1,6 +1,10 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { PasswordService } from './password.service';
-import { PasswordConfirmInput, PasswordRecoveryInput } from './inputs';
+import {
+  PasswordChangeInput,
+  PasswordConfirmInput,
+  PasswordRecoveryInput,
+} from './inputs';
 import { Auth, Authorized, ISessionMetadata, UserMetadata } from '@shared';
 
 @Resolver()
@@ -22,5 +26,19 @@ export class PasswordResolver {
     @Authorized('id') id: string,
   ) {
     return await this.passwordService.confirmPassword(id, password);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean, { name: 'changePassword' })
+  async changePassword(
+    @Args('changePasswordInput')
+    { passwordOld, passwordNew }: PasswordChangeInput,
+    @Authorized('id') id: string,
+  ) {
+    return await this.passwordService.changePassword(
+      id,
+      passwordOld,
+      passwordNew,
+    );
   }
 }
