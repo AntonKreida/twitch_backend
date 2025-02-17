@@ -2,7 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 import { MinLength, IsString, IsNotEmpty } from 'class-validator';
 
 @InputType()
-export class PasswordChangeInputDto {
+export class PasswordChangeInput {
   @Field(() => String, { nullable: false })
   @IsString({ message: 'passwordOld должно быть строкой' })
   @IsNotEmpty({ message: 'passwordOld не может быть пустым' })

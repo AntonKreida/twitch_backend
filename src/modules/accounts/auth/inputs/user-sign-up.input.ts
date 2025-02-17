@@ -15,7 +15,7 @@ type TUserRegister = Omit<
 >;
 
 @InputType()
-export class UserInputSignUpDto implements TUserRegister {
+export class UserSignUpInput implements TUserRegister {
   @Field(() => String)
   @IsString({
     message: 'firstName должно быть строкой',

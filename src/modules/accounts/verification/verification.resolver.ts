@@ -4,7 +4,7 @@ import { Args, Context, Mutation } from '@nestjs/graphql';
 import { VerificationService } from './verification.service';
 import { IContext, ISessionMetadata, UserMetadata } from '@shared';
 import { UserModel } from '../user';
-import { VerifyInput } from './dto';
+import { VerifyInput } from './inputs';
 
 @Injectable()
 export class VerificationResolver {
