@@ -22,12 +22,11 @@ export class VerificationResolver {
   @Mutation(() => Boolean, { name: 'verifyPasswordRecovery' })
   async verifyPasswordRecovery(
     @Args('inputVerifyPasswordRecovery')
-    { password, passwordRepeat, token }: VerifyPasswordRecoveryInput,
+    { password, token }: VerifyPasswordRecoveryInput,
   ): Promise<boolean> {
     return await this.verificationService.verifyPasswordRecovery(
       token,
       password,
-      passwordRepeat,
     );
   }
 }

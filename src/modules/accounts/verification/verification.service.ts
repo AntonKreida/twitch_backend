@@ -109,7 +109,6 @@ export class VerificationService {
 
   async verifyPasswordRecovery(
     token: string,
-    oldPassword: string,
     newPassword: string,
   ): Promise<boolean> {
     const tokenFound = await this.checkToken(token, ENUM_TYPE_TOKEN.PASSWORD);
@@ -120,12 +119,6 @@ export class VerificationService {
 
     if (!user) {
       throw new NotFoundException('Пользователь не найден!');
-    }
-
-    const isCorrectOldPassword = await user.validatePassword(oldPassword);
-
-    if (!isCorrectOldPassword) {
-      throw new NotFoundException('Неверный пароль!');
     }
 
     const newPasswordHash = (await user.setPassword(newPassword)).passwordHash;
