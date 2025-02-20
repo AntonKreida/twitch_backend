@@ -8,7 +8,7 @@ import { Request } from 'express';
 import { ENUM_TYPE_TOKEN, User, Token } from '/prisma/generated';
 
 import { EmailService } from '@/modules/notification';
-import { UserModel, UserRepository } from '@/modules/accounts/user';
+import { UserEntity, UserModel, UserRepository } from '@/modules/accounts/user';
 import { SessionService } from '@/modules/accounts/session';
 
 import { TokenRepository } from './repositories';
@@ -64,20 +64,7 @@ export class VerificationService {
     token: string,
     metadata: ISessionMetadata,
   ): Promise<UserModel> {
-    const tokenFound = await this.tokenRepository.findToken({
-      tokenCode: token,
-      tokenType: ENUM_TYPE_TOKEN.EMAIL,
-    });
-
-    if (!tokenFound) {
-      new NotFoundException('Токен не найден!');
-    }
-
-    const hasExistedToken = new Date(tokenFound.expiresIn) < new Date();
-
-    if (!hasExistedToken) {
-      new BadRequestException('Токен устарел!');
-    }
+    const tokenFound = await this.checkToken(token, ENUM_TYPE_TOKEN.EMAIL);
 
     const user = await this.userRepository.updateUser({
       id: tokenFound.userId,
@@ -120,6 +107,39 @@ export class VerificationService {
     });
   }
 
+  async verifyPasswordRecovery(
+    token: string,
+    oldPassword: string,
+    newPassword: string,
+  ): Promise<boolean> {
+    const tokenFound = await this.checkToken(token, ENUM_TYPE_TOKEN.PASSWORD);
+
+    const user = new UserEntity(
+      await this.userRepository.findUser({ id: tokenFound.userId }),
+    );
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const isCorrectOldPassword = await user.validatePassword(oldPassword);
+
+    if (!isCorrectOldPassword) {
+      throw new NotFoundException('Неверный пароль!');
+    }
+
+    const newPasswordHash = (await user.setPassword(newPassword)).passwordHash;
+
+    await this.userRepository.updateUser({
+      id: user.id,
+      passwordHash: newPasswordHash,
+    });
+
+    await this.tokenRepository.deleteTokenById(tokenFound.id);
+
+    return true;
+  }
+
   private async generateToken({
     userId,
     typeToken,
@@ -140,5 +160,27 @@ export class VerificationService {
     }).sendToken({ isUUID: isUUID });
 
     return await this.tokenRepository.createTokenUserById(userId, newToken);
+  }
+
+  private async checkToken(
+    token: string,
+    tokenType: ENUM_TYPE_TOKEN,
+  ): Promise<Token> {
+    const tokenFound = await this.tokenRepository.findToken({
+      tokenCode: token,
+      tokenType,
+    });
+
+    if (!tokenFound) {
+      new NotFoundException('Токен не найден!');
+    }
+
+    const hasExistedToken = new Date(tokenFound.expiresIn) < new Date();
+
+    if (!hasExistedToken) {
+      new BadRequestException('Токен устарел!');
+    }
+
+    return tokenFound;
   }
 }

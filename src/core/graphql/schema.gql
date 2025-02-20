@@ -33,6 +33,7 @@ type Mutation {
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
   signOut: String!
   signUp(inputUserSignUp: UserSignUpInput!): Boolean!
+  verifyPasswordRecovery(inputVerifyPasswordRecovery: VerifyPasswordRecoveryInput!): Boolean!
   verifyUser(inputVerify: VerifyInput!): UserModel!
 }
 
@@ -107,5 +108,11 @@ input UserSignUpInput {
 }
 
 input VerifyInput {
+  token: String!
+}
+
+input VerifyPasswordRecoveryInput {
+  password: String!
+  passwordRepeat: String!
   token: String!
 }

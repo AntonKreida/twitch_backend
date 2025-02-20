@@ -3,7 +3,7 @@ import { IsString, MinLength, IsNotEmpty } from 'class-validator';
 import { IsMatchPassword } from '@shared';
 
 @InputType()
-export class PasswordNewInput {
+export class VerifyPasswordRecoveryInput {
   @Field(() => String, { nullable: false })
   @IsString({ message: 'password должно быть строкой' })
   @IsNotEmpty({ message: 'password не может быть пустым' })
