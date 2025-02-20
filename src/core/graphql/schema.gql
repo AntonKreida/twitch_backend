@@ -27,6 +27,8 @@ type MetadataModel {
 }
 
 type Mutation {
+  changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
+  confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
   signOut: String!
@@ -37,6 +39,15 @@ type Mutation {
 input PaginationInputType {
   limit: Int
   page: Int
+}
+
+input PasswordChangeInput {
+  passwordNew: String!
+  passwordOld: String!
+}
+
+input PasswordConfirmInput {
+  password: String!
 }
 
 input PasswordRecoveryInput {
