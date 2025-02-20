@@ -147,7 +147,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\job\\twitch\\twitch_backend\\prisma\\generated",
+      "value": "/Users/anton_kreida/Desktop/job/twitch_backend/prisma/generated",
       "fromEnvVar": null
     },
     "config": {
@@ -156,12 +156,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\job\\twitch\\twitch_backend\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/anton_kreida/Desktop/job/twitch_backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -175,6 +175,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
