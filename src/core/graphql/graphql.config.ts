@@ -21,18 +21,20 @@ export class GraphQLConfigService implements GqlOptionsFactory {
         res,
       }),
       formatError: (error) => {
-        if (error.extensions['code'] !== 'BAD_REQUEST') {
-          return error;
+        let errorExtensions: null | Record<string, string>;
+
+        try {
+          errorExtensions = JSON.parse(error.message);
+        } catch {
+          errorExtensions = null;
         }
 
-        console.log(error);
-
-        const errorsParseJson = JSON.parse(error.message);
+        const originalError = error.extensions?.originalError as Error | null;
+        const errorMessage = originalError?.message ?? error.message;
 
         return {
-          message:
-            error.extensions['originalError']?.['error'] ?? error.message,
-          extensions: errorsParseJson,
+          message: errorMessage,
+          extensions: errorExtensions,
           status: error.extensions['originalError']?.['status'] ?? 400,
         };
       },

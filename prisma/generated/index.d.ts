@@ -29,7 +29,8 @@ export type Token = $Result.DefaultSelection<Prisma.$TokenPayload>
  */
 export namespace $Enums {
   export const ENUM_TYPE_TOKEN: {
-  EMAIL: 'EMAIL'
+  EMAIL: 'EMAIL',
+  PASSWORD: 'PASSWORD'
 };
 
 export type ENUM_TYPE_TOKEN = (typeof ENUM_TYPE_TOKEN)[keyof typeof ENUM_TYPE_TOKEN]

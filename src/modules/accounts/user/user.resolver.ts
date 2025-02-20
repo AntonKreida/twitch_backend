@@ -1,7 +1,7 @@
 import { Args, Resolver, Query } from '@nestjs/graphql';
 import { UserModel } from './models';
 import { UserService } from './user.service';
-import { UserArgsDto } from './dto';
+import { UserArgs } from './args';
 import { SortOrPaginationArgsType, Auth, Authorized } from '@shared';
 
 @Resolver('User')
@@ -10,7 +10,7 @@ export class UserResolver {
 
   @Auth()
   @Query(() => UserModel, { name: 'user', nullable: true })
-  async find(@Args() args: UserArgsDto): Promise<UserModel | null> {
+  async find(@Args() args: UserArgs): Promise<UserModel | null> {
     return await this.userService.findUser(args);
   }
 

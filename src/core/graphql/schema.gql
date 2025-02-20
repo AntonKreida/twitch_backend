@@ -27,15 +27,32 @@ type MetadataModel {
 }
 
 type Mutation {
-  signIn(inputUserSignIn: UserInputSignInDto!): UserModel!
+  changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
+  confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
+  recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  signIn(inputUserSignIn: UserSignInInput!): UserModel!
   signOut: String!
-  signUp(inputUserSignUp: UserInputSignUpDto!): Boolean!
+  signUp(inputUserSignUp: UserSignUpInput!): Boolean!
+  verifyPasswordRecovery(inputVerifyPasswordRecovery: VerifyPasswordRecoveryInput!): Boolean!
   verifyUser(inputVerify: VerifyInput!): UserModel!
 }
 
 input PaginationInputType {
   limit: Int
   page: Int
+}
+
+input PasswordChangeInput {
+  passwordNew: String!
+  passwordOld: String!
+}
+
+input PasswordConfirmInput {
+  password: String!
+}
+
+input PasswordRecoveryInput {
+  email: String!
 }
 
 type Query {
@@ -61,21 +78,6 @@ type SessionModel {
   userId: String!
 }
 
-input UserInputSignInDto {
-  password: String!
-  username: String!
-}
-
-input UserInputSignUpDto {
-  avatar: String
-  bio: String
-  email: String!
-  firstName: String!
-  lastName: String!
-  password: String!
-  username: String!
-}
-
 type UserModel {
   avatar: String
   bio: String
@@ -90,6 +92,27 @@ type UserModel {
   username: String!
 }
 
+input UserSignInInput {
+  password: String!
+  username: String!
+}
+
+input UserSignUpInput {
+  avatar: String
+  bio: String
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
+}
+
 input VerifyInput {
+  token: String!
+}
+
+input VerifyPasswordRecoveryInput {
+  password: String!
+  passwordRepeat: String!
   token: String!
 }

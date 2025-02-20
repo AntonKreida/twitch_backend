@@ -12,7 +12,7 @@ import { UserRepository, UserEntity, UserModel } from '../user';
 import { SessionService } from '../session';
 import { VerificationService } from '../verification';
 
-import { UserInputSignUpDto } from './dto';
+import { UserSignUpInput } from './inputs';
 import { ISessionMetadata } from '@shared';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class AuthService {
     lastName,
     password,
     username,
-  }: UserInputSignUpDto): Promise<boolean> {
+  }: UserSignUpInput): Promise<boolean> {
     const userByUsername = await this.userRepository.findUser({
       username,
     });
@@ -91,6 +91,7 @@ export class AuthService {
       await this.verificationService.sendVerificationToken(
         user.id,
         ENUM_TYPE_TOKEN.EMAIL,
+        metadata,
       );
 
       throw new BadRequestException(

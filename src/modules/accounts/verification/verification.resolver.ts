@@ -4,7 +4,7 @@ import { Args, Context, Mutation } from '@nestjs/graphql';
 import { VerificationService } from './verification.service';
 import { IContext, ISessionMetadata, UserMetadata } from '@shared';
 import { UserModel } from '../user';
-import { VerifyInput } from './dto';
+import { VerifyInput, VerifyPasswordRecoveryInput } from './inputs';
 
 @Injectable()
 export class VerificationResolver {
@@ -17,5 +17,16 @@ export class VerificationResolver {
     @UserMetadata() metadata: ISessionMetadata,
   ) {
     return await this.verificationService.verify(req, token, metadata);
+  }
+
+  @Mutation(() => Boolean, { name: 'verifyPasswordRecovery' })
+  async verifyPasswordRecovery(
+    @Args('inputVerifyPasswordRecovery')
+    { password, token }: VerifyPasswordRecoveryInput,
+  ): Promise<boolean> {
+    return await this.verificationService.verifyPasswordRecovery(
+      token,
+      password,
+    );
   }
 }

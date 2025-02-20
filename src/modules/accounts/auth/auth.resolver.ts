@@ -2,7 +2,7 @@ import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 
 import { AuthService } from './auth.service';
 import { UserModel } from '../user';
-import { UserInputSignInDto, UserInputSignUpDto } from './dto';
+import { UserSignInInput, UserSignUpInput } from './inputs';
 import { IContext, UserMetadata, ISessionMetadata } from '@shared';
 
 @Resolver('Auth')
@@ -11,14 +11,14 @@ export class AuthResolver {
 
   @Mutation(() => Boolean, { name: 'signUp' })
   async signUp(
-    @Args('inputUserSignUp') inputUser: UserInputSignUpDto,
+    @Args('inputUserSignUp') inputUser: UserSignUpInput,
   ): Promise<boolean> {
     return await this.authService.signUp(inputUser);
   }
 
   @Mutation(() => UserModel, { name: 'signIn' })
   async signIn(
-    @Args('inputUserSignIn') inputUser: UserInputSignInDto,
+    @Args('inputUserSignIn') inputUser: UserSignInInput,
     @Context() { req }: IContext,
     @UserMetadata() metadata: ISessionMetadata,
   ): Promise<UserModel> {
