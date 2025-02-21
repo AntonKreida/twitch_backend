@@ -127,6 +127,8 @@ exports.Prisma.UserScalarFieldEnum = {
   bio: 'bio',
   passwordHash: 'passwordHash',
   isEmailVerification: 'isEmailVerification',
+  isTwoFactorEnable: 'isTwoFactorEnable',
+  twoFactorSecret: 'twoFactorSecret',
   createAt: 'createAt',
   updateAt: 'updateAt'
 };

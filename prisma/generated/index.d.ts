@@ -1024,6 +1024,8 @@ export namespace Prisma {
     bio: string | null
     passwordHash: string | null
     isEmailVerification: boolean | null
+    isTwoFactorEnable: boolean | null
+    twoFactorSecret: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -1038,6 +1040,8 @@ export namespace Prisma {
     bio: string | null
     passwordHash: string | null
     isEmailVerification: boolean | null
+    isTwoFactorEnable: boolean | null
+    twoFactorSecret: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -1052,6 +1056,8 @@ export namespace Prisma {
     bio: number
     passwordHash: number
     isEmailVerification: number
+    isTwoFactorEnable: number
+    twoFactorSecret: number
     createAt: number
     updateAt: number
     _all: number
@@ -1068,6 +1074,8 @@ export namespace Prisma {
     bio?: true
     passwordHash?: true
     isEmailVerification?: true
+    isTwoFactorEnable?: true
+    twoFactorSecret?: true
     createAt?: true
     updateAt?: true
   }
@@ -1082,6 +1090,8 @@ export namespace Prisma {
     bio?: true
     passwordHash?: true
     isEmailVerification?: true
+    isTwoFactorEnable?: true
+    twoFactorSecret?: true
     createAt?: true
     updateAt?: true
   }
@@ -1096,6 +1106,8 @@ export namespace Prisma {
     bio?: true
     passwordHash?: true
     isEmailVerification?: true
+    isTwoFactorEnable?: true
+    twoFactorSecret?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -1183,6 +1195,8 @@ export namespace Prisma {
     bio: string | null
     passwordHash: string
     isEmailVerification: boolean
+    isTwoFactorEnable: boolean
+    twoFactorSecret: string | null
     createAt: Date
     updateAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1214,6 +1228,8 @@ export namespace Prisma {
     bio?: boolean
     passwordHash?: boolean
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
     tokens?: boolean | User$tokensArgs<ExtArgs>
@@ -1230,6 +1246,8 @@ export namespace Prisma {
     bio?: boolean
     passwordHash?: boolean
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1244,6 +1262,8 @@ export namespace Prisma {
     bio?: boolean
     passwordHash?: boolean
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1258,11 +1278,13 @@ export namespace Prisma {
     bio?: boolean
     passwordHash?: boolean
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "passwordHash" | "isEmailVerification" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "passwordHash" | "isEmailVerification" | "isTwoFactorEnable" | "twoFactorSecret" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | User$tokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1285,6 +1307,8 @@ export namespace Prisma {
       bio: string | null
       passwordHash: string
       isEmailVerification: boolean
+      isTwoFactorEnable: boolean
+      twoFactorSecret: string | null
       createAt: Date
       updateAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1720,6 +1744,8 @@ export namespace Prisma {
     readonly bio: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly isEmailVerification: FieldRef<"User", 'Boolean'>
+    readonly isTwoFactorEnable: FieldRef<"User", 'Boolean'>
+    readonly twoFactorSecret: FieldRef<"User", 'String'>
     readonly createAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
   }
@@ -3260,6 +3286,8 @@ export namespace Prisma {
     bio: 'bio',
     passwordHash: 'passwordHash',
     isEmailVerification: 'isEmailVerification',
+    isTwoFactorEnable: 'isTwoFactorEnable',
+    twoFactorSecret: 'twoFactorSecret',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -3388,6 +3416,8 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
     isEmailVerification?: BoolFilter<"User"> | boolean
+    isTwoFactorEnable?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
     tokens?: TokenListRelationFilter
@@ -3403,6 +3433,8 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
+    isTwoFactorEnable?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     tokens?: TokenOrderByRelationAggregateInput
@@ -3421,6 +3453,8 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
     isEmailVerification?: BoolFilter<"User"> | boolean
+    isTwoFactorEnable?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
     tokens?: TokenListRelationFilter
@@ -3436,6 +3470,8 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
+    isTwoFactorEnable?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3456,6 +3492,8 @@ export namespace Prisma {
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordHash?: StringWithAggregatesFilter<"User"> | string
     isEmailVerification?: BoolWithAggregatesFilter<"User"> | boolean
+    isTwoFactorEnable?: BoolWithAggregatesFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
     createAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -3535,6 +3573,8 @@ export namespace Prisma {
     bio?: string | null
     passwordHash: string
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutUserInput
@@ -3550,6 +3590,8 @@ export namespace Prisma {
     bio?: string | null
     passwordHash: string
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
@@ -3565,6 +3607,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutUserNestedInput
@@ -3580,6 +3624,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
@@ -3595,6 +3641,8 @@ export namespace Prisma {
     bio?: string | null
     passwordHash: string
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -3609,6 +3657,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3623,6 +3673,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3767,6 +3819,8 @@ export namespace Prisma {
     bio?: SortOrder
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
+    isTwoFactorEnable?: SortOrder
+    twoFactorSecret?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -3781,6 +3835,8 @@ export namespace Prisma {
     bio?: SortOrder
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
+    isTwoFactorEnable?: SortOrder
+    twoFactorSecret?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -3795,6 +3851,8 @@ export namespace Prisma {
     bio?: SortOrder
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
+    isTwoFactorEnable?: SortOrder
+    twoFactorSecret?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -4191,6 +4249,8 @@ export namespace Prisma {
     bio?: string | null
     passwordHash: string
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -4205,6 +4265,8 @@ export namespace Prisma {
     bio?: string | null
     passwordHash: string
     isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -4235,6 +4297,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4249,6 +4313,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
