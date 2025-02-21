@@ -86,8 +86,10 @@ type UserModel {
   firstName: String!
   id: ID!
   isEmailVerification: Boolean!
+  isTwoFactorEnable: Boolean!
   lastName: String!
   passwordHash: String!
+  twoFactorSecret: String
   updateAt: DateTime!
   username: String!
 }

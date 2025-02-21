@@ -13,6 +13,8 @@ export class UserEntity implements TEntityUser {
   bio: string | null;
   passwordHash: string;
   isEmailVerification?: boolean;
+  isTwoFactorEnable?: boolean;
+  twoFactorSecret?: string | null;
 
   constructor(user: TEntityUser) {
     this.id = user?.id;
@@ -24,6 +26,8 @@ export class UserEntity implements TEntityUser {
     this.bio = user.bio || null;
     this.passwordHash = user.passwordHash;
     this.isEmailVerification = user?.isEmailVerification;
+    this.isTwoFactorEnable = user?.isTwoFactorEnable;
+    this.twoFactorSecret = user?.twoFactorSecret;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

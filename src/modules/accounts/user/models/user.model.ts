@@ -27,6 +27,12 @@ export class UserModel implements User {
   @Field(() => Boolean)
   isEmailVerification: boolean;
 
+  @Field(() => Boolean)
+  isTwoFactorEnable: boolean;
+
+  @Field(() => String, { nullable: true })
+  twoFactorSecret: string | null;
+
   @Field(() => String)
   passwordHash: string;
 
