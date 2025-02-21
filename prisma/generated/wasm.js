@@ -159,7 +159,8 @@ exports.Prisma.NullsOrder = {
 };
 exports.ENUM_TYPE_TOKEN = exports.$Enums.ENUM_TYPE_TOKEN = {
   EMAIL: 'EMAIL',
-  PASSWORD: 'PASSWORD'
+  PASSWORD: 'PASSWORD',
+  TFA: 'TFA'
 };
 
 exports.Prisma.ModelName = {

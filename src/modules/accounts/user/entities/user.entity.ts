@@ -1,4 +1,5 @@
 import { genSalt, hash, compare } from 'bcrypt';
+import { authenticator } from 'otplib';
 import { UserModel } from '../models';
 
 type TEntityUser = Partial<Omit<UserModel, 'createAt' | 'updateAt'>>;
@@ -39,5 +40,12 @@ export class UserEntity implements TEntityUser {
 
   public async validatePassword(password: string): Promise<boolean> {
     return await compare(password, this.passwordHash);
+  }
+
+  public async generateTwoFactorAuthenticationSecret(): Promise<UserEntity> {
+    const secretKey = await authenticator.generateSecret();
+
+    this.twoFactorSecret = secretKey;
+    return this;
   }
 }

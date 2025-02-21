@@ -18,6 +18,7 @@ interface IEmailProps {
   message: string;
   link?: string;
   textLink?: string;
+  code?: string;
   metadata?: ISessionMetadata;
 }
 
@@ -120,6 +121,7 @@ export const emailTemplate = ({
   message,
   textLink,
   metadata,
+  code,
 }: IEmailProps) =>
   render(
     <Email
@@ -129,5 +131,6 @@ export const emailTemplate = ({
       subtitle={subtitle}
       textLink={textLink}
       metadata={metadata}
+      code={code}
     />,
   );

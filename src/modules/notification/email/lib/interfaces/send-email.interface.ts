@@ -10,4 +10,5 @@ export interface ISendEmail {
   link?: string;
   textLink?: string;
   metadata?: ISessionMetadata;
+  code?: string;
 }
