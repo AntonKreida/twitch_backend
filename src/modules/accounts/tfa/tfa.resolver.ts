@@ -1,13 +1,14 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { TfaService } from './tfa.service';
-import { Auth, Authorized, ISessionMetadata, UserMetadata } from '/src/shared';
 import {
   DisableTwoFactorAuthInput,
   EnableTwoFactorAuthInput,
   SendInitTwoFactorAuthenticationInput,
+  SendGeneratedQrCodeInput,
 } from './inputs';
 import { QrCodeModel } from './models';
-import { SendGeneratedQrCodeInput } from './inputs/send-generated-qr-code.input';
+
+import { Auth, Authorized, ISessionMetadata, UserMetadata } from '@shared';
 
 @Resolver()
 export class TfaResolver {

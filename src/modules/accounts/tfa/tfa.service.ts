@@ -4,13 +4,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
+import { authenticator } from 'otplib';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { VerificationService } from '@/modules/accounts/verification';
 import { UserEntity } from '@/modules/accounts/user/entities';
 
 import { QrCodeModel } from './models';
 import { ISessionMetadata } from '@shared';
-import { authenticator } from 'otplib';
 
 @Injectable()
 export class TfaService {
