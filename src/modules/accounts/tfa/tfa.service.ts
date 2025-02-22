@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { VerificationService } from '@/modules/accounts/verification';
