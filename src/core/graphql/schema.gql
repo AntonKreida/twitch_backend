@@ -13,6 +13,14 @@ type DeviceModel {
   type: String!
 }
 
+input DisableTwoFactorAuthInput {
+  password: String!
+}
+
+input EnableTwoFactorAuthInput {
+  pincode: String!
+}
+
 type LocationModel {
   city: String
   country: String
@@ -29,7 +37,11 @@ type MetadataModel {
 type Mutation {
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
+  disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
+  enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
+  sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
   signOut: String!
   signUp(inputUserSignUp: UserSignUpInput!): Boolean!
@@ -55,6 +67,10 @@ input PasswordRecoveryInput {
   email: String!
 }
 
+type QrCodeModel {
+  qrCode: String!
+}
+
 type Query {
   clearSession: Boolean!
   currentSession: SessionModel!
@@ -69,6 +85,14 @@ type Query {
 enum SORT_ENUM {
   ASC
   DESC
+}
+
+input SendGeneratedQrCodeInput {
+  token: String!
+}
+
+input SendInitTwoFactorAuthenticationInput {
+  password: String!
 }
 
 type SessionModel {
@@ -86,14 +110,17 @@ type UserModel {
   firstName: String!
   id: ID!
   isEmailVerification: Boolean!
+  isTwoFactorEnable: Boolean!
   lastName: String!
   passwordHash: String!
+  twoFactorSecret: String
   updateAt: DateTime!
   username: String!
 }
 
 input UserSignInInput {
   password: String!
+  pincode: String
   username: String!
 }
 

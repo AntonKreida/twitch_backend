@@ -11,7 +11,13 @@ import {
 
 type TUserRegister = Omit<
   User,
-  'id' | 'createAt' | 'updateAt' | 'passwordHash' | 'isEmailVerification'
+  | 'id'
+  | 'createAt'
+  | 'updateAt'
+  | 'passwordHash'
+  | 'isEmailVerification'
+  | 'twoFactorSecret'
+  | 'isTwoFactorEnable'
 >;
 
 @InputType()

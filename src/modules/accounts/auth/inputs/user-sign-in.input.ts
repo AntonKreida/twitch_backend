@@ -18,4 +18,10 @@ export class UserSignInInput {
   @IsNotEmpty({ message: 'password не может быть пустым' })
   @MinLength(8, { message: 'password должен быть больше 8-х символов' })
   password: string;
+
+  @Field(() => String, { nullable: true })
+  @IsString({ message: 'pincode должно быть строкой' })
+  @IsNotEmpty({ message: 'pincode не может быть пустым' })
+  @MinLength(6, { message: 'pincode должен быть не менее 6-х символов' })
+  pincode?: string;
 }

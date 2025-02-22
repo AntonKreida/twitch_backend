@@ -133,6 +133,43 @@ export class VerificationService {
     return true;
   }
 
+  async sendVerificationTokenTwoFactorAuth(
+    userId: string,
+    typeToken: ENUM_TYPE_TOKEN,
+    metadata: ISessionMetadata,
+  ): Promise<boolean> {
+    const tokenCreated = await this.generateToken({
+      userId,
+      typeToken,
+      isUUID: false,
+    });
+
+    return await this.emailService.sendEmail({
+      emailFrom: 'Kx5wO@example.com',
+      emailTo: tokenCreated.user.email,
+      subject:
+        'Подтверждение запроса на включение двойной аутентификации на TvStream',
+      code: tokenCreated.token,
+      title:
+        'Подтверждение запроса на включение двойной аутентификации на TvStream',
+      subtitle: `Привет ${tokenCreated.user.firstName} ${tokenCreated.user.lastName}, `,
+      message: `Для того чтобы включить двойную аутентификацию, пожалуйста, введите код ниже:`,
+      metadata,
+    });
+  }
+
+  async verifyTwoFactorAuth(token: string): Promise<boolean> {
+    const findToken = await this.checkToken(token, ENUM_TYPE_TOKEN.TFA);
+
+    if (!findToken) {
+      throw new NotFoundException('Токен не найден!');
+    }
+
+    await this.tokenRepository.deleteTokenById(findToken.id);
+
+    return true;
+  }
+
   private async generateToken({
     userId,
     typeToken,

@@ -73,6 +73,7 @@ export class AuthService {
     username: string,
     password: string,
     metadata: ISessionMetadata,
+    pincode?: string,
   ): Promise<UserModel> {
     const user = await this.userRepository.findUser({ username });
 
@@ -97,6 +98,18 @@ export class AuthService {
       throw new BadRequestException(
         'Пользователь не подтвержден! Пожалуйста проверьте почту для подтверждения!',
       );
+    }
+
+    if (userEntity.isTwoFactorEnable) {
+      if (!pincode) {
+        throw new BadRequestException('Неверный код!');
+      }
+
+      const isValid = await userEntity.validatePincode(pincode);
+
+      if (!isValid) {
+        throw new BadRequestException('Неверный код!');
+      }
     }
 
     return await this.sessionService.saveSession(req, user, metadata);

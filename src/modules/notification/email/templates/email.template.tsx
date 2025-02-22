@@ -18,6 +18,7 @@ interface IEmailProps {
   message: string;
   link?: string;
   textLink?: string;
+  code?: string;
   metadata?: ISessionMetadata;
 }
 
@@ -28,6 +29,7 @@ const Email: React.FC<IEmailProps> = ({
   subtitle,
   textLink,
   metadata,
+  code,
 }) => (
   <Html lang="ru">
     <Head>
@@ -79,7 +81,7 @@ const Email: React.FC<IEmailProps> = ({
                 {message}
               </Text>
               {!!(link && textLink) && (
-                <div className="flex items-center justify-center w-full">
+                <div className="flex items-center justify-center">
                   <Button
                     href={link}
                     className="my-[65px] bg-[#329DFF] py-4 text-center text-white text-md font-semibold font-sans rounded-md px-10"
@@ -88,13 +90,18 @@ const Email: React.FC<IEmailProps> = ({
                   </Button>
                 </div>
               )}
+              {!!code && (
+                <div className="bg-[#F2FBFF] py-3.5 px-10 flex items-center justify-center">
+                  <Text className="font-sans text-2xl">{code}</Text>
+                </div>
+              )}
               <Text className="font-bold">
                 Если вы не делали запрос, пожалуйста, проигнорируйте это
                 письмо!!!
               </Text>
             </div>
           </div>
-          <div className="bg-[#F2FBFF] w-full py-3.5 px-10 font-sans text-sm">
+          <div className="bg-[#F2FBFF] py-3.5 px-10 font-sans text-sm">
             <Text>
               Если у вас возникли трудности, вопросы вы можете обратиться в нашу
               техническую поддержку, пожалуйста, свяжитесь с нами по электронной
@@ -120,6 +127,7 @@ export const emailTemplate = ({
   message,
   textLink,
   metadata,
+  code,
 }: IEmailProps) =>
   render(
     <Email
@@ -129,5 +137,6 @@ export const emailTemplate = ({
       subtitle={subtitle}
       textLink={textLink}
       metadata={metadata}
+      code={code}
     />,
   );

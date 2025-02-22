@@ -11,6 +11,7 @@ datasource db {
 enum ENUM_TYPE_TOKEN {
   EMAIL
   PASSWORD
+  TFA
 }
 
 model User {
@@ -23,6 +24,8 @@ model User {
   bio                 String?
   passwordHash        String
   isEmailVerification Boolean  @default(false)
+  isTwoFactorEnable   Boolean  @default(false)
+  twoFactorSecret     String?
   createAt            DateTime @default(now())
   updateAt            DateTime @updatedAt
 
