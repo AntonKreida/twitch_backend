@@ -1,4 +1,4 @@
 export interface IGenerateQrCode {
-  otpauthUrl: string;
+  qrCode: string;
   secret: string;
 }

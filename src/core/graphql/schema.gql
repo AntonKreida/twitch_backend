@@ -58,7 +58,7 @@ input PasswordRecoveryInput {
 }
 
 type QrCodeModel {
-  otpauthUrl: String!
+  qrCode: String!
   secret: String!
 }
 

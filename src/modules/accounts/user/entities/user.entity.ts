@@ -1,5 +1,6 @@
 import { genSalt, hash, compare } from 'bcrypt';
 import { authenticator } from 'otplib';
+import { toDataURL } from 'qrcode';
 import { UserModel } from '../models';
 import { IGenerateQrCode } from '../lib';
 
@@ -58,7 +59,7 @@ export class UserEntity implements TEntityUser {
     );
 
     return {
-      otpauthUrl,
+      qrCode: await toDataURL(otpauthUrl),
       secret: this.twoFactorSecret,
     };
   }
