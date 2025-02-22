@@ -102,6 +102,35 @@ export class TfaService {
     return true;
   }
 
+  async disableTwoFactorAuth(
+    userId: string,
+    password: string,
+  ): Promise<boolean> {
+    const user = new UserEntity(
+      await this.userRepository.findUser({ id: userId }),
+    );
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const isCorrectPassword = await user.validatePassword(password);
+
+    if (!isCorrectPassword) {
+      throw new UnauthorizedException('Неверный пароль!');
+    }
+
+    const updateUser = await user.disableTwoFactorAuth();
+
+    await this.userRepository.updateUser({
+      id: updateUser.id,
+      isTwoFactorEnable: updateUser.isTwoFactorEnable,
+      twoFactorSecret: updateUser.twoFactorSecret,
+    });
+
+    return true;
+  }
+
   private async verifyTwoFactorAuthCode(
     token: string,
     secret: string,

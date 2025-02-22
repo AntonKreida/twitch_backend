@@ -2,6 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { TfaService } from './tfa.service';
 import { Auth, Authorized, ISessionMetadata, UserMetadata } from '/src/shared';
 import {
+  DisableTwoFactorAuthInput,
   EnableTwoFactorAuthInput,
   SendInitTwoFactorAuthenticationInput,
 } from './inputs';
@@ -44,5 +45,14 @@ export class TfaResolver {
     { pincode, secret }: EnableTwoFactorAuthInput,
   ): Promise<boolean> {
     return await this.tfaService.enableTwoFactorAuth(id, pincode, secret);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean, { name: 'disableTwoFactorAuth' })
+  async disableTwoFactorAuth(
+    @Authorized('id') id: string,
+    @Args('disableTwoFactorAuthInput') { password }: DisableTwoFactorAuthInput,
+  ): Promise<boolean> {
+    return await this.tfaService.disableTwoFactorAuth(id, password);
   }
 }
