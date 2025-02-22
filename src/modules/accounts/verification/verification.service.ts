@@ -158,6 +158,18 @@ export class VerificationService {
     });
   }
 
+  async verifyTwoFactorAuth(token: string): Promise<boolean> {
+    const findToken = await this.checkToken(token, ENUM_TYPE_TOKEN.TFA);
+
+    if (!findToken) {
+      throw new NotFoundException('Токен не найден!');
+    }
+
+    await this.tokenRepository.deleteTokenById(findToken.id);
+
+    return true;
+  }
+
   private async generateToken({
     userId,
     typeToken,

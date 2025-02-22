@@ -30,6 +30,7 @@ type Mutation {
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
   sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
   signOut: String!
@@ -56,6 +57,11 @@ input PasswordRecoveryInput {
   email: String!
 }
 
+type QrCodeModel {
+  otpauthUrl: String!
+  secret: String!
+}
+
 type Query {
   clearSession: Boolean!
   currentSession: SessionModel!
@@ -70,6 +76,10 @@ type Query {
 enum SORT_ENUM {
   ASC
   DESC
+}
+
+input SendGeneratedQrCodeInput {
+  token: String!
 }
 
 input SendInitTwoFactorAuthenticationInput {

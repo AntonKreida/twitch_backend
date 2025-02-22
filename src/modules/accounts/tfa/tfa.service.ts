@@ -6,8 +6,10 @@ import {
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { VerificationService } from '@/modules/accounts/verification';
+import { UserEntity } from '@/modules/accounts/user/entities';
+
+import { QrCodeModel } from './models';
 import { ISessionMetadata } from '@shared';
-import { UserEntity } from '../user';
 
 @Injectable()
 export class TfaService {
@@ -40,5 +42,28 @@ export class TfaService {
       ENUM_TYPE_TOKEN.TFA,
       metadata,
     );
+  }
+
+  async sendGenerateQrCode(
+    userId: string,
+    token: string,
+  ): Promise<QrCodeModel> {
+    const isSuccess = await this.verificationService.verifyTwoFactorAuth(token);
+
+    if (!isSuccess) {
+      throw new UnauthorizedException('Неверный токен!');
+    }
+
+    const user = new UserEntity(
+      await this.userRepository.findUser({ id: userId }),
+    );
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const updateUser = await user.generateSecretKey();
+
+    return await updateUser.generateQrCode();
   }
 }

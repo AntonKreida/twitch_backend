@@ -1,6 +1,7 @@
 import { genSalt, hash, compare } from 'bcrypt';
 import { authenticator } from 'otplib';
 import { UserModel } from '../models';
+import { IGenerateQrCode } from '../lib';
 
 type TEntityUser = Partial<Omit<UserModel, 'createAt' | 'updateAt'>>;
 
@@ -42,10 +43,23 @@ export class UserEntity implements TEntityUser {
     return await compare(password, this.passwordHash);
   }
 
-  public async generateTwoFactorAuthenticationSecret(): Promise<UserEntity> {
+  public async generateSecretKey(): Promise<UserEntity> {
     const secretKey = await authenticator.generateSecret();
 
     this.twoFactorSecret = secretKey;
     return this;
+  }
+
+  public async generateQrCode(): Promise<IGenerateQrCode> {
+    const otpauthUrl = authenticator.keyuri(
+      this.email,
+      process.env.AUTH_APP_NAME,
+      this.twoFactorSecret,
+    );
+
+    return {
+      otpauthUrl,
+      secret: this.twoFactorSecret,
+    };
   }
 }
