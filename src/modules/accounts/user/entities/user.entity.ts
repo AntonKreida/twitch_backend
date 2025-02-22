@@ -60,7 +60,6 @@ export class UserEntity implements TEntityUser {
 
     return {
       qrCode: await toDataURL(otpauthUrl),
-      secret: this.twoFactorSecret,
     };
   }
 

@@ -69,7 +69,6 @@ input PasswordRecoveryInput {
 
 type QrCodeModel {
   qrCode: String!
-  secret: String!
 }
 
 type Query {

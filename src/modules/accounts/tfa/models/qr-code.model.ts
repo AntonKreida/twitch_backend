@@ -4,7 +4,4 @@ import { ObjectType, Field } from '@nestjs/graphql';
 export class QrCodeModel {
   @Field(() => String)
   qrCode: string;
-
-  @Field(() => String)
-  secret: string;
 }
