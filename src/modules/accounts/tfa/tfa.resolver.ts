@@ -1,7 +1,10 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { TfaService } from './tfa.service';
 import { Auth, Authorized, ISessionMetadata, UserMetadata } from '/src/shared';
-import { SendInitTwoFactorAuthenticationInput } from './inputs';
+import {
+  EnableTwoFactorAuthInput,
+  SendInitTwoFactorAuthenticationInput,
+} from './inputs';
 import { QrCodeModel } from './models';
 import { SendGeneratedQrCodeInput } from './inputs/send-generated-qr-code.input';
 
@@ -29,7 +32,17 @@ export class TfaResolver {
   async sendGenerateQrCode(
     @Authorized('id') id: string,
     @Args('SendGeneratedQrCodeInput') { token }: SendGeneratedQrCodeInput,
-  ) {
+  ): Promise<QrCodeModel> {
     return await this.tfaService.sendGenerateQrCode(id, token);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean, { name: 'enableTwoFactorAuth' })
+  async enableTwoFactorAuth(
+    @Authorized('id') id: string,
+    @Args('enubleTwoFactorAuthInput')
+    { pincode, secret }: EnableTwoFactorAuthInput,
+  ): Promise<boolean> {
+    return await this.tfaService.enableTwoFactorAuth(id, pincode, secret);
   }
 }

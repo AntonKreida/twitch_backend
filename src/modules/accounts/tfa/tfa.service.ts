@@ -10,6 +10,7 @@ import { UserEntity } from '@/modules/accounts/user/entities';
 
 import { QrCodeModel } from './models';
 import { ISessionMetadata } from '@shared';
+import { authenticator } from 'otplib';
 
 @Injectable()
 export class TfaService {
@@ -64,6 +65,50 @@ export class TfaService {
 
     const updateUser = await user.generateSecretKey();
 
+    await this.userRepository.updateUser({
+      id: updateUser.id,
+      twoFactorSecret: updateUser.twoFactorSecret,
+    });
+
     return await updateUser.generateQrCode();
+  }
+
+  async enableTwoFactorAuth(
+    userId: string,
+    pincode: string,
+    secret: string,
+  ): Promise<boolean> {
+    const isValid = await this.verifyTwoFactorAuthCode(pincode, secret);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Неверный код!');
+    }
+
+    const user = new UserEntity(
+      await this.userRepository.findUser({ id: userId }),
+    );
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const updateUser = await user.enableTwoFactorAuth();
+
+    await this.userRepository.updateUser({
+      id: updateUser.id,
+      isTwoFactorEnable: updateUser.isTwoFactorEnable,
+    });
+
+    return true;
+  }
+
+  private async verifyTwoFactorAuthCode(
+    token: string,
+    secret: string,
+  ): Promise<boolean> {
+    return await authenticator.verify({
+      token,
+      secret,
+    });
   }
 }

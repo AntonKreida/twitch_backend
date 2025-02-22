@@ -63,4 +63,9 @@ export class UserEntity implements TEntityUser {
       secret: this.twoFactorSecret,
     };
   }
+
+  public async enableTwoFactorAuth(): Promise<UserEntity> {
+    this.isTwoFactorEnable = true;
+    return this;
+  }
 }

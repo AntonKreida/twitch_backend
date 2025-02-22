@@ -13,6 +13,11 @@ type DeviceModel {
   type: String!
 }
 
+input EnableTwoFactorAuthInput {
+  pincode: String!
+  secret: String!
+}
+
 type LocationModel {
   city: String
   country: String
@@ -29,6 +34,7 @@ type MetadataModel {
 type Mutation {
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
+  enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
   sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
   sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
