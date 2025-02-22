@@ -74,4 +74,11 @@ export class UserEntity implements TEntityUser {
     this.twoFactorSecret = null;
     return this;
   }
+
+  public async validatePincode(pincode: string): Promise<boolean> {
+    return await authenticator.verify({
+      token: pincode,
+      secret: this.twoFactorSecret,
+    });
+  }
 }

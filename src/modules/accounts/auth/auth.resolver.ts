@@ -18,13 +18,17 @@ export class AuthResolver {
 
   @Mutation(() => UserModel, { name: 'signIn' })
   async signIn(
-    @Args('inputUserSignIn') inputUser: UserSignInInput,
+    @Args('inputUserSignIn') { username, password, pincode }: UserSignInInput,
     @Context() { req }: IContext,
     @UserMetadata() metadata: ISessionMetadata,
   ): Promise<UserModel> {
-    const { username, password } = inputUser;
-
-    return await this.authService.signIn(req, username, password, metadata);
+    return await this.authService.signIn(
+      req,
+      username,
+      password,
+      metadata,
+      pincode,
+    );
   }
 
   @Mutation(() => String, { name: 'signOut' })

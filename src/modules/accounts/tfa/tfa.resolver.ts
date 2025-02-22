@@ -43,9 +43,9 @@ export class TfaResolver {
   async enableTwoFactorAuth(
     @Authorized('id') id: string,
     @Args('enubleTwoFactorAuthInput')
-    { pincode, secret }: EnableTwoFactorAuthInput,
+    { pincode }: EnableTwoFactorAuthInput,
   ): Promise<boolean> {
-    return await this.tfaService.enableTwoFactorAuth(id, pincode, secret);
+    return await this.tfaService.enableTwoFactorAuth(id, pincode);
   }
 
   @Auth()

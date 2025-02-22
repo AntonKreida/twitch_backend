@@ -4,7 +4,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
-import { authenticator } from 'otplib';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { VerificationService } from '@/modules/accounts/verification';
 import { UserEntity } from '@/modules/accounts/user/entities';
@@ -73,23 +72,19 @@ export class TfaService {
     return await updateUser.generateQrCode();
   }
 
-  async enableTwoFactorAuth(
-    userId: string,
-    pincode: string,
-    secret: string,
-  ): Promise<boolean> {
-    const isValid = await this.verifyTwoFactorAuthCode(pincode, secret);
-
-    if (!isValid) {
-      throw new UnauthorizedException('Неверный код!');
-    }
-
+  async enableTwoFactorAuth(userId: string, pincode: string): Promise<boolean> {
     const user = new UserEntity(
       await this.userRepository.findUser({ id: userId }),
     );
 
     if (!user) {
       throw new NotFoundException('Пользователь не найден!');
+    }
+
+    const isValid = await user.validatePincode(pincode);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Неверный код!');
     }
 
     const updateUser = await user.enableTwoFactorAuth();
@@ -129,15 +124,5 @@ export class TfaService {
     });
 
     return true;
-  }
-
-  private async verifyTwoFactorAuthCode(
-    token: string,
-    secret: string,
-  ): Promise<boolean> {
-    return await authenticator.verify({
-      token,
-      secret,
-    });
   }
 }

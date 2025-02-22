@@ -19,7 +19,6 @@ input DisableTwoFactorAuthInput {
 
 input EnableTwoFactorAuthInput {
   pincode: String!
-  secret: String!
 }
 
 type LocationModel {
@@ -122,6 +121,7 @@ type UserModel {
 
 input UserSignInInput {
   password: String!
+  pincode: String
   username: String!
 }
 
