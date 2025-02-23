@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { ENUM_TYPE_TOKEN, User, Token } from '/prisma/generated';
 
 import { EmailService } from '@/modules/notification';
@@ -168,6 +168,28 @@ export class VerificationService {
     await this.tokenRepository.deleteTokenById(findToken.id);
 
     return true;
+  }
+
+  async verifyDeactivatedAccount(
+    token: string,
+    req: Request,
+    res: Response,
+  ): Promise<boolean> {
+    const findToken = await this.checkToken(token, ENUM_TYPE_TOKEN.DEACTIVATED);
+
+    if (!findToken) {
+      throw new NotFoundException('Токен не найден!');
+    }
+
+    const user = await new UserEntity(
+      await this.userRepository.findUser({ id: findToken.userId }),
+    ).deactivatedAccount(true);
+
+    await this.userRepository.updateUser(user);
+
+    await this.tokenRepository.deleteTokenById(findToken.id);
+
+    return await this.sessionService.destroySession(req, res);
   }
 
   private async generateToken({

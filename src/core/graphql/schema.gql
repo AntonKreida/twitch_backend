@@ -106,6 +106,7 @@ type UserModel {
   avatar: String
   bio: String
   createAt: DateTime!
+  deactivatedAt: DateTime
   email: String!
   firstName: String!
   id: ID!
