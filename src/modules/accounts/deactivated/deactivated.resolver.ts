@@ -1,8 +1,9 @@
 import { Args, Resolver } from '@nestjs/graphql';
 import { Mutation } from '@nestjs/graphql';
 import { DeactivatedService } from './deactivated.service';
+import { SendDeactivatedEmailInput } from './inputs';
+
 import { Auth, Authorized, ISessionMetadata, UserMetadata } from '@shared';
-import { SendDeactivatedEmailInput } from './inputs/send-deactivated-email';
 
 @Resolver()
 export class DeactivatedResolver {
