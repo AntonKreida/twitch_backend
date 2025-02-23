@@ -109,6 +109,7 @@ type UserModel {
   email: String!
   firstName: String!
   id: ID!
+  isDeactivatedAccount: Boolean!
   isEmailVerification: Boolean!
   isTwoFactorEnable: Boolean!
   lastName: String!
