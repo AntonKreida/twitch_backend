@@ -20,6 +20,7 @@ import {
   TfaModule,
   DeactivatedModule,
   CroneModule,
+  ProfilesModule,
 } from '@modules';
 
 import { isDevEnv } from '@shared';
@@ -53,6 +54,7 @@ import { isDevEnv } from '@shared';
     TfaModule,
     DeactivatedModule,
     CroneModule,
+    ProfilesModule,
   ],
 })
 export class CoreModule {}
