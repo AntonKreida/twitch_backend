@@ -40,7 +40,7 @@ type Mutation {
   disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
   enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
-  sendDeactivatedAccount(email: String!): Boolean!
+  sendDeactivatedAccount(sendDeactivatedEmailInput: SendDeactivatedEmailInput!): Boolean!
   sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
   sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
@@ -86,6 +86,10 @@ type Query {
 enum SORT_ENUM {
   ASC
   DESC
+}
+
+input SendDeactivatedEmailInput {
+  email: String!
 }
 
 input SendGeneratedQrCodeInput {

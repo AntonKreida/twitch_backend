@@ -2,6 +2,7 @@ import { Args, Resolver } from '@nestjs/graphql';
 import { Mutation } from '@nestjs/graphql';
 import { DeactivatedService } from './deactivated.service';
 import { Auth, Authorized, ISessionMetadata, UserMetadata } from '@shared';
+import { SendDeactivatedEmailInput } from './inputs/send-deactivated-email';
 
 @Resolver()
 export class DeactivatedResolver {
@@ -12,7 +13,7 @@ export class DeactivatedResolver {
   async sendDeactivatedAccount(
     @Authorized('id') id: string,
     @UserMetadata() metadata: ISessionMetadata,
-    @Args('email') email: string,
+    @Args('sendDeactivatedEmailInput') { email }: SendDeactivatedEmailInput,
   ): Promise<boolean> {
     return await this.deactivatedService.sendDeactivatedAccountEmail(
       id,
