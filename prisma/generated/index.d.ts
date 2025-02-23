@@ -31,7 +31,8 @@ export namespace $Enums {
   export const ENUM_TYPE_TOKEN: {
   EMAIL: 'EMAIL',
   PASSWORD: 'PASSWORD',
-  TFA: 'TFA'
+  TFA: 'TFA',
+  DEACTIVATED: 'DEACTIVATED'
 };
 
 export type ENUM_TYPE_TOKEN = (typeof ENUM_TYPE_TOKEN)[keyof typeof ENUM_TYPE_TOKEN]
@@ -1026,6 +1027,8 @@ export namespace Prisma {
     passwordHash: string | null
     isEmailVerification: boolean | null
     isTwoFactorEnable: boolean | null
+    isDeactivatedAccount: boolean | null
+    deactivatedAt: Date | null
     twoFactorSecret: string | null
     createAt: Date | null
     updateAt: Date | null
@@ -1042,6 +1045,8 @@ export namespace Prisma {
     passwordHash: string | null
     isEmailVerification: boolean | null
     isTwoFactorEnable: boolean | null
+    isDeactivatedAccount: boolean | null
+    deactivatedAt: Date | null
     twoFactorSecret: string | null
     createAt: Date | null
     updateAt: Date | null
@@ -1058,6 +1063,8 @@ export namespace Prisma {
     passwordHash: number
     isEmailVerification: number
     isTwoFactorEnable: number
+    isDeactivatedAccount: number
+    deactivatedAt: number
     twoFactorSecret: number
     createAt: number
     updateAt: number
@@ -1076,6 +1083,8 @@ export namespace Prisma {
     passwordHash?: true
     isEmailVerification?: true
     isTwoFactorEnable?: true
+    isDeactivatedAccount?: true
+    deactivatedAt?: true
     twoFactorSecret?: true
     createAt?: true
     updateAt?: true
@@ -1092,6 +1101,8 @@ export namespace Prisma {
     passwordHash?: true
     isEmailVerification?: true
     isTwoFactorEnable?: true
+    isDeactivatedAccount?: true
+    deactivatedAt?: true
     twoFactorSecret?: true
     createAt?: true
     updateAt?: true
@@ -1108,6 +1119,8 @@ export namespace Prisma {
     passwordHash?: true
     isEmailVerification?: true
     isTwoFactorEnable?: true
+    isDeactivatedAccount?: true
+    deactivatedAt?: true
     twoFactorSecret?: true
     createAt?: true
     updateAt?: true
@@ -1197,6 +1210,8 @@ export namespace Prisma {
     passwordHash: string
     isEmailVerification: boolean
     isTwoFactorEnable: boolean
+    isDeactivatedAccount: boolean
+    deactivatedAt: Date | null
     twoFactorSecret: string | null
     createAt: Date
     updateAt: Date
@@ -1230,6 +1245,8 @@ export namespace Prisma {
     passwordHash?: boolean
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: boolean
     twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
@@ -1248,6 +1265,8 @@ export namespace Prisma {
     passwordHash?: boolean
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: boolean
     twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
@@ -1264,6 +1283,8 @@ export namespace Prisma {
     passwordHash?: boolean
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: boolean
     twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
@@ -1280,12 +1301,14 @@ export namespace Prisma {
     passwordHash?: boolean
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: boolean
     twoFactorSecret?: boolean
     createAt?: boolean
     updateAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "passwordHash" | "isEmailVerification" | "isTwoFactorEnable" | "twoFactorSecret" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "avatar" | "bio" | "passwordHash" | "isEmailVerification" | "isTwoFactorEnable" | "isDeactivatedAccount" | "deactivatedAt" | "twoFactorSecret" | "createAt" | "updateAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | User$tokensArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1309,6 +1332,8 @@ export namespace Prisma {
       passwordHash: string
       isEmailVerification: boolean
       isTwoFactorEnable: boolean
+      isDeactivatedAccount: boolean
+      deactivatedAt: Date | null
       twoFactorSecret: string | null
       createAt: Date
       updateAt: Date
@@ -1746,6 +1771,8 @@ export namespace Prisma {
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly isEmailVerification: FieldRef<"User", 'Boolean'>
     readonly isTwoFactorEnable: FieldRef<"User", 'Boolean'>
+    readonly isDeactivatedAccount: FieldRef<"User", 'Boolean'>
+    readonly deactivatedAt: FieldRef<"User", 'DateTime'>
     readonly twoFactorSecret: FieldRef<"User", 'String'>
     readonly createAt: FieldRef<"User", 'DateTime'>
     readonly updateAt: FieldRef<"User", 'DateTime'>
@@ -3288,6 +3315,8 @@ export namespace Prisma {
     passwordHash: 'passwordHash',
     isEmailVerification: 'isEmailVerification',
     isTwoFactorEnable: 'isTwoFactorEnable',
+    isDeactivatedAccount: 'isDeactivatedAccount',
+    deactivatedAt: 'deactivatedAt',
     twoFactorSecret: 'twoFactorSecret',
     createAt: 'createAt',
     updateAt: 'updateAt'
@@ -3418,6 +3447,8 @@ export namespace Prisma {
     passwordHash?: StringFilter<"User"> | string
     isEmailVerification?: BoolFilter<"User"> | boolean
     isTwoFactorEnable?: BoolFilter<"User"> | boolean
+    isDeactivatedAccount?: BoolFilter<"User"> | boolean
+    deactivatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     twoFactorSecret?: StringNullableFilter<"User"> | string | null
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
@@ -3435,6 +3466,8 @@ export namespace Prisma {
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
     isTwoFactorEnable?: SortOrder
+    isDeactivatedAccount?: SortOrder
+    deactivatedAt?: SortOrderInput | SortOrder
     twoFactorSecret?: SortOrderInput | SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -3455,6 +3488,8 @@ export namespace Prisma {
     passwordHash?: StringFilter<"User"> | string
     isEmailVerification?: BoolFilter<"User"> | boolean
     isTwoFactorEnable?: BoolFilter<"User"> | boolean
+    isDeactivatedAccount?: BoolFilter<"User"> | boolean
+    deactivatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     twoFactorSecret?: StringNullableFilter<"User"> | string | null
     createAt?: DateTimeFilter<"User"> | Date | string
     updateAt?: DateTimeFilter<"User"> | Date | string
@@ -3472,6 +3507,8 @@ export namespace Prisma {
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
     isTwoFactorEnable?: SortOrder
+    isDeactivatedAccount?: SortOrder
+    deactivatedAt?: SortOrderInput | SortOrder
     twoFactorSecret?: SortOrderInput | SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -3494,6 +3531,8 @@ export namespace Prisma {
     passwordHash?: StringWithAggregatesFilter<"User"> | string
     isEmailVerification?: BoolWithAggregatesFilter<"User"> | boolean
     isTwoFactorEnable?: BoolWithAggregatesFilter<"User"> | boolean
+    isDeactivatedAccount?: BoolWithAggregatesFilter<"User"> | boolean
+    deactivatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     twoFactorSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
     createAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updateAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -3575,6 +3614,8 @@ export namespace Prisma {
     passwordHash: string
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
     twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
@@ -3592,6 +3633,8 @@ export namespace Prisma {
     passwordHash: string
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
     twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
@@ -3609,6 +3652,8 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
     isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3626,6 +3671,8 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
     isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3643,6 +3690,8 @@ export namespace Prisma {
     passwordHash: string
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
     twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
@@ -3659,6 +3708,8 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
     isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3675,6 +3726,8 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
     isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3784,6 +3837,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -3821,6 +3885,8 @@ export namespace Prisma {
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
     isTwoFactorEnable?: SortOrder
+    isDeactivatedAccount?: SortOrder
+    deactivatedAt?: SortOrder
     twoFactorSecret?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -3837,6 +3903,8 @@ export namespace Prisma {
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
     isTwoFactorEnable?: SortOrder
+    isDeactivatedAccount?: SortOrder
+    deactivatedAt?: SortOrder
     twoFactorSecret?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -3853,6 +3921,8 @@ export namespace Prisma {
     passwordHash?: SortOrder
     isEmailVerification?: SortOrder
     isTwoFactorEnable?: SortOrder
+    isDeactivatedAccount?: SortOrder
+    deactivatedAt?: SortOrder
     twoFactorSecret?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -3900,6 +3970,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -3994,6 +4078,10 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -4077,6 +4165,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4150,6 +4249,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4251,6 +4364,8 @@ export namespace Prisma {
     passwordHash: string
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
     twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
@@ -4267,6 +4382,8 @@ export namespace Prisma {
     passwordHash: string
     isEmailVerification?: boolean
     isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
     twoFactorSecret?: string | null
     createAt?: Date | string
     updateAt?: Date | string
@@ -4299,6 +4416,8 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
     isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4315,6 +4434,8 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
     isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string

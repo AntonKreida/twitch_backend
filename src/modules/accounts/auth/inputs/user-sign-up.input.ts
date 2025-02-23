@@ -18,6 +18,8 @@ type TUserRegister = Omit<
   | 'isEmailVerification'
   | 'twoFactorSecret'
   | 'isTwoFactorEnable'
+  | 'isDeactivatedAccount'
+  | 'deactivatedAt'
 >;
 
 @InputType()

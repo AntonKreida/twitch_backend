@@ -12,22 +12,25 @@ enum ENUM_TYPE_TOKEN {
   EMAIL
   PASSWORD
   TFA
+  DEACTIVATED
 }
 
 model User {
-  id                  String   @id @default(uuid())
-  firstName           String
-  lastName            String
-  username            String   @unique
-  email               String   @unique
-  avatar              String?
-  bio                 String?
-  passwordHash        String
-  isEmailVerification Boolean  @default(false)
-  isTwoFactorEnable   Boolean  @default(false)
-  twoFactorSecret     String?
-  createAt            DateTime @default(now())
-  updateAt            DateTime @updatedAt
+  id                   String   @id @default(uuid())
+  firstName            String
+  lastName             String
+  username             String   @unique
+  email                String   @unique
+  avatar               String?
+  bio                  String?
+  passwordHash         String
+  isEmailVerification  Boolean  @default(false)
+  isTwoFactorEnable    Boolean  @default(false)
+  isDeactivatedAccount Boolean  @default(false)
+  deactivatedAt        DateTime?
+  twoFactorSecret      String?
+  createAt             DateTime @default(now())
+  updateAt             DateTime @updatedAt
 
   tokens Token[]
 }

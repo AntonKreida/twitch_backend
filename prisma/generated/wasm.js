@@ -128,6 +128,8 @@ exports.Prisma.UserScalarFieldEnum = {
   passwordHash: 'passwordHash',
   isEmailVerification: 'isEmailVerification',
   isTwoFactorEnable: 'isTwoFactorEnable',
+  isDeactivatedAccount: 'isDeactivatedAccount',
+  deactivatedAt: 'deactivatedAt',
   twoFactorSecret: 'twoFactorSecret',
   createAt: 'createAt',
   updateAt: 'updateAt'
@@ -160,7 +162,8 @@ exports.Prisma.NullsOrder = {
 exports.ENUM_TYPE_TOKEN = exports.$Enums.ENUM_TYPE_TOKEN = {
   EMAIL: 'EMAIL',
   PASSWORD: 'PASSWORD',
-  TFA: 'TFA'
+  TFA: 'TFA',
+  DEACTIVATED: 'DEACTIVATED'
 };
 
 exports.Prisma.ModelName = {

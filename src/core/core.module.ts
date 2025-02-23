@@ -18,6 +18,7 @@ import {
   EmailModule,
   PasswordModule,
   TfaModule,
+  DeactivatedModule,
 } from '@modules';
 
 import { isDevEnv } from '@shared';
@@ -49,6 +50,7 @@ import { isDevEnv } from '@shared';
     PasswordModule,
     EmailModule,
     TfaModule,
+    DeactivatedModule,
   ],
 })
 export class CoreModule {}

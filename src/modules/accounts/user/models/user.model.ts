@@ -36,6 +36,12 @@ export class UserModel implements User {
   @Field(() => String)
   passwordHash: string;
 
+  @Field(() => Boolean)
+  isDeactivatedAccount: boolean;
+
+  @Field(() => Date, { nullable: true })
+  deactivatedAt: Date | null;
+
   @Field(() => Date)
   createAt: Date;
 

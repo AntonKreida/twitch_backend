@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { ENUM_TYPE_TOKEN, User, Token } from '/prisma/generated';
 
 import { EmailService } from '@/modules/notification';
@@ -168,6 +168,53 @@ export class VerificationService {
     await this.tokenRepository.deleteTokenById(findToken.id);
 
     return true;
+  }
+
+  async verifyDeactivatedAccount(
+    token: string,
+    req: Request,
+    res: Response,
+  ): Promise<UserModel> {
+    const findToken = await this.checkToken(token, ENUM_TYPE_TOKEN.DEACTIVATED);
+
+    if (!findToken) {
+      throw new NotFoundException('Токен не найден!');
+    }
+
+    const user = await new UserEntity(
+      await this.userRepository.findUser({ id: findToken.userId }),
+    ).deactivatedAccount(true);
+
+    await this.tokenRepository.deleteTokenById(findToken.id);
+
+    const updatedUser = await this.userRepository.updateUser(user);
+
+    await this.sessionService.destroySession(req, res);
+
+    return updatedUser;
+  }
+
+  async sendDeactivatedAccount(
+    userId: string,
+    typeToken: ENUM_TYPE_TOKEN,
+    metadata: ISessionMetadata,
+  ): Promise<boolean> {
+    const tokenCreated = await this.generateToken({
+      userId,
+      typeToken,
+      isUUID: false,
+    });
+
+    return await this.emailService.sendEmail({
+      emailFrom: 'Kx5wO@example.com',
+      emailTo: tokenCreated.user.email,
+      subject: 'Подтверждение деактивации аккаунта на TvStream',
+      code: tokenCreated.token,
+      title: 'Подтверждение деактивации аккаунта на TvStream',
+      subtitle: `Привет ${tokenCreated.user.firstName} ${tokenCreated.user.lastName}, `,
+      message: `Для того чтобы деактивировать аккаунт, пожалуйста, введите код ниже:`,
+      metadata,
+    });
   }
 
   private async generateToken({

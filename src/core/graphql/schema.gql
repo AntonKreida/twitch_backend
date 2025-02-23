@@ -7,6 +7,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DeactivatedInput {
+  password: String!
+  token: String!
+}
+
 type DeviceModel {
   browser: String!
   os: String!
@@ -37,9 +42,11 @@ type MetadataModel {
 type Mutation {
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
+  deactivated(deactivatedInput: DeactivatedInput!): UserModel!
   disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
   enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  sendDeactivatedAccount(sendDeactivatedEmailInput: SendDeactivatedEmailInput!): Boolean!
   sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
   sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
@@ -87,6 +94,10 @@ enum SORT_ENUM {
   DESC
 }
 
+input SendDeactivatedEmailInput {
+  email: String!
+}
+
 input SendGeneratedQrCodeInput {
   token: String!
 }
@@ -106,9 +117,11 @@ type UserModel {
   avatar: String
   bio: String
   createAt: DateTime!
+  deactivatedAt: DateTime
   email: String!
   firstName: String!
   id: ID!
+  isDeactivatedAccount: Boolean!
   isEmailVerification: Boolean!
   isTwoFactorEnable: Boolean!
   lastName: String!
