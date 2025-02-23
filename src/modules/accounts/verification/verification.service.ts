@@ -192,6 +192,38 @@ export class VerificationService {
     return await this.sessionService.destroySession(req, res);
   }
 
+  async sendDeactivatedAccount(
+    userId: string,
+    typeToken: ENUM_TYPE_TOKEN,
+    metadata: ISessionMetadata,
+  ): Promise<boolean> {
+    const tokenCreated = await this.generateToken({
+      userId,
+      typeToken,
+      isUUID: true,
+    });
+
+    const hostnameClient = await this.configService.getOrThrow<string>(
+      'ALLOWED_ORIGIN',
+    );
+
+    const urlForLink = new URL(hostnameClient);
+    urlForLink.pathname = '/deactivated';
+    urlForLink.searchParams.append('token', tokenCreated.token);
+
+    return await this.emailService.sendEmail({
+      emailFrom: 'Kx5wO@example.com',
+      emailTo: tokenCreated.user.email,
+      subject: 'Подтверждение деактивации аккаунта на TvStream',
+      link: urlForLink.href,
+      textLink: 'Подтвердите деактивацию аккаунта',
+      title: 'Подтверждение деактивации аккаунта на TvStream',
+      subtitle: `Привет ${tokenCreated.user.firstName} ${tokenCreated.user.lastName}, `,
+      message: `Для того чтобы деактивировать аккаунт, пожалуйста, нажмите на кнопку ниже.`,
+      metadata,
+    });
+  }
+
   private async generateToken({
     userId,
     typeToken,
