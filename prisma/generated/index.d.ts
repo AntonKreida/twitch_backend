@@ -31,7 +31,8 @@ export namespace $Enums {
   export const ENUM_TYPE_TOKEN: {
   EMAIL: 'EMAIL',
   PASSWORD: 'PASSWORD',
-  TFA: 'TFA'
+  TFA: 'TFA',
+  DEACTIVATED: 'DEACTIVATED'
 };
 
 export type ENUM_TYPE_TOKEN = (typeof ENUM_TYPE_TOKEN)[keyof typeof ENUM_TYPE_TOKEN]

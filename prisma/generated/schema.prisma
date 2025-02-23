@@ -12,6 +12,7 @@ enum ENUM_TYPE_TOKEN {
   EMAIL
   PASSWORD
   TFA
+  DEACTIVATED
 }
 
 model User {
