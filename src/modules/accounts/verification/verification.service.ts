@@ -174,7 +174,7 @@ export class VerificationService {
     token: string,
     req: Request,
     res: Response,
-  ): Promise<boolean> {
+  ): Promise<UserModel> {
     const findToken = await this.checkToken(token, ENUM_TYPE_TOKEN.DEACTIVATED);
 
     if (!findToken) {
@@ -185,11 +185,13 @@ export class VerificationService {
       await this.userRepository.findUser({ id: findToken.userId }),
     ).deactivatedAccount(true);
 
-    await this.userRepository.updateUser(user);
-
     await this.tokenRepository.deleteTokenById(findToken.id);
 
-    return await this.sessionService.destroySession(req, res);
+    const updatedUser = await this.userRepository.updateUser(user);
+
+    await this.sessionService.destroySession(req, res);
+
+    return updatedUser;
   }
 
   async sendDeactivatedAccount(
@@ -200,26 +202,17 @@ export class VerificationService {
     const tokenCreated = await this.generateToken({
       userId,
       typeToken,
-      isUUID: true,
+      isUUID: false,
     });
-
-    const hostnameClient = await this.configService.getOrThrow<string>(
-      'ALLOWED_ORIGIN',
-    );
-
-    const urlForLink = new URL(hostnameClient);
-    urlForLink.pathname = '/deactivated';
-    urlForLink.searchParams.append('token', tokenCreated.token);
 
     return await this.emailService.sendEmail({
       emailFrom: 'Kx5wO@example.com',
       emailTo: tokenCreated.user.email,
       subject: 'Подтверждение деактивации аккаунта на TvStream',
-      link: urlForLink.href,
-      textLink: 'Подтвердите деактивацию аккаунта',
+      code: tokenCreated.token,
       title: 'Подтверждение деактивации аккаунта на TvStream',
       subtitle: `Привет ${tokenCreated.user.firstName} ${tokenCreated.user.lastName}, `,
-      message: `Для того чтобы деактивировать аккаунт, пожалуйста, нажмите на кнопку ниже.`,
+      message: `Для того чтобы деактивировать аккаунт, пожалуйста, введите код ниже:`,
       metadata,
     });
   }
