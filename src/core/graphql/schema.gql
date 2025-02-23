@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangeEmailUserInput {
+  email: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -40,6 +44,7 @@ type MetadataModel {
 }
 
 type Mutation {
+  changeEmail(changeEmailInput: ChangeEmailUserInput!): UserModel!
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
   deactivated(deactivatedInput: DeactivatedInput!): UserModel!
