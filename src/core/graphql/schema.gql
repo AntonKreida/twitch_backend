@@ -53,7 +53,7 @@ type Mutation {
   signOut: String!
   signUp(inputUserSignUp: UserSignUpInput!): Boolean!
   verifyPasswordRecovery(inputVerifyPasswordRecovery: VerifyPasswordRecoveryInput!): Boolean!
-  verifyUser(inputVerify: VerifyInput!): UserModel!
+  verifyUser(inputVerify: VerifyInput!): Boolean!
 }
 
 input PaginationInputType {

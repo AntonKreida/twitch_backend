@@ -59,21 +59,17 @@ export class VerificationService {
     });
   }
 
-  async verify(
-    req: Request,
-    token: string,
-    metadata: ISessionMetadata,
-  ): Promise<UserModel> {
+  async verify(token: string): Promise<boolean> {
     const tokenFound = await this.checkToken(token, ENUM_TYPE_TOKEN.EMAIL);
 
-    const user = await this.userRepository.updateUser({
+    await this.userRepository.updateUser({
       id: tokenFound.userId,
       isEmailVerification: true,
     });
 
     await this.tokenRepository.deleteTokenById(tokenFound.id);
 
-    return await this.sessionService.saveSession(req, user, metadata);
+    return true;
   }
 
   async sendVerificationPasswordRecovery(

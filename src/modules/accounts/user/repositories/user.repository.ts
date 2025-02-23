@@ -1,20 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '/prisma/generated';
+import { Prisma, User } from '/prisma/generated';
 
 import { UserEntity } from '../entities';
 import { IArgsFindUser } from '../lib/interfaces';
 
 import { PrismaService } from '@core';
-import { SortOrPaginationArgsType } from '@shared';
+import { SORT_ENUM, SortOrPaginationArgsType } from '@shared';
+import { UserModel } from '../models';
+import { GetBatchResult } from '@prisma/client/runtime/library';
+
+export type TFindAll = SortOrPaginationArgsType & Partial<UserModel>;
 
 @Injectable()
 export class UserRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findAll({
-    sort,
+    sort = SORT_ENUM.ASC,
     pagination,
-  }: SortOrPaginationArgsType): Promise<User[]> {
+    ...userData
+  }: TFindAll): Promise<User[]> {
     const paramsPagination = {
       take: pagination?.limit,
       skip: pagination?.page * pagination?.limit || 0,
@@ -25,6 +30,12 @@ export class UserRepository {
         createAt: sort,
       },
       ...paramsPagination,
+      where: {
+        ...userData,
+        deactivatedAt: {
+          lte: userData.deactivatedAt,
+        },
+      },
     });
   }
 
@@ -63,6 +74,14 @@ export class UserRepository {
       },
       data: {
         ...userData,
+      },
+    });
+  }
+
+  async deletedUsers(args: Prisma.UserWhereInput): Promise<GetBatchResult> {
+    return await this.prismaService.user.deleteMany({
+      where: {
+        ...args,
       },
     });
   }
