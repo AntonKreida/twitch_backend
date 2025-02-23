@@ -40,6 +40,7 @@ type Mutation {
   disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
   enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  sendDeactivatedAccount(email: String!): Boolean!
   sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
   sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!

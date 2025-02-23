@@ -19,7 +19,14 @@ export class DeactivatedService {
   async sendDeactivatedAccountEmail(
     userId: string,
     metadata: ISessionMetadata,
+    email: string,
   ): Promise<boolean> {
+    const user = await this.userRepository.findUser({ id: userId, email });
+
+    if (!user) {
+      throw new NotFoundException('Неверная почта!');
+    }
+
     return await this.verificationService.sendDeactivatedAccount(
       userId,
       ENUM_TYPE_TOKEN.DEACTIVATED,
@@ -46,7 +53,7 @@ export class DeactivatedService {
     }
 
     if (!token) {
-      await this.sendDeactivatedAccountEmail(userId, metadata);
+      await this.sendDeactivatedAccountEmail(userId, metadata, user.email);
 
       throw new NotFoundException('Требуется код подтверждения!');
     }
