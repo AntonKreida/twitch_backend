@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '/prisma/generated';
+import { Prisma, User } from '/prisma/generated';
 
 import { UserEntity } from '../entities';
 import { IArgsFindUser } from '../lib/interfaces';
@@ -7,6 +7,7 @@ import { IArgsFindUser } from '../lib/interfaces';
 import { PrismaService } from '@core';
 import { SORT_ENUM, SortOrPaginationArgsType } from '@shared';
 import { UserModel } from '../models';
+import { GetBatchResult } from '@prisma/client/runtime/library';
 
 export type TFindAll = SortOrPaginationArgsType & Partial<UserModel>;
 
@@ -31,6 +32,9 @@ export class UserRepository {
       ...paramsPagination,
       where: {
         ...userData,
+        deactivatedAt: {
+          lte: userData.deactivatedAt,
+        },
       },
     });
   }
@@ -70,6 +74,14 @@ export class UserRepository {
       },
       data: {
         ...userData,
+      },
+    });
+  }
+
+  async deletedUsers(args: Prisma.UserWhereInput): Promise<GetBatchResult> {
+    return await this.prismaService.user.deleteMany({
+      where: {
+        ...args,
       },
     });
   }
