@@ -31,9 +31,17 @@ import { isDevEnv } from '@shared';
       isGlobal: true,
       ignoreEnvFile: isDevEnv,
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/static',
+    ServeStaticModule.forRootAsync({
+      useFactory: () => [
+        {
+          rootPath: join(__dirname, '..', 'public'),
+          serveRoot: '/static',
+        },
+        {
+          rootPath: join(__dirname, '..', 'uploads'),
+          serveRoot: '/uploads',
+        },
+      ],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,

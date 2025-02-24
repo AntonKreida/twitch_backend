@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { RedisStore } from 'connect-redis';
 import * as session from 'express-session';
+import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 
 import { CoreModule, RedisService } from './core';
 import {
@@ -50,6 +51,8 @@ async function bootstrap() {
     credentials: true,
     exposedHeaders: ['set-cookie'],
   });
+
+  app.use(graphqlUploadExpress());
 
   await app.listen(config.getOrThrow<string>('API_PORT') || 3000);
 }
