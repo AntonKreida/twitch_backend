@@ -30,6 +30,12 @@ input EnableTwoFactorAuthInput {
   pincode: String!
 }
 
+type ImageModel {
+  id: ID!
+  src: String!
+  userAvatar: UserAvatarModel
+}
+
 type LocationModel {
   city: String
   country: String
@@ -118,6 +124,14 @@ type SessionModel {
   userId: String!
 }
 
+type UserAvatarModel {
+  id: ID!
+  image: ImageModel!
+  imageId: ID!
+  user: UserModel!
+  userId: ID!
+}
+
 type UserModel {
   bio: String
   createAt: DateTime!
@@ -132,6 +146,7 @@ type UserModel {
   passwordHash: String!
   twoFactorSecret: String
   updateAt: DateTime!
+  userAvatar: UserAvatarModel
   username: String!
 }
 

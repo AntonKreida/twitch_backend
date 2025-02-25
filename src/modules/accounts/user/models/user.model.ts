@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '/prisma/generated';
+import { UserAvatarModel } from './user-avatar.model';
 
 @ObjectType()
 export class UserModel implements User {
@@ -14,6 +15,9 @@ export class UserModel implements User {
 
   @Field(() => String)
   username: string;
+
+  @Field(() => UserAvatarModel, { nullable: true })
+  userAvatar?: UserAvatarModel;
 
   @Field(() => String)
   email: string;
