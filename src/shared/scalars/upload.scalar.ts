@@ -1,8 +1,8 @@
-import { Scalar } from '@nestjs/graphql';
+import { Scalar, CustomScalar } from '@nestjs/graphql';
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 @Scalar('Upload')
-export class Upload {
+export class Upload implements CustomScalar<any, any> {
   description = 'Upload files';
 
   parseValue(value) {

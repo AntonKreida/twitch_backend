@@ -23,10 +23,11 @@ import {
   ProfilesModule,
 } from '@modules';
 
-import { isDevEnv } from '@shared';
+import { isDevEnv, Upload } from '@shared';
 
 @Module({
   imports: [
+    Upload,
     ConfigModule.forRoot({
       isGlobal: true,
       ignoreEnvFile: isDevEnv,

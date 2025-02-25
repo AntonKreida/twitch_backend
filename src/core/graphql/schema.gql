@@ -124,6 +124,9 @@ type SessionModel {
   userId: String!
 }
 
+"""Upload files"""
+scalar Upload
+
 type UserAvatarModel {
   id: ID!
   image: ImageModel!
@@ -157,7 +160,7 @@ input UserSignInInput {
 }
 
 input UserSignUpInput {
-  avatar: String
+  avatar: Upload
   bio: String
   email: String!
   firstName: String!
