@@ -12,7 +12,6 @@ export class UserEntity implements TEntityUser {
   lastName: string;
   username: string;
   email: string;
-  avatar: string | null;
   bio: string | null;
   passwordHash: string;
   isDeactivatedAccount?: boolean;
@@ -29,7 +28,6 @@ export class UserEntity implements TEntityUser {
     this.lastName = user.lastName;
     this.username = user.username;
     this.email = user.email;
-    this.avatar = user.avatar || null;
     this.bio = user.bio || null;
     this.passwordHash = user.passwordHash;
     this.isEmailVerification = user?.isEmailVerification;

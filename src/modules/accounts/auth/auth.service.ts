@@ -24,7 +24,6 @@ export class AuthService {
   ) {}
 
   async signUp({
-    avatar,
     bio,
     email,
     firstName,
@@ -51,7 +50,6 @@ export class AuthService {
     }
 
     const newEntityUser = await new UserEntity({
-      avatar,
       bio,
       email,
       firstName,

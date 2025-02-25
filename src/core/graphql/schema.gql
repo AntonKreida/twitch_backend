@@ -119,7 +119,6 @@ type SessionModel {
 }
 
 type UserModel {
-  avatar: String
   bio: String
   createAt: DateTime!
   deactivatedAt: DateTime

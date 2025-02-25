@@ -21,7 +21,6 @@ model User {
   lastName             String
   username             String    @unique
   email                String    @unique
-  avatar               String?
   bio                  String?
   passwordHash         String
   isEmailVerification  Boolean   @default(false)
@@ -32,6 +31,7 @@ model User {
   createAt             DateTime  @default(now())
   updateAt             DateTime  @updatedAt
 
+  avatar UserAvatar?
   tokens Token[]
 }
 
@@ -44,4 +44,18 @@ model Token {
   expiresIn DateTime
   userId    String
   user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserAvatar {
+  id      String @id @default(uuid())
+  userId  String @unique
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  imageId String @unique
+  image   Image  @relation(fields: [imageId], references: [id])
+}
+
+model Image {
+  id         String      @id @default(uuid())
+  src        String
+  UserAvatar UserAvatar?
 }
