@@ -37,10 +37,18 @@ import { isDevEnv, Upload } from '@shared';
         {
           rootPath: join(__dirname, '..', 'public'),
           serveRoot: '/static',
+          serveStaticOptions: {
+            extensions: ['jpg', 'jpeg', 'png', 'gif'],
+            index: false,
+          },
         },
         {
           rootPath: join(__dirname, '..', 'uploads'),
           serveRoot: '/uploads',
+          serveStaticOptions: {
+            extensions: ['jpg', 'jpeg', 'png', 'gif'],
+            index: false,
+          },
         },
       ],
     }),
