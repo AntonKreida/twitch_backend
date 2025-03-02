@@ -49,6 +49,26 @@ export class AuthService {
     if (userByEmail) {
       throw new ConflictException('Пользователь с таким email уже существует!');
     }
+
+    if (avatar) {
+      const file = await avatar;
+
+      const filePath = await uploadFileStream({
+        readStream: file.createReadStream,
+        uploadDir: this.configService.getOrThrow<string>('UPLOAD_DIR_NAME'),
+        filename: file.filename,
+        sharpSetting: {
+          width: 512,
+          height: 512,
+          fit: 'cover',
+          toFormat: file.mimetype.split('/')[1],
+          quality: 50,
+        },
+      });
+
+      avatar = filePath;
+    }
+
     const newEntityUser = await new UserEntity({
       bio,
       email,
@@ -56,26 +76,10 @@ export class AuthService {
       lastName,
       username,
       passwordHash: '',
+      avatar,
     }).setPassword(password);
 
     const newUser = await this.userRepository.createUser(newEntityUser);
-
-    const file = await avatar;
-
-    const filePath = await uploadFileStream({
-      readStream: file.createReadStream,
-      uploadDir: this.configService.getOrThrow<string>('UPLOAD_DIR_NAME'),
-      filename: file.filename,
-      sharpSetting: {
-        width: 512,
-        height: 512,
-        fit: 'cover',
-        toFormat: file.mimetype.split('/')[1],
-        quality: 50,
-      },
-    });
-
-    console.log(filePath);
 
     return await this.verificationService.sendVerificationToken(
       newUser.id,
@@ -96,7 +100,10 @@ export class AuthService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
-    const userEntity = new UserEntity(user);
+    const userEntity = new UserEntity({
+      ...user,
+      avatar: user.avatar,
+    });
     const isCorrectPassword = await userEntity.validatePassword(password);
 
     if (!isCorrectPassword) {
@@ -127,7 +134,14 @@ export class AuthService {
       }
     }
 
-    return await this.sessionService.saveSession(req, user, metadata);
+    return await this.sessionService.saveSession(
+      req,
+      {
+        ...user,
+        avatar: user.avatar,
+      },
+      metadata,
+    );
   }
 
   async signOut(req: Request, res: Response): Promise<boolean> {

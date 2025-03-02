@@ -4,7 +4,9 @@ import { toDataURL } from 'qrcode';
 import { UserModel } from '../models';
 import { IGenerateQrCode } from '../lib';
 
-type TEntityUser = Partial<UserModel>;
+type TEntityUser = Partial<Omit<UserModel, 'avatar'>> & {
+  avatar?: string;
+};
 
 export class UserEntity implements TEntityUser {
   id?: string | null;
@@ -21,6 +23,7 @@ export class UserEntity implements TEntityUser {
   deactivatedAt?: Date;
   createAt?: Date;
   updateAt?: Date;
+  avatar?: string;
 
   constructor(user: TEntityUser) {
     this.id = user?.id;
@@ -37,6 +40,7 @@ export class UserEntity implements TEntityUser {
     this.deactivatedAt = user?.deactivatedAt;
     this.createAt = user?.createAt;
     this.updateAt = user?.updateAt;
+    this.avatar = user?.avatar;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

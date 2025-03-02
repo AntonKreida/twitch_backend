@@ -136,6 +136,7 @@ type UserAvatarModel {
 }
 
 type UserModel {
+  avatar: String
   bio: String
   createAt: DateTime!
   deactivatedAt: DateTime
@@ -149,7 +150,6 @@ type UserModel {
   passwordHash: String!
   twoFactorSecret: String
   updateAt: DateTime!
-  userAvatar: UserAvatarModel
   username: String!
 }
 
