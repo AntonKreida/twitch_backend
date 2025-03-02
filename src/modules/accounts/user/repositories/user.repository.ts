@@ -64,7 +64,11 @@ export class UserRepository {
   }
 
   async createUser(user: UserEntity): Promise<User> {
-    return await this.prismaService.user.create({ data: user });
+    return await this.prismaService.user.create({
+      data: {
+        ...user,
+      },
+    });
   }
 
   async updateUser(userData: Partial<User>): Promise<User> {

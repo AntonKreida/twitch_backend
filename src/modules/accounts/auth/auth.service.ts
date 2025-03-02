@@ -5,6 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { type Response, type Request } from 'express';
 
@@ -13,7 +14,7 @@ import { SessionService } from '../session';
 import { VerificationService } from '../verification';
 
 import { UserSignUpInput } from './inputs';
-import { ISessionMetadata } from '@shared';
+import { ISessionMetadata, uploadFileStream } from '@shared';
 
 @Injectable()
 export class AuthService {
@@ -21,26 +22,26 @@ export class AuthService {
     private readonly userRepository: UserRepository,
     private readonly verificationService: VerificationService,
     private readonly sessionService: SessionService,
+    private readonly configService: ConfigService,
   ) {}
 
   async signUp({
-    bio,
+    avatar,
+    username,
     email,
+    bio,
     firstName,
     lastName,
     password,
-    username,
   }: UserSignUpInput): Promise<boolean> {
     const userByUsername = await this.userRepository.findUser({
       username,
     });
-
     if (userByUsername) {
       throw new ConflictException(
         'Пользователь с таким username уже существует!',
       );
     }
-
     const userByEmail = await this.userRepository.findUser({
       email,
     });
@@ -48,7 +49,6 @@ export class AuthService {
     if (userByEmail) {
       throw new ConflictException('Пользователь с таким email уже существует!');
     }
-
     const newEntityUser = await new UserEntity({
       bio,
       email,
@@ -59,6 +59,23 @@ export class AuthService {
     }).setPassword(password);
 
     const newUser = await this.userRepository.createUser(newEntityUser);
+
+    const file = await avatar;
+
+    const filePath = await uploadFileStream({
+      readStream: file.createReadStream,
+      uploadDir: this.configService.getOrThrow<string>('UPLOAD_DIR_NAME'),
+      filename: file.filename,
+      sharpSetting: {
+        width: 512,
+        height: 512,
+        fit: 'cover',
+        toFormat: file.mimetype.split('/')[1],
+        quality: 50,
+      },
+    });
+
+    console.log(filePath);
 
     return await this.verificationService.sendVerificationToken(
       newUser.id,

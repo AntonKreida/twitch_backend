@@ -124,7 +124,7 @@ type SessionModel {
   userId: String!
 }
 
-"""Upload files"""
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 type UserAvatarModel {

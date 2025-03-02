@@ -1,18 +1,17 @@
 import { InputType, Field } from '@nestjs/graphql';
 import {
   IsEmail,
-  IsOptional,
-  MinLength,
-  IsString,
   IsNotEmpty,
+  IsOptional,
+  IsString,
   Matches,
+  MinLength,
 } from 'class-validator';
 
-import { TUserSignUpType } from '../lib';
-import { Upload } from '@shared';
+import * as Upload from 'graphql-upload/GraphQLUpload.js';
 
 @InputType()
-export class UserSignUpInput implements TUserSignUpType {
+export class UserSignUpInput {
   @Field(() => String)
   @IsString({
     message: 'firstName должно быть строкой',

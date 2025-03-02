@@ -20,6 +20,8 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const redis = app.get(RedisService);
 
+  app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 5 }));
+
   app.use(cookieParser(config.getOrThrow<string>('COOKIE_SECRET')));
 
   app.useGlobalPipes(validationPipeConfig);
@@ -47,12 +49,10 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+    origin: '*',
     credentials: true,
     exposedHeaders: ['set-cookie'],
   });
-
-  app.use(graphqlUploadExpress());
 
   await app.listen(config.getOrThrow<string>('API_PORT') || 3000);
 }
