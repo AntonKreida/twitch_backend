@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import * as Upload from 'graphql-upload/GraphQLUpload.js';
 import { UserModel } from '../user';
-import { deleteFile, uploadFileStream } from '/src/shared';
+import { deleteFile, uploadFileStream } from '@shared';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
