@@ -21,6 +21,12 @@ export class ProfilesService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
+    const isEmailExist = await this.userRepository.findUser({ email });
+
+    if (isEmailExist) {
+      throw new NotFoundException('Пользователь с таким email уже существует!');
+    }
+
     return await this.userRepository.updateUser({
       id: user.id,
       email,
