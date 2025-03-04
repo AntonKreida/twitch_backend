@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from '/prisma/generated';
+import { Prisma, User, UserAvatar } from '/prisma/generated';
 
 import { UserEntity } from '../entities';
 import { IArgsFindUser } from '../lib/interfaces';
@@ -144,6 +144,36 @@ export class UserRepository {
     return await this.prismaService.user.deleteMany({
       where: {
         ...args,
+      },
+    });
+  }
+
+  async updateUserAvatar(userId: string, avatar: string): Promise<UserAvatar> {
+    return await this.prismaService.userAvatar.upsert({
+      where: {
+        userId,
+      },
+      create: {
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        image: {
+          create: {
+            src: avatar,
+          },
+        },
+      },
+      update: {
+        image: {
+          update: {
+            src: avatar,
+          },
+        },
+      },
+      include: {
+        image: true,
       },
     });
   }
