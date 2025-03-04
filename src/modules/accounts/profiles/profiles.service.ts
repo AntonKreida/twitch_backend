@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { ConfigService } from '@nestjs/config';
 import * as Upload from 'graphql-upload/GraphQLUpload.js';
@@ -24,7 +28,7 @@ export class ProfilesService {
     const isEmailExist = await this.userRepository.findUser({ email });
 
     if (isEmailExist) {
-      throw new NotFoundException('Пользователь с таким email уже существует!');
+      throw new ConflictException('Пользователь с таким email уже существует!');
     }
 
     return await this.userRepository.updateUser({
@@ -83,7 +87,7 @@ export class ProfilesService {
     });
 
     if (isUsernameExist) {
-      throw new NotFoundException(
+      throw new ConflictException(
         'Пользователь с таким username уже существует!',
       );
     }
