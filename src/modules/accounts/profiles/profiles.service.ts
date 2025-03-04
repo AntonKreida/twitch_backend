@@ -72,6 +72,16 @@ export class ProfilesService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
+    const isUsernameExist = await this.userRepository.findUser({
+      username: updateUser.username,
+    });
+
+    if (isUsernameExist) {
+      throw new NotFoundException(
+        'Пользователь с таким username уже существует!',
+      );
+    }
+
     await this.userRepository.updateUser({
       id: user.id,
       ...updateUser,
