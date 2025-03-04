@@ -51,7 +51,7 @@ model UserAvatar {
   userId  String @unique
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   imageId String @unique
-  image   Image  @relation(fields: [imageId], references: [id])
+  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
 }
 
 model Image {

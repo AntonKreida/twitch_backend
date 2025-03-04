@@ -82,10 +82,12 @@ export class UserRepository {
       },
     });
 
-    return {
-      ...user,
-      avatar: user?.avatar?.image?.src ?? null,
-    };
+    return user
+      ? {
+          ...user,
+          avatar: user?.avatar?.image?.src ?? null,
+        }
+      : null;
   }
 
   async createUser(user: UserEntity): Promise<User> {

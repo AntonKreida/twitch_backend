@@ -37,6 +37,7 @@ export class AuthService {
     const userByUsername = await this.userRepository.findUser({
       username,
     });
+
     if (userByUsername) {
       throw new ConflictException(
         'Пользователь с таким username уже существует!',
@@ -56,7 +57,7 @@ export class AuthService {
       const filePath = await uploadFileStream({
         readStream: file.createReadStream,
         uploadDir: this.configService.getOrThrow<string>('UPLOAD_DIR_NAME'),
-        filename: file.filename,
+        filename: `${username}-${Date.now()}.${file.mimetype.split('/')[1]}`,
         sharpSetting: {
           width: 512,
           height: 512,
