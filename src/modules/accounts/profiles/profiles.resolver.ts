@@ -2,7 +2,11 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ProfilesService } from './profiles.service';
 import { UserModel } from '@/modules/accounts/user';
 import { Auth, Authorized } from '@shared';
-import { ChangeAvatarUserInput, ChangeEmailUserInput } from './inputs';
+import {
+  ChangeAvatarUserInput,
+  ChangeEmailUserInput,
+  ChangeProfileInfoInput,
+} from './inputs';
 
 @Resolver()
 export class ProfilesResolver {
@@ -24,5 +28,14 @@ export class ProfilesResolver {
     @Args('changeUserAvatar') { avatar }: ChangeAvatarUserInput,
   ): Promise<boolean> {
     return await this.profilesService.changeUserAvatar(id, avatar);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean)
+  async changeUserProfileInfo(
+    @Authorized('id') id: string,
+    @Args('updateUser') updateUser: ChangeProfileInfoInput,
+  ): Promise<boolean> {
+    return await this.profilesService.changeUserProfileInfo(id, updateUser);
   }
 }

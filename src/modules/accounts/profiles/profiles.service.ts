@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from '@/modules/accounts/user/repositories';
+import { ConfigService } from '@nestjs/config';
 import * as Upload from 'graphql-upload/GraphQLUpload.js';
 import { UserModel } from '../user';
+import { ChangeProfileInfoInput } from './inputs';
+
 import { deleteFile, uploadFileStream } from '@shared';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ProfilesService {
@@ -56,6 +58,24 @@ export class ProfilesService {
     }
 
     await this.userRepository.updateUserAvatar(userId, filePath);
+
+    return true;
+  }
+
+  async changeUserProfileInfo(
+    userId: string,
+    updateUser: ChangeProfileInfoInput,
+  ): Promise<boolean> {
+    const user = await this.userRepository.findUser({ id: userId });
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    await this.userRepository.updateUser({
+      id: user.id,
+      ...updateUser,
+    });
 
     return true;
   }
