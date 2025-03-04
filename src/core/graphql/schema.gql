@@ -2,8 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangeAvatarUserInput {
+  avatar: Upload!
+}
+
 input ChangeEmailUserInput {
   email: String!
+}
+
+input ChangeProfileInfoInput {
+  bio: String
+  firstName: String
+  lastName: String
+  username: String
 }
 
 """
@@ -52,6 +63,8 @@ type MetadataModel {
 type Mutation {
   changeEmail(changeEmailInput: ChangeEmailUserInput!): UserModel!
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
+  changeUserAvatar(changeUserAvatar: ChangeAvatarUserInput!): Boolean!
+  changeUserProfileInfo(updateUser: ChangeProfileInfoInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
   deactivated(deactivatedInput: DeactivatedInput!): UserModel!
   disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
