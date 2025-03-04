@@ -3,6 +3,7 @@ import { Cron } from '@nestjs/schedule';
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { EmailService } from '@/modules/notification';
 import { ConfigService } from '@nestjs/config';
+import { deleteFile } from '/src/shared';
 
 @Injectable()
 export class CroneService {
@@ -40,6 +41,10 @@ export class CroneService {
         subtitle: `Привет ${user.firstName} ${user.lastName}, `,
         link: urlForLink.href,
         textLink: 'Восстановить аккаунт',
+      });
+
+      await deleteFile({
+        pathFile: user.avatar,
       });
     }
 
