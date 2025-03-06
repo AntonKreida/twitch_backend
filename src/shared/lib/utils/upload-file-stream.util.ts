@@ -2,7 +2,7 @@ import { createWriteStream, mkdirSync } from 'fs';
 import { join } from 'path';
 import * as sharp from 'sharp';
 import { finished } from 'stream/promises';
-import { TGetArgs } from '../types';
+import { TGetArgs } from '../../types';
 
 type TSharp = ReturnType<typeof sharp>;
 type ISharpSetting = Pick<

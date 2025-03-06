@@ -10,9 +10,6 @@ import {
 export class IsMatchPasswordConstraint implements ValidatorConstraintInterface {
   validate(passwordRepeat: string, args: ValidationArguments) {
     const objectRequest = args.object as { password: string };
-
-    console.log(objectRequest);
-
     return passwordRepeat === objectRequest.password;
   }
 
