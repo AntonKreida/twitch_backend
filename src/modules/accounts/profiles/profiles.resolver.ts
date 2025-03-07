@@ -53,7 +53,7 @@ export class ProfilesResolver {
   @Auth()
   @Mutation(() => Boolean)
   async reorderSocial(
-    @Args('lList', { type: () => [ChangeReorderSocialInput] })
+    @Args('list', { type: () => [ChangeReorderSocialInput] })
     list: ChangeReorderSocialInput[],
   ): Promise<boolean> {
     return await this.profilesService.reorderSocial(list);
