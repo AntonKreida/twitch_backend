@@ -34,4 +34,12 @@ export class SocialRepository {
   async updateSocial(args: Prisma.SocialUpdateArgs): Promise<Social> {
     return this.prismaService.social.update(args);
   }
+
+  async deleteSocial(socialId: string): Promise<Social> {
+    return this.prismaService.social.delete({
+      where: {
+        id: socialId,
+      },
+    });
+  }
 }

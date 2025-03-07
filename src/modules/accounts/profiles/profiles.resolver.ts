@@ -6,6 +6,7 @@ import {
   ChangeAvatarUserInput,
   ChangeEmailUserInput,
   ChangeProfileInfoInput,
+  ChangeReorderSocialInput,
   CreateSocialInput,
 } from './inputs';
 
@@ -47,5 +48,19 @@ export class ProfilesResolver {
     @Args('createSocialInput') socialData: CreateSocialInput,
   ): Promise<boolean> {
     return await this.profilesService.createSocial(id, socialData);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean)
+  async reorderSocial(
+    @Args('socialList') socialList: ChangeReorderSocialInput[],
+  ): Promise<boolean> {
+    return await this.profilesService.reorderSocial(socialList);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean)
+  async deleteSocial(@Args('socialId') socialId: string): Promise<boolean> {
+    return await this.profilesService.deleteSocial(socialId);
   }
 }

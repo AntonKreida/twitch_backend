@@ -157,4 +157,10 @@ export class ProfilesService {
 
     return result;
   }
+
+  async deleteSocial(socialId: string): Promise<boolean> {
+    await this.socialRepository.deleteSocial(socialId);
+
+    return true;
+  }
 }
