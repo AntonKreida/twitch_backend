@@ -10,17 +10,18 @@ export class VerificationResolver {
 
   @Mutation(() => Boolean, { name: 'verifyUser' })
   async verifyUser(@Args('inputVerify') { token }: VerifyInput) {
-    return await this.verificationService.verify(token);
+    return await this.verificationService.verify({ token });
   }
 
   @Mutation(() => Boolean, { name: 'verifyPasswordRecovery' })
   async verifyPasswordRecovery(
     @Args('inputVerifyPasswordRecovery')
-    { password, token }: VerifyPasswordRecoveryInput,
+    { password, token, passwordRepeat }: VerifyPasswordRecoveryInput,
   ): Promise<boolean> {
-    return await this.verificationService.verifyPasswordRecovery(
-      token,
+    return await this.verificationService.verifyPasswordRecovery({
       password,
-    );
+      token,
+      passwordRepeat,
+    });
   }
 }

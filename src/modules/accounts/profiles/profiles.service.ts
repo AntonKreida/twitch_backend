@@ -6,8 +6,13 @@ import {
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { ConfigService } from '@nestjs/config';
 import * as Upload from 'graphql-upload/GraphQLUpload.js';
-import { AvatarRepository, UserModel } from '../user';
-import { ChangeProfileInfoInput } from './inputs';
+import {
+  AvatarRepository,
+  SocialEntity,
+  SocialRepository,
+  UserModel,
+} from '../user';
+import { ChangeProfileInfoInput, CreateSocialInput } from './inputs';
 
 import { deleteFile, uploadFileStream } from '@shared';
 
@@ -17,6 +22,7 @@ export class ProfilesService {
     private readonly userRepository: UserRepository,
     private readonly avatarRepository: AvatarRepository,
     private readonly configService: ConfigService,
+    private readonly socialRepository: SocialRepository,
   ) {}
 
   async changeEmail(userId: string, email: string): Promise<UserModel> {
@@ -95,6 +101,30 @@ export class ProfilesService {
       id: user.id,
       ...updateUser,
     });
+
+    return true;
+  }
+
+  async createSocial(
+    userId: string,
+    { title, url }: CreateSocialInput,
+  ): Promise<boolean> {
+    const lastSocial = await this.socialRepository.findSocial({
+      where: {
+        userId,
+      },
+      orderBy: {
+        position: 'desc',
+      },
+    });
+
+    const social = await new SocialEntity({
+      title,
+      url,
+      userId,
+    }).determinePosition(lastSocial?.position || 0);
+
+    await this.socialRepository.createSocial(social);
 
     return true;
   }

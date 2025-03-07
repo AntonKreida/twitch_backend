@@ -6,6 +6,7 @@ import {
   ChangeAvatarUserInput,
   ChangeEmailUserInput,
   ChangeProfileInfoInput,
+  CreateSocialInput,
 } from './inputs';
 
 @Resolver()
@@ -37,5 +38,14 @@ export class ProfilesResolver {
     @Args('updateUser') updateUser: ChangeProfileInfoInput,
   ): Promise<boolean> {
     return await this.profilesService.changeUserProfileInfo(id, updateUser);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean)
+  async createSocial(
+    @Authorized('id') id: string,
+    @Args('createSocialInput') socialData: CreateSocialInput,
+  ): Promise<boolean> {
+    return await this.profilesService.createSocial(id, socialData);
   }
 }

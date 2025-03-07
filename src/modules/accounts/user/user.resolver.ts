@@ -25,6 +25,6 @@ export class UserResolver {
   @Auth()
   @Query(() => UserModel, { name: 'me' })
   async me(@Authorized('id') id: string): Promise<UserModel> {
-    return this.userService.findUser({ id: id });
+    return this.userService.findUser({ id });
   }
 }

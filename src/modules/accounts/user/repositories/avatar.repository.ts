@@ -26,10 +26,11 @@ export class AvatarRepository {
     });
   }
 
-  async deleteAvatar(userId: string): Promise<UserAvatar> {
+  async deleteAvatar(userId?: string, id?: string): Promise<UserAvatar> {
     return await this.prismaService.userAvatar.delete({
       where: {
         userId,
+        id,
       },
       include: {
         image: true,
