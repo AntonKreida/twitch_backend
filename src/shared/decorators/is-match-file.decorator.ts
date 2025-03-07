@@ -17,12 +17,14 @@ interface IsMatchFileOptions {
 
 @ValidatorConstraint({ async: false })
 export class IsMatchFileConstraint implements ValidatorConstraintInterface {
-  validate(value: Upload, args: ValidationArguments): boolean {
+  async validate(value: Upload, args: ValidationArguments): Promise<boolean> {
     const [listExtensions, maxSize] = args.constraints;
-    const { fileName, createReadStream } = value;
+    const { filename, createReadStream } = await value;
+
+    console.log(value);
 
     const isCorrectFormat = validateFileFormat({
-      filename: fileName,
+      filename,
       formats: listExtensions,
     });
 

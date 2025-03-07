@@ -7,8 +7,9 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
-
 import * as Upload from 'graphql-upload/GraphQLUpload.js';
+
+import { IsMatchFile } from '@shared';
 
 @InputType()
 export class UserSignUpInput {
@@ -56,6 +57,15 @@ export class UserSignUpInput {
 
   @Field(() => Upload, { nullable: true })
   @IsOptional()
+  @IsMatchFile(
+    {
+      listExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+      maxSize: 5 * 1024 * 1024,
+    },
+    {
+      message: 'Некорректный файл',
+    },
+  )
   avatar: Upload | null;
 
   @Field(() => String)
