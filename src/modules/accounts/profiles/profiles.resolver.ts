@@ -8,6 +8,7 @@ import {
   ChangeProfileInfoInput,
   ChangeReorderSocialInput,
   CreateSocialInput,
+  ChangeUpdateSocialInput,
 } from './inputs';
 
 @Resolver()
@@ -63,5 +64,13 @@ export class ProfilesResolver {
   @Mutation(() => Boolean)
   async deleteSocial(@Args('socialId') socialId: string): Promise<boolean> {
     return await this.profilesService.deleteSocial(socialId);
+  }
+
+  @Auth()
+  @Mutation(() => Boolean)
+  async updateSocial(
+    @Args('updateSocial') updateSocial: ChangeUpdateSocialInput,
+  ): Promise<boolean> {
+    return await this.profilesService.updateSocial(updateSocial);
   }
 }

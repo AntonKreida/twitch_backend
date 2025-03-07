@@ -19,6 +19,7 @@ import {
 } from './inputs';
 
 import { deleteFile, uploadFileStream } from '@shared';
+import { ChangeUpdateSocialInput } from './inputs/change-update-social.input';
 
 @Injectable()
 export class ProfilesService {
@@ -160,6 +161,24 @@ export class ProfilesService {
 
   async deleteSocial(socialId: string): Promise<boolean> {
     await this.socialRepository.deleteSocial(socialId);
+
+    return true;
+  }
+
+  async updateSocial({
+    id,
+    title,
+    url,
+  }: ChangeUpdateSocialInput): Promise<boolean> {
+    await this.socialRepository.updateSocial({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        url,
+      },
+    });
 
     return true;
   }
