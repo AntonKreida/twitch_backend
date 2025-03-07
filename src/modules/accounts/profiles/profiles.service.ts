@@ -12,7 +12,11 @@ import {
   SocialRepository,
   UserModel,
 } from '../user';
-import { ChangeProfileInfoInput, CreateSocialInput } from './inputs';
+import {
+  ChangeProfileInfoInput,
+  ChangeReorderSocialInput,
+  CreateSocialInput,
+} from './inputs';
 
 import { deleteFile, uploadFileStream } from '@shared';
 
@@ -127,5 +131,30 @@ export class ProfilesService {
     await this.socialRepository.createSocial(social);
 
     return true;
+  }
+
+  async reorderSocial(
+    socialList: ChangeReorderSocialInput[],
+  ): Promise<boolean> {
+    if (!socialList?.length) {
+      return true;
+    }
+
+    const promisesSocial = socialList.map(({ id, position }) => {
+      return this.socialRepository.updateSocial({
+        where: {
+          id,
+        },
+        data: {
+          position,
+        },
+      });
+    });
+
+    const result = await Promise.all(promisesSocial)
+      .then(() => true)
+      .catch(() => false);
+
+    return result;
   }
 }

@@ -30,4 +30,8 @@ export class SocialRepository {
   async findSocial(args: Prisma.SocialFindFirstArgs): Promise<Social | null> {
     return this.prismaService.social.findFirst(args);
   }
+
+  async updateSocial(args: Prisma.SocialUpdateArgs): Promise<Social> {
+    return this.prismaService.social.update(args);
+  }
 }
