@@ -33,6 +33,11 @@ export type UserAvatar = $Result.DefaultSelection<Prisma.$UserAvatarPayload>
  * 
  */
 export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>
+/**
+ * Model Social
+ * 
+ */
+export type Social = $Result.DefaultSelection<Prisma.$SocialPayload>
 
 /**
  * Enums
@@ -217,6 +222,16 @@ export class PrismaClient<
     * ```
     */
   get image(): Prisma.ImageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.social`: Exposes CRUD operations for the **Social** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Socials
+    * const socials = await prisma.social.findMany()
+    * ```
+    */
+  get social(): Prisma.SocialDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -660,7 +675,8 @@ export namespace Prisma {
     User: 'User',
     Token: 'Token',
     UserAvatar: 'UserAvatar',
-    Image: 'Image'
+    Image: 'Image',
+    Social: 'Social'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -676,7 +692,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "token" | "userAvatar" | "image"
+      modelProps: "user" | "token" | "userAvatar" | "image" | "social"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -976,6 +992,80 @@ export namespace Prisma {
           }
         }
       }
+      Social: {
+        payload: Prisma.$SocialPayload<ExtArgs>
+        fields: Prisma.SocialFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SocialFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SocialFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>
+          }
+          findFirst: {
+            args: Prisma.SocialFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SocialFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>
+          }
+          findMany: {
+            args: Prisma.SocialFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>[]
+          }
+          create: {
+            args: Prisma.SocialCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>
+          }
+          createMany: {
+            args: Prisma.SocialCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SocialCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>[]
+          }
+          delete: {
+            args: Prisma.SocialDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>
+          }
+          update: {
+            args: Prisma.SocialUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>
+          }
+          deleteMany: {
+            args: Prisma.SocialDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SocialUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SocialUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>[]
+          }
+          upsert: {
+            args: Prisma.SocialUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPayload>
+          }
+          aggregate: {
+            args: Prisma.SocialAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSocial>
+          }
+          groupBy: {
+            args: Prisma.SocialGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SocialGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SocialCountArgs<ExtArgs>
+            result: $Utils.Optional<SocialCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1064,6 +1154,7 @@ export namespace Prisma {
     token?: TokenOmit
     userAvatar?: UserAvatarOmit
     image?: ImageOmit
+    social?: SocialOmit
   }
 
   /* Types for Logging */
@@ -1159,10 +1250,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     tokens: number
+    Social: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | UserCountOutputTypeCountTokensArgs
+    Social?: boolean | UserCountOutputTypeCountSocialArgs
   }
 
   // Custom InputTypes
@@ -1181,6 +1274,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TokenWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSocialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialWhereInput
   }
 
 
@@ -1426,6 +1526,7 @@ export namespace Prisma {
     updateAt?: boolean
     avatar?: boolean | User$avatarArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
+    Social?: boolean | User$SocialArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1484,6 +1585,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     avatar?: boolean | User$avatarArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
+    Social?: boolean | User$SocialArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1494,6 +1596,7 @@ export namespace Prisma {
     objects: {
       avatar: Prisma.$UserAvatarPayload<ExtArgs> | null
       tokens: Prisma.$TokenPayload<ExtArgs>[]
+      Social: Prisma.$SocialPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1906,6 +2009,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     avatar<T extends User$avatarArgs<ExtArgs> = {}>(args?: Subset<T, User$avatarArgs<ExtArgs>>): Prisma__UserAvatarClient<$Result.GetResult<Prisma.$UserAvatarPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Social<T extends User$SocialArgs<ExtArgs> = {}>(args?: Subset<T, User$SocialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2377,6 +2481,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
+  }
+
+  /**
+   * User.Social
+   */
+  export type User$SocialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    where?: SocialWhereInput
+    orderBy?: SocialOrderByWithRelationInput | SocialOrderByWithRelationInput[]
+    cursor?: SocialWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SocialScalarFieldEnum | SocialScalarFieldEnum[]
   }
 
   /**
@@ -5547,6 +5675,1124 @@ export namespace Prisma {
 
 
   /**
+   * Model Social
+   */
+
+  export type AggregateSocial = {
+    _count: SocialCountAggregateOutputType | null
+    _avg: SocialAvgAggregateOutputType | null
+    _sum: SocialSumAggregateOutputType | null
+    _min: SocialMinAggregateOutputType | null
+    _max: SocialMaxAggregateOutputType | null
+  }
+
+  export type SocialAvgAggregateOutputType = {
+    position: number | null
+  }
+
+  export type SocialSumAggregateOutputType = {
+    position: number | null
+  }
+
+  export type SocialMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    url: string | null
+    position: number | null
+    createAt: Date | null
+    updateAt: Date | null
+    userId: string | null
+  }
+
+  export type SocialMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    url: string | null
+    position: number | null
+    createAt: Date | null
+    updateAt: Date | null
+    userId: string | null
+  }
+
+  export type SocialCountAggregateOutputType = {
+    id: number
+    title: number
+    url: number
+    position: number
+    createAt: number
+    updateAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type SocialAvgAggregateInputType = {
+    position?: true
+  }
+
+  export type SocialSumAggregateInputType = {
+    position?: true
+  }
+
+  export type SocialMinAggregateInputType = {
+    id?: true
+    title?: true
+    url?: true
+    position?: true
+    createAt?: true
+    updateAt?: true
+    userId?: true
+  }
+
+  export type SocialMaxAggregateInputType = {
+    id?: true
+    title?: true
+    url?: true
+    position?: true
+    createAt?: true
+    updateAt?: true
+    userId?: true
+  }
+
+  export type SocialCountAggregateInputType = {
+    id?: true
+    title?: true
+    url?: true
+    position?: true
+    createAt?: true
+    updateAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type SocialAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Social to aggregate.
+     */
+    where?: SocialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Socials to fetch.
+     */
+    orderBy?: SocialOrderByWithRelationInput | SocialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SocialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Socials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Socials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Socials
+    **/
+    _count?: true | SocialCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SocialAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SocialSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SocialMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SocialMaxAggregateInputType
+  }
+
+  export type GetSocialAggregateType<T extends SocialAggregateArgs> = {
+        [P in keyof T & keyof AggregateSocial]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSocial[P]>
+      : GetScalarType<T[P], AggregateSocial[P]>
+  }
+
+
+
+
+  export type SocialGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialWhereInput
+    orderBy?: SocialOrderByWithAggregationInput | SocialOrderByWithAggregationInput[]
+    by: SocialScalarFieldEnum[] | SocialScalarFieldEnum
+    having?: SocialScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SocialCountAggregateInputType | true
+    _avg?: SocialAvgAggregateInputType
+    _sum?: SocialSumAggregateInputType
+    _min?: SocialMinAggregateInputType
+    _max?: SocialMaxAggregateInputType
+  }
+
+  export type SocialGroupByOutputType = {
+    id: string
+    title: string
+    url: string
+    position: number
+    createAt: Date
+    updateAt: Date
+    userId: string
+    _count: SocialCountAggregateOutputType | null
+    _avg: SocialAvgAggregateOutputType | null
+    _sum: SocialSumAggregateOutputType | null
+    _min: SocialMinAggregateOutputType | null
+    _max: SocialMaxAggregateOutputType | null
+  }
+
+  type GetSocialGroupByPayload<T extends SocialGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SocialGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SocialGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SocialGroupByOutputType[P]>
+            : GetScalarType<T[P], SocialGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SocialSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    url?: boolean
+    position?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["social"]>
+
+  export type SocialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    url?: boolean
+    position?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["social"]>
+
+  export type SocialSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    url?: boolean
+    position?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["social"]>
+
+  export type SocialSelectScalar = {
+    id?: boolean
+    title?: boolean
+    url?: boolean
+    position?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+    userId?: boolean
+  }
+
+  export type SocialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "url" | "position" | "createAt" | "updateAt" | "userId", ExtArgs["result"]["social"]>
+  export type SocialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SocialIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SocialIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SocialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Social"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      url: string
+      position: number
+      createAt: Date
+      updateAt: Date
+      userId: string
+    }, ExtArgs["result"]["social"]>
+    composites: {}
+  }
+
+  type SocialGetPayload<S extends boolean | null | undefined | SocialDefaultArgs> = $Result.GetResult<Prisma.$SocialPayload, S>
+
+  type SocialCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SocialFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SocialCountAggregateInputType | true
+    }
+
+  export interface SocialDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Social'], meta: { name: 'Social' } }
+    /**
+     * Find zero or one Social that matches the filter.
+     * @param {SocialFindUniqueArgs} args - Arguments to find a Social
+     * @example
+     * // Get one Social
+     * const social = await prisma.social.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SocialFindUniqueArgs>(args: SelectSubset<T, SocialFindUniqueArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Social that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SocialFindUniqueOrThrowArgs} args - Arguments to find a Social
+     * @example
+     * // Get one Social
+     * const social = await prisma.social.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SocialFindUniqueOrThrowArgs>(args: SelectSubset<T, SocialFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Social that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialFindFirstArgs} args - Arguments to find a Social
+     * @example
+     * // Get one Social
+     * const social = await prisma.social.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SocialFindFirstArgs>(args?: SelectSubset<T, SocialFindFirstArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Social that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialFindFirstOrThrowArgs} args - Arguments to find a Social
+     * @example
+     * // Get one Social
+     * const social = await prisma.social.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SocialFindFirstOrThrowArgs>(args?: SelectSubset<T, SocialFindFirstOrThrowArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Socials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Socials
+     * const socials = await prisma.social.findMany()
+     * 
+     * // Get first 10 Socials
+     * const socials = await prisma.social.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const socialWithIdOnly = await prisma.social.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SocialFindManyArgs>(args?: SelectSubset<T, SocialFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Social.
+     * @param {SocialCreateArgs} args - Arguments to create a Social.
+     * @example
+     * // Create one Social
+     * const Social = await prisma.social.create({
+     *   data: {
+     *     // ... data to create a Social
+     *   }
+     * })
+     * 
+     */
+    create<T extends SocialCreateArgs>(args: SelectSubset<T, SocialCreateArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Socials.
+     * @param {SocialCreateManyArgs} args - Arguments to create many Socials.
+     * @example
+     * // Create many Socials
+     * const social = await prisma.social.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SocialCreateManyArgs>(args?: SelectSubset<T, SocialCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Socials and returns the data saved in the database.
+     * @param {SocialCreateManyAndReturnArgs} args - Arguments to create many Socials.
+     * @example
+     * // Create many Socials
+     * const social = await prisma.social.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Socials and only return the `id`
+     * const socialWithIdOnly = await prisma.social.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SocialCreateManyAndReturnArgs>(args?: SelectSubset<T, SocialCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Social.
+     * @param {SocialDeleteArgs} args - Arguments to delete one Social.
+     * @example
+     * // Delete one Social
+     * const Social = await prisma.social.delete({
+     *   where: {
+     *     // ... filter to delete one Social
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SocialDeleteArgs>(args: SelectSubset<T, SocialDeleteArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Social.
+     * @param {SocialUpdateArgs} args - Arguments to update one Social.
+     * @example
+     * // Update one Social
+     * const social = await prisma.social.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SocialUpdateArgs>(args: SelectSubset<T, SocialUpdateArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Socials.
+     * @param {SocialDeleteManyArgs} args - Arguments to filter Socials to delete.
+     * @example
+     * // Delete a few Socials
+     * const { count } = await prisma.social.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SocialDeleteManyArgs>(args?: SelectSubset<T, SocialDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Socials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Socials
+     * const social = await prisma.social.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SocialUpdateManyArgs>(args: SelectSubset<T, SocialUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Socials and returns the data updated in the database.
+     * @param {SocialUpdateManyAndReturnArgs} args - Arguments to update many Socials.
+     * @example
+     * // Update many Socials
+     * const social = await prisma.social.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Socials and only return the `id`
+     * const socialWithIdOnly = await prisma.social.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SocialUpdateManyAndReturnArgs>(args: SelectSubset<T, SocialUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Social.
+     * @param {SocialUpsertArgs} args - Arguments to update or create a Social.
+     * @example
+     * // Update or create a Social
+     * const social = await prisma.social.upsert({
+     *   create: {
+     *     // ... data to create a Social
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Social we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SocialUpsertArgs>(args: SelectSubset<T, SocialUpsertArgs<ExtArgs>>): Prisma__SocialClient<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Socials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialCountArgs} args - Arguments to filter Socials to count.
+     * @example
+     * // Count the number of Socials
+     * const count = await prisma.social.count({
+     *   where: {
+     *     // ... the filter for the Socials we want to count
+     *   }
+     * })
+    **/
+    count<T extends SocialCountArgs>(
+      args?: Subset<T, SocialCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SocialCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Social.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SocialAggregateArgs>(args: Subset<T, SocialAggregateArgs>): Prisma.PrismaPromise<GetSocialAggregateType<T>>
+
+    /**
+     * Group by Social.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SocialGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SocialGroupByArgs['orderBy'] }
+        : { orderBy?: SocialGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SocialGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSocialGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Social model
+   */
+  readonly fields: SocialFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Social.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SocialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Social model
+   */ 
+  interface SocialFieldRefs {
+    readonly id: FieldRef<"Social", 'String'>
+    readonly title: FieldRef<"Social", 'String'>
+    readonly url: FieldRef<"Social", 'String'>
+    readonly position: FieldRef<"Social", 'Int'>
+    readonly createAt: FieldRef<"Social", 'DateTime'>
+    readonly updateAt: FieldRef<"Social", 'DateTime'>
+    readonly userId: FieldRef<"Social", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Social findUnique
+   */
+  export type SocialFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * Filter, which Social to fetch.
+     */
+    where: SocialWhereUniqueInput
+  }
+
+  /**
+   * Social findUniqueOrThrow
+   */
+  export type SocialFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * Filter, which Social to fetch.
+     */
+    where: SocialWhereUniqueInput
+  }
+
+  /**
+   * Social findFirst
+   */
+  export type SocialFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * Filter, which Social to fetch.
+     */
+    where?: SocialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Socials to fetch.
+     */
+    orderBy?: SocialOrderByWithRelationInput | SocialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Socials.
+     */
+    cursor?: SocialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Socials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Socials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Socials.
+     */
+    distinct?: SocialScalarFieldEnum | SocialScalarFieldEnum[]
+  }
+
+  /**
+   * Social findFirstOrThrow
+   */
+  export type SocialFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * Filter, which Social to fetch.
+     */
+    where?: SocialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Socials to fetch.
+     */
+    orderBy?: SocialOrderByWithRelationInput | SocialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Socials.
+     */
+    cursor?: SocialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Socials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Socials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Socials.
+     */
+    distinct?: SocialScalarFieldEnum | SocialScalarFieldEnum[]
+  }
+
+  /**
+   * Social findMany
+   */
+  export type SocialFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * Filter, which Socials to fetch.
+     */
+    where?: SocialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Socials to fetch.
+     */
+    orderBy?: SocialOrderByWithRelationInput | SocialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Socials.
+     */
+    cursor?: SocialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Socials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Socials.
+     */
+    skip?: number
+    distinct?: SocialScalarFieldEnum | SocialScalarFieldEnum[]
+  }
+
+  /**
+   * Social create
+   */
+  export type SocialCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Social.
+     */
+    data: XOR<SocialCreateInput, SocialUncheckedCreateInput>
+  }
+
+  /**
+   * Social createMany
+   */
+  export type SocialCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Socials.
+     */
+    data: SocialCreateManyInput | SocialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Social createManyAndReturn
+   */
+  export type SocialCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * The data used to create many Socials.
+     */
+    data: SocialCreateManyInput | SocialCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Social update
+   */
+  export type SocialUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Social.
+     */
+    data: XOR<SocialUpdateInput, SocialUncheckedUpdateInput>
+    /**
+     * Choose, which Social to update.
+     */
+    where: SocialWhereUniqueInput
+  }
+
+  /**
+   * Social updateMany
+   */
+  export type SocialUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Socials.
+     */
+    data: XOR<SocialUpdateManyMutationInput, SocialUncheckedUpdateManyInput>
+    /**
+     * Filter which Socials to update
+     */
+    where?: SocialWhereInput
+    /**
+     * Limit how many Socials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Social updateManyAndReturn
+   */
+  export type SocialUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * The data used to update Socials.
+     */
+    data: XOR<SocialUpdateManyMutationInput, SocialUncheckedUpdateManyInput>
+    /**
+     * Filter which Socials to update
+     */
+    where?: SocialWhereInput
+    /**
+     * Limit how many Socials to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Social upsert
+   */
+  export type SocialUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Social to update in case it exists.
+     */
+    where: SocialWhereUniqueInput
+    /**
+     * In case the Social found by the `where` argument doesn't exist, create a new Social with this data.
+     */
+    create: XOR<SocialCreateInput, SocialUncheckedCreateInput>
+    /**
+     * In case the Social was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SocialUpdateInput, SocialUncheckedUpdateInput>
+  }
+
+  /**
+   * Social delete
+   */
+  export type SocialDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+    /**
+     * Filter which Social to delete.
+     */
+    where: SocialWhereUniqueInput
+  }
+
+  /**
+   * Social deleteMany
+   */
+  export type SocialDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Socials to delete
+     */
+    where?: SocialWhereInput
+    /**
+     * Limit how many Socials to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Social without action
+   */
+  export type SocialDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Social
+     */
+    select?: SocialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Social
+     */
+    omit?: SocialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5608,6 +6854,19 @@ export namespace Prisma {
   };
 
   export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
+
+
+  export const SocialScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    url: 'url',
+    position: 'position',
+    createAt: 'createAt',
+    updateAt: 'updateAt',
+    userId: 'userId'
+  };
+
+  export type SocialScalarFieldEnum = (typeof SocialScalarFieldEnum)[keyof typeof SocialScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5700,6 +6959,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -5725,6 +6998,7 @@ export namespace Prisma {
     updateAt?: DateTimeFilter<"User"> | Date | string
     avatar?: XOR<UserAvatarNullableScalarRelationFilter, UserAvatarWhereInput> | null
     tokens?: TokenListRelationFilter
+    Social?: SocialListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5744,6 +7018,7 @@ export namespace Prisma {
     updateAt?: SortOrder
     avatar?: UserAvatarOrderByWithRelationInput
     tokens?: TokenOrderByRelationAggregateInput
+    Social?: SocialOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5766,6 +7041,7 @@ export namespace Prisma {
     updateAt?: DateTimeFilter<"User"> | Date | string
     avatar?: XOR<UserAvatarNullableScalarRelationFilter, UserAvatarWhereInput> | null
     tokens?: TokenListRelationFilter
+    Social?: SocialListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -5961,6 +7237,73 @@ export namespace Prisma {
     src?: StringWithAggregatesFilter<"Image"> | string
   }
 
+  export type SocialWhereInput = {
+    AND?: SocialWhereInput | SocialWhereInput[]
+    OR?: SocialWhereInput[]
+    NOT?: SocialWhereInput | SocialWhereInput[]
+    id?: StringFilter<"Social"> | string
+    title?: StringFilter<"Social"> | string
+    url?: StringFilter<"Social"> | string
+    position?: IntFilter<"Social"> | number
+    createAt?: DateTimeFilter<"Social"> | Date | string
+    updateAt?: DateTimeFilter<"Social"> | Date | string
+    userId?: StringFilter<"Social"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SocialOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    position?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SocialWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SocialWhereInput | SocialWhereInput[]
+    OR?: SocialWhereInput[]
+    NOT?: SocialWhereInput | SocialWhereInput[]
+    title?: StringFilter<"Social"> | string
+    url?: StringFilter<"Social"> | string
+    position?: IntFilter<"Social"> | number
+    createAt?: DateTimeFilter<"Social"> | Date | string
+    updateAt?: DateTimeFilter<"Social"> | Date | string
+    userId?: StringFilter<"Social"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type SocialOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    position?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    userId?: SortOrder
+    _count?: SocialCountOrderByAggregateInput
+    _avg?: SocialAvgOrderByAggregateInput
+    _max?: SocialMaxOrderByAggregateInput
+    _min?: SocialMinOrderByAggregateInput
+    _sum?: SocialSumOrderByAggregateInput
+  }
+
+  export type SocialScalarWhereWithAggregatesInput = {
+    AND?: SocialScalarWhereWithAggregatesInput | SocialScalarWhereWithAggregatesInput[]
+    OR?: SocialScalarWhereWithAggregatesInput[]
+    NOT?: SocialScalarWhereWithAggregatesInput | SocialScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Social"> | string
+    title?: StringWithAggregatesFilter<"Social"> | string
+    url?: StringWithAggregatesFilter<"Social"> | string
+    position?: IntWithAggregatesFilter<"Social"> | number
+    createAt?: DateTimeWithAggregatesFilter<"Social"> | Date | string
+    updateAt?: DateTimeWithAggregatesFilter<"Social"> | Date | string
+    userId?: StringWithAggregatesFilter<"Social"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
@@ -5978,6 +7321,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
+    Social?: SocialCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5997,6 +7341,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    Social?: SocialUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6016,6 +7361,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
+    Social?: SocialUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6035,6 +7381,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    Social?: SocialUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6236,6 +7583,75 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
   }
 
+  export type SocialCreateInput = {
+    id?: string
+    title: string
+    url: string
+    position: number
+    createAt?: Date | string
+    updateAt?: Date | string
+    user: UserCreateNestedOneWithoutSocialInput
+  }
+
+  export type SocialUncheckedCreateInput = {
+    id?: string
+    title: string
+    url: string
+    position: number
+    createAt?: Date | string
+    updateAt?: Date | string
+    userId: string
+  }
+
+  export type SocialUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSocialNestedInput
+  }
+
+  export type SocialUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SocialCreateManyInput = {
+    id?: string
+    title: string
+    url: string
+    position: number
+    createAt?: Date | string
+    updateAt?: Date | string
+    userId: string
+  }
+
+  export type SocialUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6304,12 +7720,22 @@ export namespace Prisma {
     none?: TokenWhereInput
   }
 
+  export type SocialListRelationFilter = {
+    every?: SocialWhereInput
+    some?: SocialWhereInput
+    none?: SocialWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type TokenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SocialOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6526,6 +7952,71 @@ export namespace Prisma {
     src?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type SocialCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    position?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SocialAvgOrderByAggregateInput = {
+    position?: SortOrder
+  }
+
+  export type SocialMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    position?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SocialMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    url?: SortOrder
+    position?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SocialSumOrderByAggregateInput = {
+    position?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type UserAvatarCreateNestedOneWithoutUserInput = {
     create?: XOR<UserAvatarCreateWithoutUserInput, UserAvatarUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserAvatarCreateOrConnectWithoutUserInput
@@ -6539,6 +8030,13 @@ export namespace Prisma {
     connect?: TokenWhereUniqueInput | TokenWhereUniqueInput[]
   }
 
+  export type SocialCreateNestedManyWithoutUserInput = {
+    create?: XOR<SocialCreateWithoutUserInput, SocialUncheckedCreateWithoutUserInput> | SocialCreateWithoutUserInput[] | SocialUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialCreateOrConnectWithoutUserInput | SocialCreateOrConnectWithoutUserInput[]
+    createMany?: SocialCreateManyUserInputEnvelope
+    connect?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+  }
+
   export type UserAvatarUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<UserAvatarCreateWithoutUserInput, UserAvatarUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserAvatarCreateOrConnectWithoutUserInput
@@ -6550,6 +8048,13 @@ export namespace Prisma {
     connectOrCreate?: TokenCreateOrConnectWithoutUserInput | TokenCreateOrConnectWithoutUserInput[]
     createMany?: TokenCreateManyUserInputEnvelope
     connect?: TokenWhereUniqueInput | TokenWhereUniqueInput[]
+  }
+
+  export type SocialUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SocialCreateWithoutUserInput, SocialUncheckedCreateWithoutUserInput> | SocialCreateWithoutUserInput[] | SocialUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialCreateOrConnectWithoutUserInput | SocialCreateOrConnectWithoutUserInput[]
+    createMany?: SocialCreateManyUserInputEnvelope
+    connect?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6596,6 +8101,20 @@ export namespace Prisma {
     deleteMany?: TokenScalarWhereInput | TokenScalarWhereInput[]
   }
 
+  export type SocialUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SocialCreateWithoutUserInput, SocialUncheckedCreateWithoutUserInput> | SocialCreateWithoutUserInput[] | SocialUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialCreateOrConnectWithoutUserInput | SocialCreateOrConnectWithoutUserInput[]
+    upsert?: SocialUpsertWithWhereUniqueWithoutUserInput | SocialUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SocialCreateManyUserInputEnvelope
+    set?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    disconnect?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    delete?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    connect?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    update?: SocialUpdateWithWhereUniqueWithoutUserInput | SocialUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SocialUpdateManyWithWhereWithoutUserInput | SocialUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SocialScalarWhereInput | SocialScalarWhereInput[]
+  }
+
   export type UserAvatarUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<UserAvatarCreateWithoutUserInput, UserAvatarUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserAvatarCreateOrConnectWithoutUserInput
@@ -6618,6 +8137,20 @@ export namespace Prisma {
     update?: TokenUpdateWithWhereUniqueWithoutUserInput | TokenUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TokenUpdateManyWithWhereWithoutUserInput | TokenUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TokenScalarWhereInput | TokenScalarWhereInput[]
+  }
+
+  export type SocialUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SocialCreateWithoutUserInput, SocialUncheckedCreateWithoutUserInput> | SocialCreateWithoutUserInput[] | SocialUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialCreateOrConnectWithoutUserInput | SocialCreateOrConnectWithoutUserInput[]
+    upsert?: SocialUpsertWithWhereUniqueWithoutUserInput | SocialUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SocialCreateManyUserInputEnvelope
+    set?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    disconnect?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    delete?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    connect?: SocialWhereUniqueInput | SocialWhereUniqueInput[]
+    update?: SocialUpdateWithWhereUniqueWithoutUserInput | SocialUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SocialUpdateManyWithWhereWithoutUserInput | SocialUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SocialScalarWhereInput | SocialScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutTokensInput = {
@@ -6696,6 +8229,28 @@ export namespace Prisma {
     delete?: UserAvatarWhereInput | boolean
     connect?: UserAvatarWhereUniqueInput
     update?: XOR<XOR<UserAvatarUpdateToOneWithWhereWithoutImageInput, UserAvatarUpdateWithoutImageInput>, UserAvatarUncheckedUpdateWithoutImageInput>
+  }
+
+  export type UserCreateNestedOneWithoutSocialInput = {
+    create?: XOR<UserCreateWithoutSocialInput, UserUncheckedCreateWithoutSocialInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSocialInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutSocialNestedInput = {
+    create?: XOR<UserCreateWithoutSocialInput, UserUncheckedCreateWithoutSocialInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSocialInput
+    upsert?: UserUpsertWithoutSocialInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSocialInput, UserUpdateWithoutSocialInput>, UserUncheckedUpdateWithoutSocialInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6862,6 +8417,33 @@ export namespace Prisma {
     _max?: NestedEnumENUM_TYPE_TOKENFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type UserAvatarCreateWithoutUserInput = {
     id?: string
     image: ImageCreateNestedOneWithoutUserAvatarInput
@@ -6902,6 +8484,34 @@ export namespace Prisma {
 
   export type TokenCreateManyUserInputEnvelope = {
     data: TokenCreateManyUserInput | TokenCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SocialCreateWithoutUserInput = {
+    id?: string
+    title: string
+    url: string
+    position: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type SocialUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    url: string
+    position: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type SocialCreateOrConnectWithoutUserInput = {
+    where: SocialWhereUniqueInput
+    create: XOR<SocialCreateWithoutUserInput, SocialUncheckedCreateWithoutUserInput>
+  }
+
+  export type SocialCreateManyUserInputEnvelope = {
+    data: SocialCreateManyUserInput | SocialCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -6955,6 +8565,35 @@ export namespace Prisma {
     userId?: StringFilter<"Token"> | string
   }
 
+  export type SocialUpsertWithWhereUniqueWithoutUserInput = {
+    where: SocialWhereUniqueInput
+    update: XOR<SocialUpdateWithoutUserInput, SocialUncheckedUpdateWithoutUserInput>
+    create: XOR<SocialCreateWithoutUserInput, SocialUncheckedCreateWithoutUserInput>
+  }
+
+  export type SocialUpdateWithWhereUniqueWithoutUserInput = {
+    where: SocialWhereUniqueInput
+    data: XOR<SocialUpdateWithoutUserInput, SocialUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SocialUpdateManyWithWhereWithoutUserInput = {
+    where: SocialScalarWhereInput
+    data: XOR<SocialUpdateManyMutationInput, SocialUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SocialScalarWhereInput = {
+    AND?: SocialScalarWhereInput | SocialScalarWhereInput[]
+    OR?: SocialScalarWhereInput[]
+    NOT?: SocialScalarWhereInput | SocialScalarWhereInput[]
+    id?: StringFilter<"Social"> | string
+    title?: StringFilter<"Social"> | string
+    url?: StringFilter<"Social"> | string
+    position?: IntFilter<"Social"> | number
+    createAt?: DateTimeFilter<"Social"> | Date | string
+    updateAt?: DateTimeFilter<"Social"> | Date | string
+    userId?: StringFilter<"Social"> | string
+  }
+
   export type UserCreateWithoutTokensInput = {
     id?: string
     firstName: string
@@ -6971,6 +8610,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
+    Social?: SocialCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTokensInput = {
@@ -6989,6 +8629,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
+    Social?: SocialUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTokensInput = {
@@ -7023,6 +8664,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
+    Social?: SocialUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTokensInput = {
@@ -7041,6 +8683,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
+    Social?: SocialUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAvatarInput = {
@@ -7059,6 +8702,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutUserInput
+    Social?: SocialCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAvatarInput = {
@@ -7077,6 +8721,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    Social?: SocialUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAvatarInput = {
@@ -7126,6 +8771,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutUserNestedInput
+    Social?: SocialUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAvatarInput = {
@@ -7144,6 +8790,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    Social?: SocialUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ImageUpsertWithoutUserAvatarInput = {
@@ -7203,6 +8850,98 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserCreateWithoutSocialInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    bio?: string | null
+    passwordHash: string
+    isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
+    twoFactorSecret?: string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+    avatar?: UserAvatarCreateNestedOneWithoutUserInput
+    tokens?: TokenCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSocialInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    bio?: string | null
+    passwordHash: string
+    isEmailVerification?: boolean
+    isTwoFactorEnable?: boolean
+    isDeactivatedAccount?: boolean
+    deactivatedAt?: Date | string | null
+    twoFactorSecret?: string | null
+    createAt?: Date | string
+    updateAt?: Date | string
+    avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
+    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSocialInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSocialInput, UserUncheckedCreateWithoutSocialInput>
+  }
+
+  export type UserUpsertWithoutSocialInput = {
+    update: XOR<UserUpdateWithoutSocialInput, UserUncheckedUpdateWithoutSocialInput>
+    create: XOR<UserCreateWithoutSocialInput, UserUncheckedCreateWithoutSocialInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSocialInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSocialInput, UserUncheckedUpdateWithoutSocialInput>
+  }
+
+  export type UserUpdateWithoutSocialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: UserAvatarUpdateOneWithoutUserNestedInput
+    tokens?: TokenUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSocialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    isEmailVerification?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnable?: BoolFieldUpdateOperationsInput | boolean
+    isDeactivatedAccount?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
+    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type TokenCreateManyUserInput = {
     id?: string
     type: $Enums.ENUM_TYPE_TOKEN
@@ -7210,6 +8949,15 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     expiresIn: Date | string
+  }
+
+  export type SocialCreateManyUserInput = {
+    id?: string
+    title: string
+    url: string
+    position: number
+    createAt?: Date | string
+    updateAt?: Date | string
   }
 
   export type TokenUpdateWithoutUserInput = {
@@ -7237,6 +8985,33 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    position?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -155,6 +155,16 @@ exports.Prisma.ImageScalarFieldEnum = {
   src: 'src'
 };
 
+exports.Prisma.SocialScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  url: 'url',
+  position: 'position',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -180,7 +190,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Token: 'Token',
   UserAvatar: 'UserAvatar',
-  Image: 'Image'
+  Image: 'Image',
+  Social: 'Social'
 };
 
 /**
