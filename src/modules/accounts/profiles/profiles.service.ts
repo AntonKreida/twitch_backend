@@ -6,7 +6,7 @@ import {
 import { UserRepository } from '@/modules/accounts/user/repositories';
 import { ConfigService } from '@nestjs/config';
 import * as Upload from 'graphql-upload/GraphQLUpload.js';
-import { UserModel } from '../user';
+import { AvatarRepository, UserModel } from '../user';
 import { ChangeProfileInfoInput } from './inputs';
 
 import { deleteFile, uploadFileStream } from '@shared';
@@ -15,6 +15,7 @@ import { deleteFile, uploadFileStream } from '@shared';
 export class ProfilesService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly avatarRepository: AvatarRepository,
     private readonly configService: ConfigService,
   ) {}
 
@@ -62,12 +63,10 @@ export class ProfilesService {
         pathFile: user.avatar,
       });
 
-      await this.userRepository.updateUserAvatar(userId, filePath);
-
-      return true;
+      await this.avatarRepository.deleteAvatar(user.id);
     }
 
-    await this.userRepository.updateUserAvatar(userId, filePath);
+    await this.avatarRepository.createAvatar(user.id, filePath);
 
     return true;
   }

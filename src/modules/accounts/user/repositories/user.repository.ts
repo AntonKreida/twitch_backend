@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, User, UserAvatar } from '/prisma/generated';
+import { GetBatchResult } from '@prisma/client/runtime/library';
+
+import { PrismaService } from '@core';
 
 import { UserEntity } from '../entities';
 import { IArgsFindUser } from '../lib/interfaces';
-
-import { PrismaService } from '@core';
-import { SORT_ENUM, SortOrPaginationArgsType } from '@shared';
 import { UserModel } from '../models';
-import { GetBatchResult } from '@prisma/client/runtime/library';
+
+import { SORT_ENUM, SortOrPaginationArgsType } from '@shared';
 
 export type TFindAll = SortOrPaginationArgsType &
   Partial<Omit<UserModel, 'avatar'>>;
