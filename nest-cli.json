@@ -9,6 +9,11 @@
         "include": "../public/**/*",
         "outDir": "./dist/public",
         "watchAssets": true
+      },
+      {
+        "include": "../uploads/**/*",
+        "outDir": "./dist/uploads",
+        "watchAssets": true
       }
     ]
   }

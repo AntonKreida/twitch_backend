@@ -5,6 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ENUM_TYPE_TOKEN } from '/prisma/generated';
 import { type Response, type Request } from 'express';
 
@@ -13,7 +14,7 @@ import { SessionService } from '../session';
 import { VerificationService } from '../verification';
 
 import { UserSignUpInput } from './inputs';
-import { ISessionMetadata } from '@shared';
+import { ISessionMetadata, uploadFileStream } from '@shared';
 
 @Injectable()
 export class AuthService {
@@ -21,16 +22,17 @@ export class AuthService {
     private readonly userRepository: UserRepository,
     private readonly verificationService: VerificationService,
     private readonly sessionService: SessionService,
+    private readonly configService: ConfigService,
   ) {}
 
   async signUp({
     avatar,
-    bio,
+    username,
     email,
+    bio,
     firstName,
     lastName,
     password,
-    username,
   }: UserSignUpInput): Promise<boolean> {
     const userByUsername = await this.userRepository.findUser({
       username,
@@ -41,7 +43,6 @@ export class AuthService {
         'Пользователь с таким username уже существует!',
       );
     }
-
     const userByEmail = await this.userRepository.findUser({
       email,
     });
@@ -50,14 +51,33 @@ export class AuthService {
       throw new ConflictException('Пользователь с таким email уже существует!');
     }
 
+    if (avatar) {
+      const file = await avatar;
+
+      const filePath = await uploadFileStream({
+        readStream: file.createReadStream,
+        uploadDir: this.configService.getOrThrow<string>('UPLOAD_DIR_NAME'),
+        filename: `avatar-${username}.${file.mimetype.split('/')[1]}`,
+        sharpSetting: {
+          width: 512,
+          height: 512,
+          fit: 'cover',
+          toFormat: file.mimetype.split('/')[1],
+          quality: 50,
+        },
+      });
+
+      avatar = filePath;
+    }
+
     const newEntityUser = await new UserEntity({
-      avatar,
       bio,
       email,
       firstName,
       lastName,
       username,
       passwordHash: '',
+      avatar,
     }).setPassword(password);
 
     const newUser = await this.userRepository.createUser(newEntityUser);
@@ -81,7 +101,10 @@ export class AuthService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
-    const userEntity = new UserEntity(user);
+    const userEntity = new UserEntity({
+      ...user,
+      avatar: user.avatar,
+    });
     const isCorrectPassword = await userEntity.validatePassword(password);
 
     if (!isCorrectPassword) {
@@ -112,7 +135,14 @@ export class AuthService {
       }
     }
 
-    return await this.sessionService.saveSession(req, user, metadata);
+    return await this.sessionService.saveSession(
+      req,
+      {
+        ...user,
+        avatar: user.avatar,
+      },
+      metadata,
+    );
   }
 
   async signOut(req: Request, res: Response): Promise<boolean> {

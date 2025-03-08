@@ -20,6 +20,7 @@ import {
   TfaModule,
   DeactivatedModule,
   CroneModule,
+  ProfilesModule,
 } from '@modules';
 
 import { isDevEnv } from '@shared';
@@ -30,9 +31,25 @@ import { isDevEnv } from '@shared';
       isGlobal: true,
       ignoreEnvFile: isDevEnv,
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/static',
+    ServeStaticModule.forRootAsync({
+      useFactory: () => [
+        {
+          rootPath: join(__dirname, '..', 'public'),
+          serveRoot: '/static',
+          serveStaticOptions: {
+            extensions: ['jpg', 'jpeg', 'png', 'gif'],
+            index: false,
+          },
+        },
+        {
+          rootPath: join(__dirname, '..', 'uploads'),
+          serveRoot: '/uploads',
+          serveStaticOptions: {
+            extensions: ['jpg', 'jpeg', 'png', 'gif'],
+            index: false,
+          },
+        },
+      ],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -53,6 +70,7 @@ import { isDevEnv } from '@shared';
     TfaModule,
     DeactivatedModule,
     CroneModule,
+    ProfilesModule,
   ],
 })
 export class CoreModule {}

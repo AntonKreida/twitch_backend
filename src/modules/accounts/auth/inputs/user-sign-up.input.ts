@@ -1,29 +1,18 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { User } from '/prisma/generated';
 import {
   IsEmail,
-  IsOptional,
-  MinLength,
-  IsString,
   IsNotEmpty,
+  IsOptional,
+  IsString,
   Matches,
+  MinLength,
 } from 'class-validator';
+import * as Upload from 'graphql-upload/GraphQLUpload.js';
 
-type TUserRegister = Omit<
-  User,
-  | 'id'
-  | 'createAt'
-  | 'updateAt'
-  | 'passwordHash'
-  | 'isEmailVerification'
-  | 'twoFactorSecret'
-  | 'isTwoFactorEnable'
-  | 'isDeactivatedAccount'
-  | 'deactivatedAt'
->;
+import { IsMatchFile } from '@shared';
 
 @InputType()
-export class UserSignUpInput implements TUserRegister {
+export class UserSignUpInput {
   @Field(() => String)
   @IsString({
     message: 'firstName должно быть строкой',
@@ -66,6 +55,19 @@ export class UserSignUpInput implements TUserRegister {
   })
   username: string;
 
+  @Field(() => Upload, { nullable: true })
+  @IsOptional()
+  @IsMatchFile(
+    {
+      listExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+      maxSize: 5 * 1024 * 1024,
+    },
+    {
+      message: 'Некорректный файл',
+    },
+  )
+  avatar: Upload | null;
+
   @Field(() => String)
   @IsString({
     message: 'password должен быть строкой',
@@ -73,14 +75,6 @@ export class UserSignUpInput implements TUserRegister {
   @MinLength(8, { message: 'password должен быть больше 8-х символов' })
   @IsNotEmpty({ message: 'password не может быть пустым' })
   password: string;
-
-  @Field(() => String, { nullable: true })
-  @IsOptional()
-  @IsString({
-    message: 'avatar должен быть строкой',
-  })
-  @IsNotEmpty({ message: 'avatar не может быть пустым' })
-  avatar: string | null;
 
   @Field(() => String, { nullable: true })
   @IsOptional()

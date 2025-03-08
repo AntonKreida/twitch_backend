@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { RedisStore } from 'connect-redis';
 import * as session from 'express-session';
+import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 
 import { CoreModule, RedisService } from './core';
 import {
@@ -18,6 +19,8 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   const redis = app.get(RedisService);
+
+  app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 5 }));
 
   app.use(cookieParser(config.getOrThrow<string>('COOKIE_SECRET')));
 
@@ -46,7 +49,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+    origin: '*',
     credentials: true,
     exposedHeaders: ['set-cookie'],
   });

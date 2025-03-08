@@ -1,5 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '/prisma/generated';
+import { SocialModel } from './social.model';
+
+import { pathFileMiddleware } from '@shared';
 
 @ObjectType()
 export class UserModel implements User {
@@ -15,11 +18,14 @@ export class UserModel implements User {
   @Field(() => String)
   username: string;
 
+  @Field(() => String, {
+    nullable: true,
+    middleware: [pathFileMiddleware],
+  })
+  avatar: string | null;
+
   @Field(() => String)
   email: string;
-
-  @Field(() => String, { nullable: true })
-  avatar: string | null;
 
   @Field(() => String, { nullable: true })
   bio: string | null;
@@ -47,4 +53,7 @@ export class UserModel implements User {
 
   @Field(() => Date)
   updateAt: Date;
+
+  @Field(() => [SocialModel])
+  social: SocialModel[];
 }

@@ -14,8 +14,9 @@ import { SessionService } from '@/modules/accounts/session';
 import { TokenRepository } from './repositories';
 import { EntityToken } from './entities';
 
-import { ISessionMetadata } from '@shared';
 import { IGenerateToken } from './lib';
+import { VerifyInput, VerifyPasswordRecoveryInput } from './inputs';
+import { ISessionMetadata } from '@shared';
 
 @Injectable()
 export class VerificationService {
@@ -59,7 +60,7 @@ export class VerificationService {
     });
   }
 
-  async verify(token: string): Promise<boolean> {
+  async verify({ token }: VerifyInput): Promise<boolean> {
     const tokenFound = await this.checkToken(token, ENUM_TYPE_TOKEN.EMAIL);
 
     await this.userRepository.updateUser({
@@ -103,10 +104,10 @@ export class VerificationService {
     });
   }
 
-  async verifyPasswordRecovery(
-    token: string,
-    newPassword: string,
-  ): Promise<boolean> {
+  async verifyPasswordRecovery({
+    token,
+    password,
+  }: VerifyPasswordRecoveryInput): Promise<boolean> {
     const tokenFound = await this.checkToken(token, ENUM_TYPE_TOKEN.PASSWORD);
 
     const user = new UserEntity(
@@ -117,7 +118,7 @@ export class VerificationService {
       throw new NotFoundException('Пользователь не найден!');
     }
 
-    const newPasswordHash = (await user.setPassword(newPassword)).passwordHash;
+    const newPasswordHash = (await user.setPassword(password)).passwordHash;
 
     await this.userRepository.updateUser({
       id: user.id,

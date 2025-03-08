@@ -2,6 +2,37 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangeAvatarUserInput {
+  avatar: Upload!
+}
+
+input ChangeEmailUserInput {
+  email: String!
+}
+
+input ChangeProfileInfoInput {
+  bio: String
+  firstName: String
+  lastName: String
+  username: String
+}
+
+input ChangeReorderSocialInput {
+  id: String!
+  position: Float!
+}
+
+input ChangeUpdateSocialInput {
+  id: ID!
+  title: String!
+  url: String!
+}
+
+input CreateSocialInput {
+  title: String!
+  url: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -26,6 +57,12 @@ input EnableTwoFactorAuthInput {
   pincode: String!
 }
 
+type ImageModel {
+  id: ID!
+  src: String!
+  userAvatar: UserAvatarModel
+}
+
 type LocationModel {
   city: String
   country: String
@@ -40,18 +77,26 @@ type MetadataModel {
 }
 
 type Mutation {
+  changeEmail(changeEmailInput: ChangeEmailUserInput!): UserModel!
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
+  changeUserAvatar(changeUserAvatar: ChangeAvatarUserInput!): Boolean!
+  changeUserProfileInfo(updateUser: ChangeProfileInfoInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
+  createSocial(createSocialInput: CreateSocialInput!): Boolean!
   deactivated(deactivatedInput: DeactivatedInput!): UserModel!
+  deleteSocial(socialId: String!): Boolean!
   disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
   enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
+  findSocials: [SocialModel!]!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  reorderSocial(list: [ChangeReorderSocialInput!]!): Boolean!
   sendDeactivatedAccount(sendDeactivatedEmailInput: SendDeactivatedEmailInput!): Boolean!
   sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!
   sendInitTwoFactorAuthentication(inputInitTwoFactorAuthentication: SendInitTwoFactorAuthenticationInput!): Boolean!
   signIn(inputUserSignIn: UserSignInInput!): UserModel!
   signOut: String!
   signUp(inputUserSignUp: UserSignUpInput!): Boolean!
+  updateSocial(updateSocial: ChangeUpdateSocialInput!): Boolean!
   verifyPasswordRecovery(inputVerifyPasswordRecovery: VerifyPasswordRecoveryInput!): Boolean!
   verifyUser(inputVerify: VerifyInput!): Boolean!
 }
@@ -113,6 +158,27 @@ type SessionModel {
   userId: String!
 }
 
+type SocialModel {
+  createAt: DateTime!
+  id: ID!
+  position: Float!
+  title: String!
+  updateAt: DateTime!
+  url: String!
+  userId: ID!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UserAvatarModel {
+  id: ID!
+  image: ImageModel!
+  imageId: ID!
+  user: UserModel!
+  userId: ID!
+}
+
 type UserModel {
   avatar: String
   bio: String
@@ -126,6 +192,7 @@ type UserModel {
   isTwoFactorEnable: Boolean!
   lastName: String!
   passwordHash: String!
+  social: [SocialModel!]!
   twoFactorSecret: String
   updateAt: DateTime!
   username: String!
@@ -138,7 +205,7 @@ input UserSignInInput {
 }
 
 input UserSignUpInput {
-  avatar: String
+  avatar: Upload
   bio: String
   email: String!
   firstName: String!
