@@ -115,10 +115,20 @@ export class UserRepository {
             },
           },
         },
+        stream: {
+          create: {
+            title: `Стрим ${user.username}`,
+          },
+        },
       };
     } else {
       dataUserCreate = {
         ...user,
+        stream: {
+          create: {
+            title: `Стрим ${user.username}`,
+          },
+        },
       };
     }
 
