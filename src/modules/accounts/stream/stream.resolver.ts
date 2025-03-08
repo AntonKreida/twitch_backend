@@ -13,4 +13,9 @@ export class StreamResolver {
   ): Promise<StreamModel[]> {
     return await this.streamService.findMany(searchStream);
   }
+
+  @Query(() => [StreamModel], { name: 'findRandomStream' })
+  async findRandomStream(): Promise<StreamModel[]> {
+    return await this.streamService.findRandomStream();
+  }
 }

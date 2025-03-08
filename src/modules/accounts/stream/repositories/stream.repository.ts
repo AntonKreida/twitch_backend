@@ -53,6 +53,45 @@ export class StreamRepository {
     }));
   }
 
+  async findRandomStream(count: number): Promise<StreamModel[]> {
+    const totalStreams = await this.prismaService.stream.count();
+
+    const indexStreams = new Set();
+
+    while (indexStreams.size < (count <= totalStreams ? count : totalStreams)) {
+      indexStreams.add(Math.floor(Math.random() * totalStreams));
+    }
+
+    const streams = await this.prismaService.stream.findMany({
+      skip: 0,
+      take: totalStreams,
+      include: {
+        user: {
+          include: {
+            avatar: {
+              include: {
+                image: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+    });
+
+    return streams
+      .filter((_, index) => indexStreams.has(index))
+      .map((stream) => ({
+        ...stream,
+        user: {
+          ...stream.user,
+          avatar: stream.user.avatar?.image?.src || null,
+        },
+      }));
+  }
+
   private searchStream(search: string): Prisma.StreamWhereInput {
     return {
       OR: [
