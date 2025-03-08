@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '/prisma/generated';
 
 import { PrismaService } from '@core';
 import { StreamModel } from '../models';
 import { SearchStreamInput } from '../inputs';
-import { Prisma } from '/prisma/generated';
 
 @Injectable()
 export class StreamRepository {
