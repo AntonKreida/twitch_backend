@@ -1250,12 +1250,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     tokens: number
-    Social: number
+    social: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | UserCountOutputTypeCountTokensArgs
-    Social?: boolean | UserCountOutputTypeCountSocialArgs
+    social?: boolean | UserCountOutputTypeCountSocialArgs
   }
 
   // Custom InputTypes
@@ -1526,7 +1526,7 @@ export namespace Prisma {
     updateAt?: boolean
     avatar?: boolean | User$avatarArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
-    Social?: boolean | User$SocialArgs<ExtArgs>
+    social?: boolean | User$socialArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1585,7 +1585,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     avatar?: boolean | User$avatarArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
-    Social?: boolean | User$SocialArgs<ExtArgs>
+    social?: boolean | User$socialArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1596,7 +1596,7 @@ export namespace Prisma {
     objects: {
       avatar: Prisma.$UserAvatarPayload<ExtArgs> | null
       tokens: Prisma.$TokenPayload<ExtArgs>[]
-      Social: Prisma.$SocialPayload<ExtArgs>[]
+      social: Prisma.$SocialPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2009,7 +2009,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     avatar<T extends User$avatarArgs<ExtArgs> = {}>(args?: Subset<T, User$avatarArgs<ExtArgs>>): Prisma__UserAvatarClient<$Result.GetResult<Prisma.$UserAvatarPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    Social<T extends User$SocialArgs<ExtArgs> = {}>(args?: Subset<T, User$SocialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    social<T extends User$socialArgs<ExtArgs> = {}>(args?: Subset<T, User$socialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2484,9 +2484,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.Social
+   * User.social
    */
-  export type User$SocialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$socialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Social
      */
@@ -6998,7 +6998,7 @@ export namespace Prisma {
     updateAt?: DateTimeFilter<"User"> | Date | string
     avatar?: XOR<UserAvatarNullableScalarRelationFilter, UserAvatarWhereInput> | null
     tokens?: TokenListRelationFilter
-    Social?: SocialListRelationFilter
+    social?: SocialListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7018,7 +7018,7 @@ export namespace Prisma {
     updateAt?: SortOrder
     avatar?: UserAvatarOrderByWithRelationInput
     tokens?: TokenOrderByRelationAggregateInput
-    Social?: SocialOrderByRelationAggregateInput
+    social?: SocialOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7041,7 +7041,7 @@ export namespace Prisma {
     updateAt?: DateTimeFilter<"User"> | Date | string
     avatar?: XOR<UserAvatarNullableScalarRelationFilter, UserAvatarWhereInput> | null
     tokens?: TokenListRelationFilter
-    Social?: SocialListRelationFilter
+    social?: SocialListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7321,7 +7321,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
-    Social?: SocialCreateNestedManyWithoutUserInput
+    social?: SocialCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7341,7 +7341,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
-    Social?: SocialUncheckedCreateNestedManyWithoutUserInput
+    social?: SocialUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7361,7 +7361,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
-    Social?: SocialUpdateManyWithoutUserNestedInput
+    social?: SocialUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7381,7 +7381,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
-    Social?: SocialUncheckedUpdateManyWithoutUserNestedInput
+    social?: SocialUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8610,7 +8610,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
-    Social?: SocialCreateNestedManyWithoutUserInput
+    social?: SocialCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTokensInput = {
@@ -8629,7 +8629,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
-    Social?: SocialUncheckedCreateNestedManyWithoutUserInput
+    social?: SocialUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTokensInput = {
@@ -8664,7 +8664,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
-    Social?: SocialUpdateManyWithoutUserNestedInput
+    social?: SocialUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTokensInput = {
@@ -8683,7 +8683,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
-    Social?: SocialUncheckedUpdateManyWithoutUserNestedInput
+    social?: SocialUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAvatarInput = {
@@ -8702,7 +8702,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutUserInput
-    Social?: SocialCreateNestedManyWithoutUserInput
+    social?: SocialCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAvatarInput = {
@@ -8721,7 +8721,7 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
-    Social?: SocialUncheckedCreateNestedManyWithoutUserInput
+    social?: SocialUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAvatarInput = {
@@ -8771,7 +8771,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutUserNestedInput
-    Social?: SocialUpdateManyWithoutUserNestedInput
+    social?: SocialUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAvatarInput = {
@@ -8790,7 +8790,7 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
-    Social?: SocialUncheckedUpdateManyWithoutUserNestedInput
+    social?: SocialUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ImageUpsertWithoutUserAvatarInput = {

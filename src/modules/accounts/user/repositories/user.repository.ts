@@ -37,6 +37,11 @@ export class UserRepository {
         deactivatedAt: {
           lte: userData.deactivatedAt,
         },
+        social: {
+          some: {
+            userId: userData.id,
+          },
+        },
       },
       include: {
         avatar: {
@@ -44,6 +49,7 @@ export class UserRepository {
             image: true,
           },
         },
+        social: true,
       },
     });
 
@@ -80,6 +86,7 @@ export class UserRepository {
             image: true,
           },
         },
+        social: true,
       },
     });
 
@@ -132,6 +139,7 @@ export class UserRepository {
             image: true,
           },
         },
+        social: true,
       },
     });
 

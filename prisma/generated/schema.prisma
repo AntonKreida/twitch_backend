@@ -33,7 +33,7 @@ model User {
 
   avatar UserAvatar?
   tokens Token[]
-  Social Social[]
+  social Social[]
 }
 
 model Token {
@@ -71,5 +71,5 @@ model Social {
   updateAt DateTime @updatedAt
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

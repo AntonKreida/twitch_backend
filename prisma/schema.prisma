@@ -33,7 +33,7 @@ model User {
 
   avatar UserAvatar?
   tokens Token[]
-  Social Social[]
+  social Social[]
 }
 
 model Token {

@@ -1,5 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '/prisma/generated';
+import { SocialModel } from './social.model';
+
 import { pathFileMiddleware } from '@shared';
 
 @ObjectType()
@@ -51,4 +53,7 @@ export class UserModel implements User {
 
   @Field(() => Date)
   updateAt: Date;
+
+  @Field(() => [SocialModel])
+  social: SocialModel[];
 }
