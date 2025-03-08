@@ -34,7 +34,7 @@ model User {
   avatar UserAvatar?
   tokens Token[]
   social Social[]
-  Stream Stream?
+  stream Stream?
 }
 
 model Token {

@@ -1618,7 +1618,7 @@ export namespace Prisma {
     avatar?: boolean | User$avatarArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
     social?: boolean | User$socialArgs<ExtArgs>
-    Stream?: boolean | User$StreamArgs<ExtArgs>
+    stream?: boolean | User$streamArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1678,7 +1678,7 @@ export namespace Prisma {
     avatar?: boolean | User$avatarArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
     social?: boolean | User$socialArgs<ExtArgs>
-    Stream?: boolean | User$StreamArgs<ExtArgs>
+    stream?: boolean | User$streamArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1690,7 +1690,7 @@ export namespace Prisma {
       avatar: Prisma.$UserAvatarPayload<ExtArgs> | null
       tokens: Prisma.$TokenPayload<ExtArgs>[]
       social: Prisma.$SocialPayload<ExtArgs>[]
-      Stream: Prisma.$StreamPayload<ExtArgs> | null
+      stream: Prisma.$StreamPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2104,7 +2104,7 @@ export namespace Prisma {
     avatar<T extends User$avatarArgs<ExtArgs> = {}>(args?: Subset<T, User$avatarArgs<ExtArgs>>): Prisma__UserAvatarClient<$Result.GetResult<Prisma.$UserAvatarPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     social<T extends User$socialArgs<ExtArgs> = {}>(args?: Subset<T, User$socialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    Stream<T extends User$StreamArgs<ExtArgs> = {}>(args?: Subset<T, User$StreamArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    stream<T extends User$streamArgs<ExtArgs> = {}>(args?: Subset<T, User$streamArgs<ExtArgs>>): Prisma__StreamClient<$Result.GetResult<Prisma.$StreamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2603,9 +2603,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.Stream
+   * User.stream
    */
-  export type User$StreamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$streamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Stream
      */
@@ -8252,7 +8252,7 @@ export namespace Prisma {
     avatar?: XOR<UserAvatarNullableScalarRelationFilter, UserAvatarWhereInput> | null
     tokens?: TokenListRelationFilter
     social?: SocialListRelationFilter
-    Stream?: XOR<StreamNullableScalarRelationFilter, StreamWhereInput> | null
+    stream?: XOR<StreamNullableScalarRelationFilter, StreamWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8273,7 +8273,7 @@ export namespace Prisma {
     avatar?: UserAvatarOrderByWithRelationInput
     tokens?: TokenOrderByRelationAggregateInput
     social?: SocialOrderByRelationAggregateInput
-    Stream?: StreamOrderByWithRelationInput
+    stream?: StreamOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8297,7 +8297,7 @@ export namespace Prisma {
     avatar?: XOR<UserAvatarNullableScalarRelationFilter, UserAvatarWhereInput> | null
     tokens?: TokenListRelationFilter
     social?: SocialListRelationFilter
-    Stream?: XOR<StreamNullableScalarRelationFilter, StreamWhereInput> | null
+    stream?: XOR<StreamNullableScalarRelationFilter, StreamWhereInput> | null
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8658,7 +8658,7 @@ export namespace Prisma {
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     social?: SocialCreateNestedManyWithoutUserInput
-    Stream?: StreamCreateNestedOneWithoutUserInput
+    stream?: StreamCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8679,7 +8679,7 @@ export namespace Prisma {
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     social?: SocialUncheckedCreateNestedManyWithoutUserInput
-    Stream?: StreamUncheckedCreateNestedOneWithoutUserInput
+    stream?: StreamUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8700,7 +8700,7 @@ export namespace Prisma {
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     social?: SocialUpdateManyWithoutUserNestedInput
-    Stream?: StreamUpdateOneWithoutUserNestedInput
+    stream?: StreamUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8721,7 +8721,7 @@ export namespace Prisma {
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     social?: SocialUncheckedUpdateManyWithoutUserNestedInput
-    Stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
+    stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10195,7 +10195,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
     social?: SocialCreateNestedManyWithoutUserInput
-    Stream?: StreamCreateNestedOneWithoutUserInput
+    stream?: StreamCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTokensInput = {
@@ -10215,7 +10215,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
     social?: SocialUncheckedCreateNestedManyWithoutUserInput
-    Stream?: StreamUncheckedCreateNestedOneWithoutUserInput
+    stream?: StreamUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTokensInput = {
@@ -10251,7 +10251,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
     social?: SocialUpdateManyWithoutUserNestedInput
-    Stream?: StreamUpdateOneWithoutUserNestedInput
+    stream?: StreamUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTokensInput = {
@@ -10271,7 +10271,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
     social?: SocialUncheckedUpdateManyWithoutUserNestedInput
-    Stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
+    stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAvatarInput = {
@@ -10291,7 +10291,7 @@ export namespace Prisma {
     updateAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutUserInput
     social?: SocialCreateNestedManyWithoutUserInput
-    Stream?: StreamCreateNestedOneWithoutUserInput
+    stream?: StreamCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAvatarInput = {
@@ -10311,7 +10311,7 @@ export namespace Prisma {
     updateAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     social?: SocialUncheckedCreateNestedManyWithoutUserInput
-    Stream?: StreamUncheckedCreateNestedOneWithoutUserInput
+    stream?: StreamUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAvatarInput = {
@@ -10362,7 +10362,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutUserNestedInput
     social?: SocialUpdateManyWithoutUserNestedInput
-    Stream?: StreamUpdateOneWithoutUserNestedInput
+    stream?: StreamUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAvatarInput = {
@@ -10382,7 +10382,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     social?: SocialUncheckedUpdateManyWithoutUserNestedInput
-    Stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
+    stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ImageUpsertWithoutUserAvatarInput = {
@@ -10459,7 +10459,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarCreateNestedOneWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
-    Stream?: StreamCreateNestedOneWithoutUserInput
+    stream?: StreamCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSocialInput = {
@@ -10479,7 +10479,7 @@ export namespace Prisma {
     updateAt?: Date | string
     avatar?: UserAvatarUncheckedCreateNestedOneWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
-    Stream?: StreamUncheckedCreateNestedOneWithoutUserInput
+    stream?: StreamUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSocialInput = {
@@ -10515,7 +10515,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUpdateOneWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
-    Stream?: StreamUpdateOneWithoutUserNestedInput
+    stream?: StreamUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSocialInput = {
@@ -10535,7 +10535,7 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: UserAvatarUncheckedUpdateOneWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
-    Stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
+    stream?: StreamUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStreamInput = {
