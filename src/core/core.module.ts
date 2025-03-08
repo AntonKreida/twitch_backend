@@ -21,6 +21,7 @@ import {
   DeactivatedModule,
   CroneModule,
   ProfilesModule,
+  StreamModule,
 } from '@modules';
 
 import { isDevEnv } from '@shared';
@@ -71,6 +72,7 @@ import { isDevEnv } from '@shared';
     DeactivatedModule,
     CroneModule,
     ProfilesModule,
+    StreamModule,
   ],
 })
 export class CoreModule {}

@@ -50,6 +50,7 @@ export class UserRepository {
           },
         },
         social: true,
+        stream: true,
       },
     });
 
@@ -87,6 +88,7 @@ export class UserRepository {
           },
         },
         social: true,
+        stream: true,
       },
     });
 
@@ -140,6 +142,7 @@ export class UserRepository {
           },
         },
         social: true,
+        stream: true,
       },
     });
 

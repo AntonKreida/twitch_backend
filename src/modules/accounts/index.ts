@@ -5,3 +5,4 @@ export * from './password';
 export * from './tfa';
 export * from './deactivated';
 export * from './profiles';
+export * from './stream';

@@ -1,6 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '/prisma/generated';
+
 import { SocialModel } from './social.model';
+import { StreamModel } from '@/modules/accounts/stream/models';
 
 import { pathFileMiddleware } from '@shared';
 
@@ -56,4 +58,7 @@ export class UserModel implements User {
 
   @Field(() => [SocialModel])
   social: SocialModel[];
+
+  @Field(() => StreamModel, { nullable: true })
+  stream: StreamModel | null;
 }

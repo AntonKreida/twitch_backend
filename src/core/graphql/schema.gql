@@ -168,6 +168,19 @@ type SocialModel {
   userId: ID!
 }
 
+type StreamModel {
+  createAt: DateTime!
+  id: ID!
+  ingressId: String
+  isLive: Boolean!
+  previewUrl: String
+  serverUrl: String
+  streamKey: String
+  title: String!
+  updateAt: DateTime!
+  userId: ID!
+}
+
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
@@ -193,6 +206,7 @@ type UserModel {
   lastName: String!
   passwordHash: String!
   social: [SocialModel!]!
+  stream: StreamModel
   twoFactorSecret: String
   updateAt: DateTime!
   username: String!
