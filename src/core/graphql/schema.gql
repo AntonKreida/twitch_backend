@@ -87,6 +87,7 @@ type Mutation {
   deleteSocial(socialId: String!): Boolean!
   disableTwoFactorAuth(disableTwoFactorAuthInput: DisableTwoFactorAuthInput!): Boolean!
   enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
+  findSocials: [SocialModel!]!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
   reorderSocial(list: [ChangeReorderSocialInput!]!): Boolean!
   sendDeactivatedAccount(sendDeactivatedEmailInput: SendDeactivatedEmailInput!): Boolean!

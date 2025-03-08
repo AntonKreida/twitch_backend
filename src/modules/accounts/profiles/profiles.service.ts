@@ -9,6 +9,7 @@ import * as Upload from 'graphql-upload/GraphQLUpload.js';
 import {
   AvatarRepository,
   SocialEntity,
+  SocialModel,
   SocialRepository,
   UserModel,
 } from '../user';
@@ -16,10 +17,10 @@ import {
   ChangeProfileInfoInput,
   ChangeReorderSocialInput,
   CreateSocialInput,
+  ChangeUpdateSocialInput,
 } from './inputs';
 
 import { deleteFile, uploadFileStream } from '@shared';
-import { ChangeUpdateSocialInput } from './inputs/change-update-social.input';
 
 @Injectable()
 export class ProfilesService {
@@ -181,5 +182,16 @@ export class ProfilesService {
     });
 
     return true;
+  }
+
+  async findSocials(userId: string): Promise<SocialModel[]> {
+    return await this.socialRepository.findAllSocials({
+      where: {
+        userId,
+      },
+      orderBy: {
+        position: 'asc',
+      },
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ProfilesService } from './profiles.service';
-import { UserModel } from '@/modules/accounts/user';
+import { SocialModel, UserModel } from '@/modules/accounts/user';
 import { Auth, Authorized } from '@shared';
 import {
   ChangeAvatarUserInput,
@@ -72,5 +72,11 @@ export class ProfilesResolver {
     @Args('updateSocial') updateSocial: ChangeUpdateSocialInput,
   ): Promise<boolean> {
     return await this.profilesService.updateSocial(updateSocial);
+  }
+
+  @Auth()
+  @Mutation(() => [SocialModel])
+  async findSocials(@Authorized('id') id: string): Promise<SocialModel[]> {
+    return await this.profilesService.findSocials(id);
   }
 }
