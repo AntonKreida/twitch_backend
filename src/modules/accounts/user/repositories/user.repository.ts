@@ -23,8 +23,8 @@ export class UserRepository {
     ...userData
   }: TFindAll): Promise<UserModel[]> {
     const paramsPagination = {
-      take: pagination?.limit,
-      skip: pagination?.page * pagination?.limit || 0,
+      take: pagination?.limit ?? 10,
+      skip: Math.max((pagination.page - 1) * pagination.limit, 0) ?? 0,
     };
 
     const users = await this.prismaService.user.findMany({
@@ -42,6 +42,9 @@ export class UserRepository {
             userId: userData.id,
           },
         },
+        stream: {
+          userId: userData.id,
+        },
       },
       include: {
         avatar: {
@@ -57,6 +60,7 @@ export class UserRepository {
     return users.map((user) => ({
       ...user,
       avatar: user?.avatar?.image?.src ?? null,
+      stream: user?.stream ?? null,
     }));
   }
 

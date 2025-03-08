@@ -24,7 +24,7 @@ export class UserModel implements User {
     nullable: true,
     middleware: [pathFileMiddleware],
   })
-  avatar: string | null;
+  avatar?: string | null;
 
   @Field(() => String)
   email: string;
@@ -57,8 +57,8 @@ export class UserModel implements User {
   updateAt: Date;
 
   @Field(() => [SocialModel])
-  social: SocialModel[];
+  social?: SocialModel[];
 
   @Field(() => StreamModel, { nullable: true })
-  stream: StreamModel | null;
+  stream?: StreamModel | null;
 }

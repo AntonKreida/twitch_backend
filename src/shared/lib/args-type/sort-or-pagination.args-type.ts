@@ -3,7 +3,7 @@ import { IsEnum, IsOptional, Min } from 'class-validator';
 import { SORT_ENUM } from '../enums';
 
 @InputType()
-class PaginationInputType {
+export class PaginationInputType {
   @Field(() => Int, { nullable: true })
   @Min(1, { message: 'Limit должен быть не меньше 1' })
   limit?: number;

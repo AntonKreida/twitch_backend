@@ -126,6 +126,7 @@ type QrCodeModel {
 type Query {
   clearSession: Boolean!
   currentSession: SessionModel!
+  findAllStream(searchStream: SearchStreamInput!): [StreamModel!]!
   me: UserModel!
   removeSession(id: String!): Boolean!
   session: [SessionModel!]!
@@ -137,6 +138,11 @@ type Query {
 enum SORT_ENUM {
   ASC
   DESC
+}
+
+input SearchStreamInput {
+  pagination: PaginationInputType
+  search: String
 }
 
 input SendDeactivatedEmailInput {
@@ -178,6 +184,7 @@ type StreamModel {
   streamKey: String
   title: String!
   updateAt: DateTime!
+  user: UserModel!
   userId: ID!
 }
 
