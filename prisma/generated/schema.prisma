@@ -34,6 +34,7 @@ model User {
   avatar UserAvatar?
   tokens Token[]
   social Social[]
+  Stream Stream?
 }
 
 model Token {
@@ -71,5 +72,20 @@ model Social {
   updateAt DateTime @updatedAt
 
   userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Stream {
+  id         String   @id @default(uuid())
+  title      String
+  previewUrl String?
+  ingressId  String?  @unique
+  serverUrl  String?
+  streamKey  String?
+  isLive     Boolean  @default(false)
+  createAt   DateTime @default(now())
+  updateAt   DateTime @updatedAt
+
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
