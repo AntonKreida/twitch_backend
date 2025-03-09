@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { StreamRepository } from './repositories';
 import { StreamModel } from './models';
-import { SearchStreamInput } from './inputs';
+import { ChangeInfoStreamInput, SearchStreamInput } from './inputs';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -21,5 +21,12 @@ export class StreamService {
     );
 
     return await this.streamRepository.findRandomStream(countStream);
+  }
+
+  async changeInfoStream(
+    userId: string,
+    data: ChangeInfoStreamInput,
+  ): Promise<StreamModel> {
+    return await this.streamRepository.updateStream(userId, data);
   }
 }

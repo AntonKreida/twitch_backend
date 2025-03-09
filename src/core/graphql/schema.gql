@@ -10,6 +10,10 @@ input ChangeEmailUserInput {
   email: String!
 }
 
+input ChangeInfoStreamInput {
+  title: String!
+}
+
 input ChangeProfileInfoInput {
   bio: String
   firstName: String
@@ -78,6 +82,7 @@ type MetadataModel {
 
 type Mutation {
   changeEmail(changeEmailInput: ChangeEmailUserInput!): UserModel!
+  changeInfoStream(changeInfoStreamInput: ChangeInfoStreamInput!): StreamModel!
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
   changeUserAvatar(changeUserAvatar: ChangeAvatarUserInput!): Boolean!
   changeUserProfileInfo(updateUser: ChangeProfileInfoInput!): Boolean!

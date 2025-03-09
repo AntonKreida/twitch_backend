@@ -1,7 +1,8 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { StreamService } from './stream.service';
 import { StreamModel } from './models';
-import { SearchStreamInput } from './inputs';
+import { ChangeInfoStreamInput, SearchStreamInput } from './inputs';
+import { Auth, Authorized } from '/src/shared';
 
 @Resolver()
 export class StreamResolver {
@@ -17,5 +18,17 @@ export class StreamResolver {
   @Query(() => [StreamModel], { name: 'findRandomStream' })
   async findRandomStream(): Promise<StreamModel[]> {
     return await this.streamService.findRandomStream();
+  }
+
+  @Auth()
+  @Mutation(() => StreamModel, { name: 'changeInfoStream' })
+  async changeInfoStream(
+    @Authorized('id') userId: string,
+    @Args('changeInfoStreamInput') changeInfoStreamInput: ChangeInfoStreamInput,
+  ) {
+    return await this.streamService.changeInfoStream(
+      userId,
+      changeInfoStreamInput,
+    );
   }
 }

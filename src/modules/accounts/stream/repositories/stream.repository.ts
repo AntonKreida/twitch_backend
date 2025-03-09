@@ -3,7 +3,7 @@ import { Prisma } from '/prisma/generated';
 
 import { PrismaService } from '@core';
 import { StreamModel } from '../models';
-import { SearchStreamInput } from '../inputs';
+import { ChangeInfoStreamInput, SearchStreamInput } from '../inputs';
 
 @Injectable()
 export class StreamRepository {
@@ -110,6 +110,39 @@ export class StreamRepository {
           },
         },
       ],
+    };
+  }
+
+  async updateStream(
+    userId: string,
+    { title }: ChangeInfoStreamInput,
+  ): Promise<StreamModel> {
+    const stream = await this.prismaService.stream.update({
+      where: {
+        userId,
+      },
+      data: {
+        title,
+      },
+      include: {
+        user: {
+          include: {
+            avatar: {
+              include: {
+                image: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return {
+      ...stream,
+      user: {
+        ...stream.user,
+        avatar: stream.user.avatar?.image?.src || null,
+      },
     };
   }
 }
