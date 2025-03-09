@@ -85,6 +85,24 @@ export class ProfilesService {
     return true;
   }
 
+  async removeUserAvatar(userId: string): Promise<boolean> {
+    const user = await this.userRepository.findUser({ id: userId });
+
+    if (!user) {
+      throw new NotFoundException('Пользователь не найден!');
+    }
+
+    if (user.avatar) {
+      await deleteFile({
+        pathFile: user.avatar,
+      });
+
+      await this.avatarRepository.deleteAvatar(user.id);
+    }
+
+    return true;
+  }
+
   async changeUserProfileInfo(
     userId: string,
     updateUser: ChangeProfileInfoInput,

@@ -34,6 +34,12 @@ export class ProfilesResolver {
   }
 
   @Auth()
+  @Mutation(() => Boolean, { name: 'removeUserAvatar' })
+  async removeUserAvatar(@Authorized('id') id: string): Promise<boolean> {
+    return await this.profilesService.removeUserAvatar(id);
+  }
+
+  @Auth()
   @Mutation(() => Boolean)
   async changeUserProfileInfo(
     @Authorized('id') id: string,

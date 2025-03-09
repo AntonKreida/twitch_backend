@@ -99,6 +99,8 @@ type Mutation {
   enableTwoFactorAuth(enubleTwoFactorAuthInput: EnableTwoFactorAuthInput!): Boolean!
   findSocials: [SocialModel!]!
   recoveryPassword(inputPasswordRecovery: PasswordRecoveryInput!): Boolean!
+  removePreviewStream: Boolean!
+  removeUserAvatar: Boolean!
   reorderSocial(list: [ChangeReorderSocialInput!]!): Boolean!
   sendDeactivatedAccount(sendDeactivatedEmailInput: SendDeactivatedEmailInput!): Boolean!
   sendGenerateQrCode(SendGeneratedQrCodeInput: SendGeneratedQrCodeInput!): QrCodeModel!

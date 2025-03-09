@@ -209,6 +209,17 @@ export class StreamRepository {
     });
   }
 
+  async deletePreviewStream(streamId: string): Promise<StreamPreview> {
+    return await this.prismaService.streamPreview.delete({
+      where: {
+        streamId,
+      },
+      include: {
+        image: true,
+      },
+    });
+  }
+
   private searchStream(search: string): Prisma.StreamWhereInput {
     return {
       OR: [

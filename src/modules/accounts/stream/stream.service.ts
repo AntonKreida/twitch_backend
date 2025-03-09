@@ -64,4 +64,18 @@ export class StreamService {
 
     return await this.streamRepository.findStreamUserById(userId);
   }
+
+  async removePreviewStream(userId: string): Promise<true> {
+    const stream = await this.streamRepository.findStreamUserById(userId);
+
+    if (stream.streamPreview) {
+      await deleteFile({
+        pathFile: stream.streamPreview,
+      });
+    }
+
+    await this.streamRepository.deletePreviewStream(userId);
+
+    return true;
+  }
 }

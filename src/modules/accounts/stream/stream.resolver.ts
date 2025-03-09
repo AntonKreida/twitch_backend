@@ -44,4 +44,10 @@ export class StreamResolver {
   ) {
     return await this.streamService.changePreviewStream(userId, streamPreview);
   }
+
+  @Auth()
+  @Mutation(() => Boolean, { name: 'removePreviewStream' })
+  async removePreviewStream(@Authorized('id') userId: string) {
+    return await this.streamService.removePreviewStream(userId);
+  }
 }
