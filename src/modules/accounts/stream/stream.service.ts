@@ -46,8 +46,8 @@ export class StreamService {
       )}/stream`,
       filename: `stream-preview-${stream.id}.${file.mimetype.split('/')[1]}`,
       sharpSetting: {
-        width: 512,
-        height: 512,
+        width: 1280,
+        height: 720,
         fit: 'cover',
         toFormat: file.mimetype.split('/')[1],
         quality: 50,
