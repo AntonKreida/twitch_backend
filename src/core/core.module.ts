@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MailerModule } from '@nestjs-modules/mailer';
@@ -25,6 +25,8 @@ import {
 } from '@modules';
 
 import { isDevEnv } from '@shared';
+import { LiveKitModule } from '../modules/live-kit/live-kit.module';
+import { liveKitConfig } from './live-kit';
 
 @Module({
   imports: [
@@ -60,6 +62,11 @@ import { isDevEnv } from '@shared';
     MailerModule.forRootAsync({
       useClass: MailerConfigService,
       imports: [ConfigModule],
+    }),
+    LiveKitModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: liveKitConfig,
+      inject: [ConfigService],
     }),
     PrismaModule,
     RedisModule,

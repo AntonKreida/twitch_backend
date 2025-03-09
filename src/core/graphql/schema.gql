@@ -140,6 +140,7 @@ type Query {
   currentSession: SessionModel!
   findAllStream(searchStream: SearchStreamInput!): [StreamModel!]!
   findRandomStream: [StreamModel!]!
+  key: String!
   me: UserModel!
   removeSession(id: String!): Boolean!
   session: [SessionModel!]!
