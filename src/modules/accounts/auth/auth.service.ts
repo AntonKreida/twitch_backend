@@ -56,7 +56,9 @@ export class AuthService {
 
       const filePath = await uploadFileStream({
         readStream: file.createReadStream,
-        uploadDir: this.configService.getOrThrow<string>('UPLOAD_DIR_NAME'),
+        uploadDir: `${this.configService.getOrThrow<string>(
+          'UPLOAD_DIR_NAME',
+        )}/avatar`,
         filename: `avatar-${username}.${file.mimetype.split('/')[1]}`,
         sharpSetting: {
           width: 512,
