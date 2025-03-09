@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Stream } from '/prisma/generated';
 
 import { UserModel } from '@/modules/accounts/user/models';
+import { pathFileMiddleware } from '@shared';
 
 @ObjectType()
 export class StreamModel implements Stream {
@@ -11,8 +12,8 @@ export class StreamModel implements Stream {
   @Field(() => String)
   title: string;
 
-  @Field(() => String, { nullable: true })
-  previewUrl: string | null;
+  @Field(() => String, { nullable: true, middleware: [pathFileMiddleware] })
+  streamPreview: string | null;
 
   @Field(() => String, { nullable: true })
   ingressId: string | null;

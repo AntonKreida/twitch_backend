@@ -14,6 +14,10 @@ input ChangeInfoStreamInput {
   title: String!
 }
 
+input ChangePreviewStreamInput {
+  streamPreview: Upload
+}
+
 input ChangeProfileInfoInput {
   bio: String
   firstName: String
@@ -84,6 +88,7 @@ type Mutation {
   changeEmail(changeEmailInput: ChangeEmailUserInput!): UserModel!
   changeInfoStream(changeInfoStreamInput: ChangeInfoStreamInput!): StreamModel!
   changePassword(changePasswordInput: PasswordChangeInput!): Boolean!
+  changePreviewStream(changePreviewStream: ChangePreviewStreamInput!): StreamModel!
   changeUserAvatar(changeUserAvatar: ChangeAvatarUserInput!): Boolean!
   changeUserProfileInfo(updateUser: ChangeProfileInfoInput!): Boolean!
   confirmPassword(confirmPasswordInput: PasswordConfirmInput!): Boolean!
@@ -185,9 +190,9 @@ type StreamModel {
   id: ID!
   ingressId: String
   isLive: Boolean!
-  previewUrl: String
   serverUrl: String
   streamKey: String
+  streamPreview: String
   title: String!
   updateAt: DateTime!
   user: UserModel!

@@ -1,8 +1,12 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { StreamService } from './stream.service';
 import { StreamModel } from './models';
-import { ChangeInfoStreamInput, SearchStreamInput } from './inputs';
-import { Auth, Authorized } from '/src/shared';
+import {
+  ChangeInfoStreamInput,
+  ChangePreviewStreamInput,
+  SearchStreamInput,
+} from './inputs';
+import { Auth, Authorized } from '@shared';
 
 @Resolver()
 export class StreamResolver {
@@ -30,5 +34,14 @@ export class StreamResolver {
       userId,
       changeInfoStreamInput,
     );
+  }
+
+  @Auth()
+  @Mutation(() => StreamModel, { name: 'changePreviewStream' })
+  async changePreviewStream(
+    @Authorized('id') userId: string,
+    @Args('changePreviewStream') { streamPreview }: ChangePreviewStreamInput,
+  ) {
+    return await this.streamService.changePreviewStream(userId, streamPreview);
   }
 }

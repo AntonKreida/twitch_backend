@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '/prisma/generated';
+import { Prisma, StreamPreview } from '/prisma/generated';
 
 import { PrismaService } from '@core';
 import { StreamModel } from '../models';
@@ -29,6 +29,11 @@ export class StreamRepository {
         ...whereStreams,
       },
       include: {
+        streamPreview: {
+          include: {
+            image: true,
+          },
+        },
         user: {
           include: {
             avatar: {
@@ -46,6 +51,7 @@ export class StreamRepository {
 
     return streams.map((stream) => ({
       ...stream,
+      streamPreview: stream.streamPreview?.image?.src || null,
       user: {
         ...stream.user,
         avatar: stream.user.avatar?.image?.src || null,
@@ -75,6 +81,11 @@ export class StreamRepository {
             },
           },
         },
+        streamPreview: {
+          include: {
+            image: true,
+          },
+        },
       },
       orderBy: {
         createAt: 'desc',
@@ -85,32 +96,12 @@ export class StreamRepository {
       .filter((_, index) => indexStreams.has(index))
       .map((stream) => ({
         ...stream,
+        streamPreview: stream.streamPreview?.image?.src || null,
         user: {
           ...stream.user,
           avatar: stream.user.avatar?.image?.src || null,
         },
       }));
-  }
-
-  private searchStream(search: string): Prisma.StreamWhereInput {
-    return {
-      OR: [
-        {
-          title: {
-            contains: search,
-            mode: 'insensitive',
-          },
-        },
-        {
-          user: {
-            username: {
-              contains: search,
-              mode: 'insensitive',
-            },
-          },
-        },
-      ],
-    };
   }
 
   async updateStream(
@@ -134,15 +125,108 @@ export class StreamRepository {
             },
           },
         },
+        streamPreview: {
+          include: {
+            image: true,
+          },
+        },
       },
     });
 
     return {
       ...stream,
+      streamPreview: stream.streamPreview?.image?.src || null,
       user: {
         ...stream.user,
         avatar: stream.user.avatar?.image?.src || null,
       },
+    };
+  }
+
+  async findStreamUserById(userId: string): Promise<StreamModel> {
+    const stream = await this.prismaService.stream.findUnique({
+      where: {
+        userId,
+      },
+      include: {
+        user: {
+          include: {
+            avatar: {
+              include: {
+                image: true,
+              },
+            },
+          },
+        },
+        streamPreview: {
+          include: {
+            image: true,
+          },
+        },
+      },
+    });
+
+    return {
+      ...stream,
+      streamPreview: stream.streamPreview?.image?.src || null,
+      user: {
+        ...stream.user,
+        avatar: stream.user.avatar?.image?.src || null,
+      },
+    };
+  }
+
+  async changePreviewStream(
+    streamId: string,
+    preview: string,
+  ): Promise<StreamPreview> {
+    return await this.prismaService.streamPreview.upsert({
+      where: {
+        streamId,
+      },
+      create: {
+        stream: {
+          connect: {
+            id: streamId,
+          },
+        },
+        image: {
+          create: {
+            src: preview,
+          },
+        },
+      },
+      update: {
+        image: {
+          update: {
+            src: preview,
+          },
+        },
+      },
+      include: {
+        image: true,
+      },
+    });
+  }
+
+  private searchStream(search: string): Prisma.StreamWhereInput {
+    return {
+      OR: [
+        {
+          title: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          user: {
+            username: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+        },
+      ],
     };
   }
 }

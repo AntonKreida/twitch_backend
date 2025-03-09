@@ -168,7 +168,6 @@ exports.Prisma.SocialScalarFieldEnum = {
 exports.Prisma.StreamScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  previewUrl: 'previewUrl',
   ingressId: 'ingressId',
   serverUrl: 'serverUrl',
   streamKey: 'streamKey',
@@ -176,6 +175,12 @@ exports.Prisma.StreamScalarFieldEnum = {
   createAt: 'createAt',
   updateAt: 'updateAt',
   userId: 'userId'
+};
+
+exports.Prisma.StreamPreviewScalarFieldEnum = {
+  id: 'id',
+  imageId: 'imageId',
+  streamId: 'streamId'
 };
 
 exports.Prisma.SortOrder = {
@@ -205,7 +210,8 @@ exports.Prisma.ModelName = {
   UserAvatar: 'UserAvatar',
   Image: 'Image',
   Social: 'Social',
-  Stream: 'Stream'
+  Stream: 'Stream',
+  StreamPreview: 'StreamPreview'
 };
 
 /**

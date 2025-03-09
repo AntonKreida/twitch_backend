@@ -57,9 +57,10 @@ model UserAvatar {
 }
 
 model Image {
-  id         String      @id @default(uuid())
-  src        String
-  UserAvatar UserAvatar?
+  id            String         @id @default(uuid())
+  src           String
+  UserAvatar    UserAvatar?
+  StreamPreview StreamPreview?
 }
 
 model Social {
@@ -78,7 +79,6 @@ model Social {
 model Stream {
   id         String   @id @default(uuid())
   title      String
-  previewUrl String?
   ingressId  String?  @unique
   serverUrl  String?
   streamKey  String?
@@ -88,4 +88,16 @@ model Stream {
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  streamPreview StreamPreview?
+}
+
+model StreamPreview {
+  id String @id @default(uuid())
+
+  imageId String @unique
+  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  streamId String @unique
+  stream   Stream @relation(fields: [streamId], references: [id], onDelete: Cascade)
 }

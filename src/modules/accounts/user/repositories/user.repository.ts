@@ -53,14 +53,25 @@ export class UserRepository {
           },
         },
         social: true,
-        stream: true,
+        stream: {
+          include: {
+            streamPreview: {
+              include: {
+                image: true,
+              },
+            },
+          },
+        },
       },
     });
 
     return users.map((user) => ({
       ...user,
       avatar: user?.avatar?.image?.src ?? null,
-      stream: user?.stream ?? null,
+      stream: {
+        ...user.stream,
+        streamPreview: user.stream.streamPreview?.image?.src || null,
+      },
     }));
   }
 
@@ -92,7 +103,15 @@ export class UserRepository {
           },
         },
         social: true,
-        stream: true,
+        stream: {
+          include: {
+            streamPreview: {
+              include: {
+                image: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -100,6 +119,10 @@ export class UserRepository {
       ? {
           ...user,
           avatar: user?.avatar?.image?.src ?? null,
+          stream: {
+            ...user.stream,
+            streamPreview: user.stream.streamPreview?.image?.src || null,
+          },
         }
       : null;
   }
@@ -156,13 +179,25 @@ export class UserRepository {
           },
         },
         social: true,
-        stream: true,
+        stream: {
+          include: {
+            streamPreview: {
+              include: {
+                image: true,
+              },
+            },
+          },
+        },
       },
     });
 
     return {
       ...user,
       avatar: user?.avatar?.image?.src ?? null,
+      stream: {
+        ...user.stream,
+        streamPreview: user.stream.streamPreview?.image?.src || null,
+      },
     };
   }
 
