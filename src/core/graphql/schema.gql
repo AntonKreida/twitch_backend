@@ -36,6 +36,11 @@ input ChangeUpdateSocialInput {
   url: String!
 }
 
+type CodecModel {
+  fmtpLine: String!
+  mime: String!
+}
+
 input CreateSocialInput {
   title: String!
   url: String!
@@ -140,12 +145,26 @@ type Query {
   currentSession: SessionModel!
   findAllStream(searchStream: SearchStreamInput!): [StreamModel!]!
   findRandomStream: [StreamModel!]!
-  key: String!
+  listRoom: [RoomModel!]!
   me: UserModel!
   removeSession(id: String!): Boolean!
   session: [SessionModel!]!
   user(email: String, id: ID, username: String): UserModel
   users(pagination: PaginationInputType, sort: SORT_ENUM): [UserModel!]!
+}
+
+type RoomModel {
+  activeRecording: Boolean!
+  creationTime: Float!
+  emptyTimeout: Float!
+  enabledCodecs: [CodecModel!]!
+  maxParticipants: Float!
+  metadata: String!
+  name: String!
+  numParticipants: Float!
+  numPublishers: Float!
+  sid: String!
+  turnPassword: String!
 }
 
 """Сортировка по возрастанию/убыванию"""
