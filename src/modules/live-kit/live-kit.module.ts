@@ -20,6 +20,7 @@ export class LiveKitModule {
         LiveKitService,
       ],
       exports: [LiveKitService],
+      global: options.global,
     };
   }
 
@@ -36,6 +37,7 @@ export class LiveKitModule {
         LiveKitService,
         LiveKitResolver,
       ],
+      global: options.global,
       exports: [LiveKitService],
     };
   }

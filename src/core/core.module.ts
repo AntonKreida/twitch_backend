@@ -67,6 +67,7 @@ import { liveKitConfig } from './live-kit';
       imports: [ConfigModule],
       useFactory: liveKitConfig,
       inject: [ConfigService],
+      global: true,
     }),
     PrismaModule,
     RedisModule,
